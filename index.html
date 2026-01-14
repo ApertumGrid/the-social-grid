@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Social Grid | Powered by Apertum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #00ffd5; --bright-blue: #0077ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { background: radial-gradient(circle at 50% 50%, #1a2a44 0%, #050a14 100%); background-attachment: fixed; color: #fff; margin: 0; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+        header { position: fixed; top: 0; left: 0; width: 100%; height: 130px; background: rgba(10, 15, 25, 0.95); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .header-inner { width: 92%; max-width: 1500px; display: flex; justify-content: space-between; align-items: center; }
+        .brand-wrap { display: flex; align-items: center; gap: 20px; }
+        .logo-sphere { width: 65px; height: 65px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--accent), var(--bright-blue)); box-shadow: 0 0 40px var(--accent), inset 0 0 20px rgba(255,255,255,0.5); border: 2px solid rgba(255,255,255,0.3); animation: pulse 2s infinite alternate; }
+        @keyframes pulse { from { transform: scale(1); box-shadow: 0 0 30px var(--accent); } to { transform: scale(1.05); box-shadow: 0 0 50px var(--accent); } }
+        .brand-text h1 { font-family: 'Orbitron'; font-size: 32px; margin: 0; letter-spacing: 6px; font-weight: 900; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; line-height: 1; }
+        .brand-text p { font-size: 11px; margin: 8px 0 0 0; color: #8fa7c7; letter-spacing: 5px; text-transform: uppercase; font-weight: 700; }
+        .nav-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; padding: 8px 15px; border-radius: 5px; margin-right: 15px; }
+        .wallet-btn { padding: 14px 32px; border-radius: 14px; border: none; background: linear-gradient(90deg, var(--accent), var(--bright-blue)); color: #000; font-family: 'Montserrat'; font-weight: 800; font-size: 13px; cursor: pointer; text-transform: uppercase; }
+        main { margin-top: 180px; padding-bottom: 300px; display: flex; justify-content: center; }
+        #grid { display: grid; grid-template-columns: repeat(auto-fill, 120px); gap: 15px; width: 92%; max-width: 1500px; justify-content: center; }
+        .tile { width: 120px; height: 120px; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; position: relative; transition: 0.2s; }
+        .tile.selected { border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
+        .tile.sold { border: none; border-radius: 0; background-size: 255px 255px !important; background-repeat: no-repeat; }
+        #selection-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); width: auto; min-width: 400px; background: rgba(10, 15, 25, 0.95); border: 1px solid var(--accent); padding: 15px 30px; border-radius: 50px; backdrop-filter: blur(20px); z-index: 2000; display: none; justify-content: space-between; align-items: center; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        #data-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.9); backdrop-filter: blur(15px); display: none; align-items: center; justify-content: center; z-index: 3000; }
+        .modal-box { width: 90%; max-width: 500px; background: #0a0f19; border: 1px solid var(--accent); padding: 40px; border-radius: 30px; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-family: 'Orbitron'; font-size: 10px; color: var(--accent); margin-bottom: 6px; }
+        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: #fff; box-sizing: border-box; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.95); backdrop-filter: blur(40px); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 5000; }
+        .glass-panel { width: 90%; max-width: 1100px; padding: 60px; border-radius: 40px; background: rgba(10, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); overflow-y: auto; max-height: 85vh; text-align: center; }
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+        .feature-item { background: rgba(255,255,255,0.02); padding: 35px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.08); text-align: left; }
+        .feature-item h3 { font-family: 'Orbitron'; color: var(--accent); font-size: 16px; margin-bottom: 20px; }
+        .feature-item p { font-size: 14px; line-height: 1.8; color: #b0c4de; margin: 0; }
+        .store-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; font-family: 'Orbitron'; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        .store-btn:hover { background: var(--accent); color: #000; }
+    </style>
+</head>
+<body>
+    <header><div class="header-inner"><div class="brand-wrap"><div class="logo-sphere"></div><div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div></div><div class="nav-group"><button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button><button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button><button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button></div></div></header>
+    <main><div id="grid"></div></main>
+    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
+    <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL (.jpg / .png)</label><input type="text" id="img-url" placeholder="https://imgur.com/image.jpg"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
+    <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    <script>
+        const CONTRACT_ADDR = "0x593860b792F6d890FeE5A0aaC777cB26CBa6634F"; 
+        const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
+        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkMain","type":"string"},{"internalType":"string","name":"linkExternal","type":"string"},{"internalType":"string","name":"linkSocial","type":"string"},{"internalType":"string","name":"linkTelegram","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
+        let selected = []; let userAccount = "";
+        let web3Read = new Web3(new Web3.providers.HttpProvider(RPC_URL));
+        let contractRead = new web3Read.eth.Contract(ABI, CONTRACT_ADDR);
+        window.onload = () => {
+            const g = document.getElementById('grid');
+            for (let i = 0; i < 4000; i++) {
+                const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = () => handleTileClick(i); g.appendChild(d);
+            }
+            loadGrid();
+        };
+        async function loadGrid() {
+            const cols = Math.floor(document.getElementById('grid').offsetWidth / 135); 
+            for(let i = 0; i < 1500; i++) {
+                contractRead.methods.grid(i).call().then(res => {
+                    if(res.isSold) {
+                        const el = document.getElementById('b-' + i); if(!el) return;
+                        el.classList.add('sold'); el.onclick = () => showStorefront(res);
+                        el.style.backgroundImage = `url('${res.imageUrl}')`;
+                        let c = i % cols; let r = Math.floor(i / cols);
+                        let posX = (c % 2 === 0) ? "0px" : "-135px";
+                        let posY = (r % 2 === 0) ? "-135px" : "0px";
+                        el.style.backgroundPosition = `${posX} ${posY}`;
+                    }
+                });
+            }
+        }
+        function showStorefront(data) {
+            const m = document.getElementById('overlay'); m.style.display = 'flex';
+            const c = document.getElementById('modal-content');
+            c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
+                <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2><p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
+                <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT WEBSITE</a>${data.linkExternal ? `<a href="${data.linkExternal}" target="_blank" class="store-btn">💎 DAO LINK</a>` : ''}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a><a href="${data.linkTelegram}" target="_blank" class="store-btn">✈️ TELEGRAM</a></div>
+                <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
+        }
+        function handleTileClick(id) {
+            const el = document.getElementById('b-' + id);
+            if(!el.classList.contains('sold')) {
+                if(el.classList.contains('selected')) { el.classList.remove('selected'); selected = selected.filter(x => x !== id); }
+                else { el.classList.add('selected'); selected.push(id); }
+                document.getElementById('selection-bar').style.display = selected.length > 0 ? 'flex' : 'none';
+                document.getElementById('select-count').innerText = selected.length;
+                document.getElementById('price-tag').innerText = (selected.length * 5) + " APTM";
+            }
+        }
+        function openDataModal() { document.getElementById('data-modal').style.display = 'flex'; }
+        function closeDataModal() { document.getElementById('data-modal').style.display = 'none'; }
+        async function connect() {
+            if (window.ethereum) {
+                const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accs[0];
+                document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38);
+            }
+        }
+        async function purchase() {
+            if(!userAccount) { alert("Connect wallet first!"); return; }
+            const web3 = new Web3(window.ethereum);
+            const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
+            const price = web3.utils.toWei((selected.length * 5).toString(), "ether");
+            try {
+                await contract.methods.buyBlocks(selected, document.getElementById('img-url').value, document.getElementById('main-link').value, document.getElementById('ext-link').value, document.getElementById('soc-link').value, document.getElementById('tg-link').value).send({ from: userAccount, value: price });
+                location.reload();
+            } catch(e) { alert("Error: " + e.message); }
+        }
+        function openModal(t) {
+            const m = document.getElementById('overlay'); m.style.display = 'flex';
+            const c = document.getElementById('modal-content');
+            if(t === 'how') {
+                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'">THE APERTUM PROTOCOL</h2><div class="feature-grid"><div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory on our 10,000-block landscape for 5 APTM per block. Buy one for a logo or multiple to create a massive billboard. Drive global traffic to your website, socials, and affiliate networks.</p></div><div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Secure dominance. Any spot can be overtaken by paying 1.5x the current price (7.5 APTM), turning the grid into a competitive battlefield.</p></div><div class="feature-item"><h3>💰 120% RETURN</h3><p>If overtaken, the protocol instantly returns your original 5 APTM back plus a 1 APTM (20%) profit bonus instantly.</p></div></div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>`;
+            } else if(t === 'aff') {
+                const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
+                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'">AFFILIATE PROGRAM</h2><p style="color:#ccc; margin-bottom: 25px;">Earn 1 APTM instantly for every single block purchased through your unique referral link.</p><div style="padding: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: 'Orbitron'; font-size: 12px;">${userAccount ? link : "Please connect your wallet first."}</div><button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText('${link}'); alert('Copied!');">COPY REFERRAL LINK</button><button class="nav-btn" style="margin-top:20px; border: none;" onclick="closeModal()">CLOSE [X]</button>`;
+            }
+        }
+        function closeModal() { document.getElementById('overlay').style.display = 'none'; }
+    </script>
+</body>
+</html>
