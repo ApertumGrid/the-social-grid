@@ -16,6 +16,9 @@
         .brand-text p { font-size: 11px; margin: 8px 0 0 0; color: #8fa7c7; letter-spacing: 5px; text-transform: uppercase; font-weight: 700; }
         .nav-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; padding: 8px 15px; border-radius: 5px; margin-right: 15px; }
         .wallet-btn { padding: 14px 32px; border-radius: 14px; border: none; background: linear-gradient(90deg, var(--accent), var(--bright-blue)); color: #000; font-family: 'Montserrat'; font-weight: 800; font-size: 13px; cursor: pointer; text-transform: uppercase; }
+        /* Telegram Button Style */
+        .tg-btn { background: #24A1DE; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-left: 15px; padding: 14px 24px; border-radius: 14px; font-weight: 800; font-size: 13px; font-family: 'Montserrat'; text-transform: uppercase; vertical-align: middle; }
+        
         main { margin-top: 180px; padding-bottom: 300px; display: flex; justify-content: center; }
         #grid { display: grid; grid-template-columns: repeat(auto-fill, 120px); gap: 15px; width: 92%; max-width: 1500px; justify-content: center; }
         .tile { width: 120px; height: 120px; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; position: relative; transition: 0.2s; }
@@ -35,14 +38,38 @@
         .feature-item p { font-size: 14px; line-height: 1.8; color: #b0c4de; margin: 0; }
         .store-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; font-family: 'Orbitron'; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
         .store-btn:hover { background: var(--accent); color: #000; }
+        footer { width: 100%; text-align: center; padding: 60px 0; background: rgba(5, 10, 20, 0.8); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
+        .footer-link { color: var(--accent); text-decoration: none; font-family: 'Orbitron'; font-size: 11px; letter-spacing: 2px; margin-top: 15px; display: block; transition: 0.3s; }
+        .footer-link:hover { opacity: 0.7; }
     </style>
 </head>
 <body>
-    <header><div class="header-inner"><div class="brand-wrap"><div class="logo-sphere"></div><div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div></div><div class="nav-group"><button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button><button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button><button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button></div></div></header>
+    <header>
+        <div class="header-inner">
+            <div class="brand-wrap">
+                <div class="logo-sphere"></div>
+                <div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div>
+            </div>
+            <div class="nav-group">
+                <button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button>
+                <button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button>
+                <button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button>
+                <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="tg-btn">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="16"> HQ
+                </a>
+            </div>
+        </div>
+    </header>
     <main><div id="grid"></div></main>
     <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
     <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL (.jpg / .png)</label><input type="text" id="img-url" placeholder="https://imgur.com/image.jpg"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
     <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
+    
+    <footer>
+        <p style="font-size: 12px; letter-spacing: 3px; color: #556b8a; margin: 0;">POWERED BY APERTUM</p>
+        <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="footer-link">VIEW PROJECT BLUEPRINT & ROADMAP →</a>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script>
         const CONTRACT_ADDR = "0x593860b792F6d890FeE5A0aaC777cB26CBa6634F"; 
