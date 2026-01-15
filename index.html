@@ -36,31 +36,22 @@
         .feature-item p { font-size: 14px; line-height: 1.8; color: #b0c4de; margin: 0; }
         .store-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; font-family: 'Orbitron'; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
         .store-btn:hover { background: var(--accent); color: #000; }
-        footer { width: 100%; text-align: center; padding: 60px 0; background: rgba(5, 10, 20, 0.8); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-inner">
-            <div class="brand-wrap">
-                <div class="logo-sphere"></div>
-                <div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div>
-            </div>
+            <div class="brand-wrap"><div class="logo-sphere"></div><div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div></div>
             <div class="nav-group">
                 <button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button>
                 <button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button>
                 <button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button>
-                <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="tg-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="16"> HQ
-                </a>
+                <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="tg-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="16"> HQ</a>
             </div>
         </div>
     </header>
     <main><div id="grid"></div></main>
-    <div id="selection-bar">
-        <div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div>
-        <button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button>
-    </div>
+    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
     <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL (.jpg / .png)</label><input type="text" id="img-url" placeholder="https://imgur.com/image.jpg"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
     <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
     
@@ -89,8 +80,7 @@
                     prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
                     if(res.isSold) {
                         const el = document.getElementById('b-' + i); if(!el) return;
-                        el.classList.add('sold');
-                        el.style.backgroundImage = `url('${res.imageUrl}')`;
+                        el.classList.add('sold'); el.style.backgroundImage = `url('${res.imageUrl}')`;
                         let c = i % cols; let r = Math.floor(i / cols);
                         let posX = (c % 2 === 0) ? "0px" : "-135px";
                         let posY = (r % 2 === 0) ? "-135px" : "0px";
@@ -104,17 +94,11 @@
         function handleTileClick(id, event) {
             const el = document.getElementById('b-' + id);
             const isSold = el.classList.contains('sold');
-
             if (el.classList.contains('selected')) {
-                el.classList.remove('selected');
-                selected = selected.filter(x => x !== id);
+                el.classList.remove('selected'); selected = selected.filter(x => x !== id);
             } else {
-                el.classList.add('selected');
-                selected.push(id);
-                if(isSold) {
-                    const data = JSON.parse(el.getAttribute('data-owner-info'));
-                    showStorefront(data, id);
-                }
+                el.classList.add('selected'); selected.push(id);
+                if(isSold) { showStorefront(JSON.parse(el.getAttribute('data-owner-info')), id); }
             }
             updateSelectionBar();
         }
@@ -126,9 +110,7 @@
                 let total = selected.reduce((sum, id) => sum + (prices[id] || 5), 0);
                 document.getElementById('select-count').innerText = selected.length;
                 document.getElementById('price-tag').innerText = total.toFixed(2) + " APTM";
-            } else {
-                bar.style.display = 'none';
-            }
+            } else { bar.style.display = 'none'; }
         }
 
         function showStorefront(data, id) {
@@ -136,11 +118,8 @@
             const c = document.getElementById('modal-content');
             c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
                 <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2><p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
-                <div style="background:rgba(0,255,213,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent);">
-                    <p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:12px;">WAR ZONE TAKEOVER PRICE: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</p>
-                </div>
-                <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT WEBSITE</a>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a><a href="${data.linkTelegram}" target="_blank" class="store-btn">✈️ TELEGRAM</a></div>
+                <div style="background:rgba(0,255,213,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent);"><p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:12px;">WAR ZONE TAKEOVER PRICE: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</p></div>
+                <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT WEBSITE</a><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a><a href="${data.linkTelegram}" target="_blank" class="store-btn">✈️ TELEGRAM</a></div>
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
 
@@ -151,29 +130,20 @@
             let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
             const urlParams = new URLSearchParams(window.location.search);
             const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
-            try {
-                await contract.methods.buyBlocks(selected, document.getElementById('img-url').value, document.getElementById('main-link').value, document.getElementById('ext-link').value, document.getElementById('soc-link').value, document.getElementById('tg-link').value, ref).send({ from: userAccount, value: totalWei.toString() });
-                location.reload();
-            } catch(e) { alert("Error: " + e.message); }
+            try { await contract.methods.buyBlocks(selected, document.getElementById('img-url').value, document.getElementById('main-link').value, document.getElementById('ext-link').value, document.getElementById('soc-link').value, document.getElementById('tg-link').value, ref).send({ from: userAccount, value: totalWei.toString() }); location.reload(); } catch(e) { alert("Error: " + e.message); }
         }
 
-        async function connect() {
-            if (window.ethereum) {
-                const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAccount = accs[0];
-                document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38);
-            }
-        }
+        async function connect() { if (window.ethereum) { const accs = await window.ethereum.request({ method: 'eth_requestAccounts' }); userAccount = accs[0]; document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38); } }
         function openDataModal() { document.getElementById('data-modal').style.display = 'flex'; }
         function closeDataModal() { document.getElementById('data-modal').style.display = 'none'; }
         function openModal(t) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
             const c = document.getElementById('modal-content');
             if(t === 'how') {
-                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'; letter-spacing:3px;">THE APERTUM PROTOCOL</h2><div class="feature-grid"><div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory for 5 APTM per block. Buy one for a logo or multiple for a billboard.</p></div><div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Any spot can be overtaken by paying 1.5x the current price.</p></div><div class="feature-item"><h3>💰 120% RETURN</h3><p>If overtaken, you receive your original cost back plus 20% profit instantly.</p></div></div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>`;
+                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'; letter-spacing:3px;">THE APERTUM PROTOCOL</h2><div class="feature-grid"><div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory on our 10,000-block landscape for 5 APTM per block. Buy one for a logo or multiple to create a massive billboard. Drive global traffic to your website, socials, and affiliate networks.</p></div><div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Secure dominance. Any spot can be overtaken by paying 1.5x the current price (7.5 APTM), turning the grid into a competitive battlefield.</p></div><div class="feature-item"><h3>💰 120% RETURN</h3><p>If overtaken, the protocol instantly returns your original 5 APTM back plus a 1 APTM (20%) profit bonus instantly.</p></div></div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>`;
             } else if(t === 'aff') {
                 const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
-                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'">AFFILIATE PROGRAM</h2><p>Earn 1 APTM instantly for every block purchased through your link.</p><div style="padding: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: 'Orbitron'; font-size: 12px;">${userAccount ? link : "Please connect your wallet first."}</div><button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText('${link}'); alert('Copied!');">COPY LINK</button><button class="nav-btn" style="margin-top:20px; border: none;" onclick="closeModal()">CLOSE [X]</button>`;
+                c.innerHTML = `<h2 style="color:var(--accent); font-family: 'Orbitron'">AFFILIATE PROGRAM</h2><p style="color:#ccc; margin-bottom: 25px;">Earn 1 APTM instantly for every single block purchased through your unique referral link.</p><div style="padding: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: 'Orbitron'; font-size: 12px;">${userAccount ? link : "Please connect your wallet first."}</div><button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText('${link}'); alert('Copied!');">COPY REFERRAL LINK</button><button class="nav-btn" style="margin-top:20px; border: none;" onclick="closeModal()">CLOSE [X]</button>`;
             }
         }
         function closeModal() { document.getElementById('overlay').style.display = 'none'; }
