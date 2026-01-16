@@ -81,30 +81,32 @@
     from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
     to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
 }
- /* Style for Unsold Blocks (FIXED NAME) */
-.tile:empty::before {
+ /* Style for UNSOLD blocks only (Fixed Font & Visibility) */
+.tile:not(.sold)::before {
     content: "+";
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    color: #333;      /* Very dark grey */
-    font-size: 24px;  
-    font-weight: 100; 
-    font-family: monospace; 
+    color: #555;      /* Brighter grey so you can see it */
+    font-size: 28px;
+    font-weight: 700; /* Bold */
+    font-family: 'Orbitron', sans-serif; /* CHANGED TO YOUR SITE FONT */
     cursor: pointer;
     transition: all 0.3s ease;
 }
-/* Make it glow slightly when they hover */
-.tile:empty:hover::before {
-    content: "CLAIM"; 
-    color: #00ffcc;   
-    font-size: 12px;  
-    font-weight: bold;
-    letter-spacing: 1px;
-    background: rgba(0, 255, 204, 0.1); 
-}       
+
+/* Make it glow when they hover */
+.tile:not(.sold):hover::before {
+    content: "CLAIM"; /* You can change this word to "AVAILABLE" if you prefer */
+    color: #00ffcc;   /* Neon Cyan */
+    font-size: 14px;  
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: rgba(0, 255, 204, 0.05);
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5); /* Glowing Text Effect */
+}      
     </style>
 </head>
 <body>
@@ -278,6 +280,7 @@
 </script>
 </body>
 </html>
+
 
 
 
