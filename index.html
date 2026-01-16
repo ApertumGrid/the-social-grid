@@ -106,7 +106,41 @@
     letter-spacing: 2px;
     background: rgba(0, 255, 204, 0.05);
     text-shadow: 0 0 5px rgba(0, 255, 204, 0.5); /* Glowing Text Effect */
-}      
+}
+/* Make SOLD blocks pop out when hovered */
+.tile.sold {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    z-index: 1;
+}
+
+.tile.sold:hover {
+    transform: scale(1.15); /* Enlarge the ad */
+    box-shadow: 0 0 25px rgba(0, 255, 213, 0.5); /* Add a glowing aura */
+    z-index: 100; /* Bring it to the very front */
+    border: 1px solid #00ffcc;
+}
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background: #050a14; /* Dark background */
+}
+::-webkit-scrollbar-thumb {
+    background: #1a2a44; /* Dark Blue thumb */
+    border: 1px solid #00ffcc; /* Neon Border */
+    border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00ffcc; /* Lights up when you grab it */
+    box-shadow: 0 0 10px #00ffcc;
+}
+/* Custom Text Selection Color */
+::selection {
+    background: #00ffcc; /* Your Brand Color */
+    color: #000000; /* Black text */
+    text-shadow: none;
+}        
     </style>
 </head>
 <body>
@@ -280,6 +314,7 @@
 </script>
 </body>
 </html>
+
 
 
 
