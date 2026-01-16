@@ -81,6 +81,31 @@
     from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
     to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
 }
+ /* Style for Unsold Blocks */
+.grid-cell:empty::before {
+    content: "+";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #333;      /* Very dark grey, barely visible */
+    font-size: 24px;  /* Nice and big */
+    font-weight: 100; /* Thin and elegant */
+    font-family: monospace; /* Tech look */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Make it glow slightly when they hover */
+.grid-cell:empty:hover::before {
+    content: "CLAIM"; /* Changes from + to CLAIM on hover */
+    color: #00ffcc;   /* Turns Neon Green */
+    font-size: 12px;  
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: rgba(0, 255, 204, 0.1); /* Slight green tint background */
+}       
     </style>
 </head>
 <body>
@@ -229,6 +254,7 @@
 </section>
 </body>
 </html>
+
 
 
 
