@@ -81,6 +81,26 @@
     <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    /* News Ticker - Gold Style */
+.news-link a {
+    color: #ffd700 !important; /* Gold */
+    font-weight: 800;
+    border: 1px solid #ffd700;
+    padding: 6px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 1px;
+    margin-right: 15px;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
+    to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+}
     <script>
         const CONTRACT_ADDR = "0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1"; 
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
@@ -204,5 +224,6 @@
 </section>
 </body>
 </html>
+
 
 
