@@ -81,30 +81,29 @@
     from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
     to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
 }
- /* Style for Unsold Blocks */
-.grid-cell:empty::before {
+ /* Style for Unsold Blocks (FIXED NAME) */
+.tile:empty::before {
     content: "+";
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    color: #333;      /* Very dark grey, barely visible */
-    font-size: 24px;  /* Nice and big */
-    font-weight: 100; /* Thin and elegant */
-    font-family: monospace; /* Tech look */
+    color: #333;      /* Very dark grey */
+    font-size: 24px;  
+    font-weight: 100; 
+    font-family: monospace; 
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 /* Make it glow slightly when they hover */
-.grid-cell:empty:hover::before {
-    content: "CLAIM"; /* Changes from + to CLAIM on hover */
-    color: #00ffcc;   /* Turns Neon Green */
+.tile:empty:hover::before {
+    content: "CLAIM"; 
+    color: #00ffcc;   
     font-size: 12px;  
     font-weight: bold;
     letter-spacing: 1px;
-    background: rgba(0, 255, 204, 0.1); /* Slight green tint background */
+    background: rgba(0, 255, 204, 0.1); 
 }       
     </style>
 </head>
@@ -266,13 +265,12 @@
     }, 2000);
 </script>
     <script>
-    // THE VACUUM SCRIPT
-    // This runs every 2 seconds to clean up invisible spaces in the grid
+    // THE VACUUM SCRIPT (FIXED FOR .tile)
     setInterval(function() {
-        const cells = document.querySelectorAll('.grid-cell');
+        const cells = document.querySelectorAll('.tile'); // CHANGED FROM grid-cell TO tile
         cells.forEach(cell => {
-            // If a cell has no image inside, wipe it clean so the "+" shows up
-            if (!cell.querySelector('img')) {
+            // If a cell is not sold (no class 'sold') and has no image, clean it
+            if (!cell.classList.contains('sold') && !cell.querySelector('img')) {
                 cell.innerHTML = '';
             }
         });
@@ -280,6 +278,7 @@
 </script>
 </body>
 </html>
+
 
 
 
