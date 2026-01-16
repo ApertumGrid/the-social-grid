@@ -252,8 +252,35 @@
     <h3>Verified Contract</h3>
     <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
 </section>
+<script>
+    // THE VACUUM SCRIPT
+    // This runs every 2 seconds to clean up invisible spaces in the grid
+    setInterval(function() {
+        const cells = document.querySelectorAll('.grid-cell');
+        cells.forEach(cell => {
+            // If a cell has no image inside, wipe it clean so the "+" shows up
+            if (!cell.querySelector('img')) {
+                cell.innerHTML = '';
+            }
+        });
+    }, 2000);
+</script>
+    <script>
+    // THE VACUUM SCRIPT
+    // This runs every 2 seconds to clean up invisible spaces in the grid
+    setInterval(function() {
+        const cells = document.querySelectorAll('.grid-cell');
+        cells.forEach(cell => {
+            // If a cell has no image inside, wipe it clean so the "+" shows up
+            if (!cell.querySelector('img')) {
+                cell.innerHTML = '';
+            }
+        });
+    }, 2000);
+</script>
 </body>
 </html>
+
 
 
 
