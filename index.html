@@ -140,6 +140,11 @@
     background: #00ffcc; /* Your Brand Color */
     color: #000000; /* Black text */
     text-shadow: none;
+}
+/* Lock-On Mechanic: Spins the text 90 degrees on hover */
+.tile:not(.sold):hover::before {
+    transform: rotate(90deg); 
+    transition: transform 0.2s cubic-bezier(0.5, 0, 0.75, 0); /* Mechanical Snap */
 }        
     </style>
 </head>
@@ -314,6 +319,7 @@
 </script>
 </body>
 </html>
+
 
 
 
