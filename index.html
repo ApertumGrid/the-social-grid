@@ -36,6 +36,31 @@
         .feature-item p { font-size: 14px; line-height: 1.8; color: #b0c4de; margin: 0; }
         .store-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; font-family: 'Orbitron'; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
         .store-btn:hover { background: var(--accent); color: #000; }
+        #lite-paper {
+    background: #0a0a0a;
+    color: #cccccc;
+    padding: 60px 20px;
+    font-family: sans-serif;
+    border-top: 1px solid #333;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 60px auto 0;
+    text-align: left;
+}
+#lite-paper h2 { color: #00ffcc; margin-bottom: 20px; font-size: 24px; }
+#lite-paper h3 { color: #00ffcc; margin-top: 30px; font-size: 20px; }
+#lite-paper ul { list-style: none; padding: 0; }
+#lite-paper li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+#lite-paper li::before { content: "→"; position: absolute; left: 0; color: #00ffcc; }
+.contract-box { 
+    background: #1a1a1a; 
+    padding: 15px; 
+    border-radius: 5px; 
+    border: 1px dashed #444; 
+    word-break: break-all; 
+    font-family: monospace;
+    color: #00ffcc;
+}
     </style>
 </head>
 <body>
@@ -148,5 +173,35 @@
         }
         function closeModal() { document.getElementById('overlay').style.display = 'none'; }
     </script>
+    <section id="lite-paper">
+    <h2>The Social Grid: White Paper</h2>
+    
+    <p>The Social Grid is a decentralized, high-velocity advertising economy built on the Apertum Network. Every block is an on-chain asset that serves as a permanent recruitment portal for your projects and affiliate links.</p>
+
+    <h3>1. The War Zone Mechanics</h3>
+    <ul>
+        <li><strong>No Squatting:</strong> No spot is permanent. Any block can be overtaken for 1.5x its current value.</li>
+        <li><strong>The 120% Payout:</strong> If your block is overtaken, the contract instantly pays you back your original price plus a <strong>20% instant profit</strong>.</li>
+        <li><strong>Economic Flow:</strong> This ensures the grid stays fresh and rewards early participants even if they lose their territory.</li>
+    </ul>
+
+    <h3>2. Marketing Utility</h3>
+    <ul>
+        <li><strong>Affiliate Rewards:</strong> Every purchase triggers a 1 APTM referral fee to the referrer.</li>
+        <li><strong>Conversion Hubs:</strong> Blocks support direct links to your DAO 1 affiliate portals.</li>
+        <li><strong>GPS Precision (Upcoming):</strong> Direct coordinate links will allow you to share a URL that auto-zooms the map to your specific banner for external marketing.</li>
+    </ul>
+
+    <h3>3. Roadmap</h3>
+    <ul>
+        <li><strong>Phase 1:</strong> Genesis Land Rush (Current).</li>
+        <li><strong>Phase 2:</strong> GPS Shareable Coordinate Links.</li>
+        <li><strong>Phase 3:</strong> Integration as the Apertum Ecosystem Visual Directory.</li>
+    </ul>
+
+    <h3>Verified Contract</h3>
+    <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
+</section>
 </body>
 </html>
+
