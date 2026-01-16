@@ -252,10 +252,28 @@
         function showStorefront(data, id) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
             const c = document.getElementById('modal-content');
+
+            // Check if they actually have a partner link (length > 1)
+            let partnerBtn = '';
+            if (data.linkExternal && data.linkExternal.length > 1) {
+                partnerBtn = `<a href="${data.linkExternal}" target="_blank" class="store-btn" style="border:1px dashed var(--accent); color:var(--accent);">🤝 PARTNER / DAO</a>`;
+            }
+
+            // Build the Modal
             c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
-                <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2><p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
-                <div style="background:rgba(0,255,213,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent);"><p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:12px;">WAR ZONE TAKEOVER PRICE: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</p></div>
-                <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT WEBSITE</a><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a><a href="${data.linkTelegram}" target="_blank" class="store-btn">✈️ TELEGRAM</a></div>
+                <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2>
+                <p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
+                
+                <div style="background:rgba(0,255,213,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent);">
+                    <p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:12px;">WAR ZONE TAKEOVER PRICE: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</p>
+                </div>
+
+                <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT MAIN WEBSITE</a>
+                ${partnerBtn} <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a>
+                    <a href="${data.linkTelegram}" target="_blank" class="store-btn">✈️ TELEGRAM</a>
+                </div>
+                
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
 
@@ -314,19 +332,6 @@
     <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
 </section>
 <script>
-    // THE VACUUM SCRIPT
-    // This runs every 2 seconds to clean up invisible spaces in the grid
-    setInterval(function() {
-        const cells = document.querySelectorAll('.grid-cell');
-        cells.forEach(cell => {
-            // If a cell has no image inside, wipe it clean so the "+" shows up
-            if (!cell.querySelector('img')) {
-                cell.innerHTML = '';
-            }
-        });
-    }, 2000);
-</script>
-    <script>
     // THE VACUUM SCRIPT (FIXED FOR .tile)
     setInterval(function() {
         const cells = document.querySelectorAll('.tile'); // CHANGED FROM grid-cell TO tile
@@ -340,6 +345,7 @@
 </script>
 </body>
 </html>
+
 
 
 
