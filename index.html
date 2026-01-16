@@ -61,26 +61,6 @@
     font-family: monospace;
     color: #00ffcc;
 }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-inner">
-            <div class="brand-wrap"><div class="logo-sphere"></div><div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div></div>
-            <div class="nav-group">
-                <button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button>
-                <button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button>
-                <button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button>
-                <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="tg-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="16"> HQ</a>
-            </div>
-        </div>
-    </header>
-    <main><div id="grid"></div></main>
-    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
-    <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL (.jpg / .png)</label><input type="text" id="img-url" placeholder="https://imgur.com/image.jpg"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
-    <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     /* News Ticker - Gold Style */
 .news-link a {
     color: #ffd700 !important; /* Gold */
@@ -101,6 +81,26 @@
     from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
     to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
 }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="brand-wrap"><div class="logo-sphere"></div><div class="brand-text"><h1>THE SOCIAL GRID</h1><p>POWERED BY APERTUM</p></div></div>
+            <div class="nav-group">
+                <button class="nav-btn" onclick="openModal('how')">HOW IT WORKS</button>
+                <button class="nav-btn" onclick="openModal('aff')">AFFILIATE PROGRAM</button>
+                <button class="wallet-btn" onclick="connect()" id="w-btn">CONNECT WALLET</button>
+                <a href="https://t.me/TheSocialGridOfficial" target="_blank" class="tg-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="16"> HQ</a>
+            </div>
+        </div>
+    </header>
+    <main><div id="grid"></div></main>
+    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
+    <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL (.jpg / .png)</label><input type="text" id="img-url" placeholder="https://imgur.com/image.jpg"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
+    <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script>
         const CONTRACT_ADDR = "0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1"; 
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
@@ -224,6 +224,7 @@
 </section>
 </body>
 </html>
+
 
 
 
