@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'none';">
     <title>The Social Grid | Powered by Apertum</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -231,11 +232,11 @@
                         el.style.backgroundImage = "url('" + res.imageUrl + "')";
                         
                         // --- CSP-SAFE 3-BLOCK SLICER ---
-                        el.style.backgroundSize = "300% 100%";
-                        var pos = i % 3;
-                        var xShift = "0%";
-                        if (pos === 1) { xShift = "50%"; }
-                        if (pos === 2) { xShift = "100%"; }
+                        // --- THE ULTIMATE SAFE SLICER ---
+el.style.backgroundSize = "300% 100%";
+if (i % 3 === 0) { el.style.backgroundPosition = "0% center"; }
+if (i % 3 === 1) { el.style.backgroundPosition = "50% center"; }
+if (i % 3 === 2) { el.style.backgroundPosition = "100% center"; }
                         
                         // SECURITY FIX: Avoiding backticks for position
                         el.style.backgroundPosition = xShift + " center";
@@ -383,6 +384,7 @@
 </script>
 </body>
 </html>
+
 
 
 
