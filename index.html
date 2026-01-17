@@ -99,7 +99,7 @@
         };
 
        async function loadGrid() {
-            // We reduced the loop to 2500 to save resources, and increased delay to 5ms
+            // We scan 2500 blocks with the 5ms breather for stability
             for(let i = 0; i < 2500; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
@@ -110,26 +110,21 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- KEEPS YOUR PERFECT ALIGNMENT ---
-                            const prevId = 'b-' + (i - 1);
-                            const nextId = 'b-' + (i + 1);
-                            const prevEl = document.getElementById(prevId);
-                            const nextEl = document.getElementById(nextId);
-                            let slicePos = -1;
-
-                            const isNextMatch = nextEl && nextEl.getAttribute('data-link') === res.linkMain && nextEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
-                            const isPrevMatch = prevEl && prevEl.getAttribute('data-link') === res.linkMain && prevEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
-
-                            if (isNextMatch && !isPrevMatch) { slicePos = 0; } 
-                            else if (isNextMatch && isPrevMatch) { slicePos = 1; } 
-                            else if (!isNextMatch && isPrevMatch) { slicePos = 2; }
-
-                            if (slicePos !== -1) {
+                            // --- COORDINATE-BASED SLICER ---
+                            // We look for any image with "banner" in the URL
+                            if (res.imageUrl.includes('banner') || res.imageUrl.includes('f2a99d4580')) { 
                                 el.style.backgroundSize = "300% 100%";
+                                
+                                // This math finds the block's position in a 3-part sequence 
+                                // (0=Left, 1=Middle, 2=Right) based on its ID.
+                                // We use (i % 3) to ensure it stays 0-1-2-0-1-2 forever.
+                                var slicePos = i % 3; 
+
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
+                                // Individual blocks (Top Red Dots) stay at 100%
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -137,14 +132,10 @@
                             el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
-                    }).catch(err => { 
-                        // This "Catch" stops the red UNCAUGHT error from appearing
-                        console.log("Block " + i + " pending..."); 
-                    });
-                }, i * 5); // Increased to 5ms for maximum stability
+                    }).catch(e => { console.log("Slow block: " + i); });
+                }, i * 5); 
             }
         }
-
         function handleTileClick(id, event) {
             const el = document.getElementById('b-' + id);
             const isSold = el.classList.contains('sold');
@@ -243,6 +234,7 @@
     </script>
 </body>
 </html>
+
 
 
 
