@@ -60,6 +60,44 @@
         @keyframes heartbeat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 255, 213, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); } }
         .wallet-btn { animation: heartbeat 2s infinite; }
         .wallet-btn:hover { animation: none; transform: scale(1.1); box-shadow: 0 0 20px #00ffcc; }
+        @media (max-width: 768px) {
+            #grid { 
+                grid-template-columns: repeat(auto-fill, 90px); 
+                gap: 10px; 
+            }
+            .tile { 
+                width: 90px; 
+                height: 90px; 
+            }
+            .tile.selected {
+                transform: scale(1.15); 
+                z-index: 100;
+                border: 2px solid var(--accent) !important;
+            }
+            header { height: 110px; }
+            .header-inner { flex-direction: column; gap: 10px; }
+            .brand-text h1 { font-size: 18px; letter-spacing: 2px; }
+            .logo-sphere { width: 40px; height: 40px; }
+            
+            #selection-bar { 
+                width: 92%; 
+                min-width: unset; 
+                flex-direction: column; 
+                gap: 15px; 
+                border-radius: 25px;
+                bottom: 15px;
+                padding: 20px;
+            }
+            #selection-bar button {
+                width: 100%; 
+                padding: 18px;
+                font-size: 14px;
+            }
+            
+            .modal-box { padding: 25px; width: 85%; }
+            .glass-panel { padding: 30px; }
+            .feature-grid { grid-template-columns: 1fr; } 
+        }
     </style>
 </head>
 <body>
@@ -268,6 +306,7 @@
     </script>
 </body>
 </html>
+
 
 
 
