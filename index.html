@@ -98,7 +98,7 @@
             loadGrid();
         };
 
-       async function loadGrid() {
+      async function loadGrid() {
             for(let i = 0; i < 3000; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
@@ -108,39 +108,37 @@
                             if(!el) return;
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
+                            el.setAttribute('data-link', res.linkMain); // Important for the check
 
-                            // --- UNIVERSAL TEAM DETECTOR ---
-                            // We check the link to see if blocks are "Team Members"
-                            const prevId = 'b-' + (i - 1);
-                            const nextId = 'b-' + (i + 1);
-                            const prevEl = document.getElementById(prevId);
-                            const nextEl = document.getElementById(nextId);
+                            // --- THE SMART CHECK (Wait for load) ---
+                            // We wait a tiny fraction for neighbors to exist
+                            setTimeout(() => {
+                                const prevEl = document.getElementById('b-' + (i - 1));
+                                const nextEl = document.getElementById('b-' + (i + 1));
 
-                            // We only group if the Link and Image are IDENTICAL
-                            const isNextMatch = nextEl && nextEl.getAttribute('data-link') === res.linkMain;
-                            const isPrevMatch = prevEl && prevEl.getAttribute('data-link') === res.linkMain;
+                                const isNextMatch = nextEl && nextEl.getAttribute('data-link') === res.linkMain;
+                                const isPrevMatch = prevEl && prevEl.getAttribute('data-link') === res.linkMain;
 
-                            if (isNextMatch || isPrevMatch) {
-                                el.style.backgroundSize = "300% 100%";
-                                
-                                // UNIVERSAL POSITIONING
-                                if (isNextMatch && !isPrevMatch) {
-                                    el.style.backgroundPosition = "0% center"; // Left Side
-                                } else if (isNextMatch && isPrevMatch) {
-                                    el.style.backgroundPosition = "50% center"; // Middle Side
-                                } else if (!isNextMatch && isPrevMatch) {
-                                    el.style.backgroundPosition = "100% center"; // Right (QR) Side
+                                if (isNextMatch || isPrevMatch) {
+                                    el.style.backgroundSize = "300% 100%";
+                                    
+                                    if (isNextMatch && !isPrevMatch) {
+                                        el.style.backgroundPosition = "0% center"; // I am the START
+                                    } else if (isNextMatch && isPrevMatch) {
+                                        el.style.backgroundPosition = "50% center"; // I am the MIDDLE
+                                    } else if (!isNextMatch && isPrevMatch) {
+                                        el.style.backgroundPosition = "100% center"; // I am the END
+                                    }
+                                } else {
+                                    // Individual blocks
+                                    el.style.backgroundSize = "cover";
+                                    el.style.backgroundPosition = "center";
                                 }
-                            } else {
-                                // Individual blocks (Top Red Dots) stay at 100%
-                                el.style.backgroundSize = "cover";
-                                el.style.backgroundPosition = "center";
-                            }
+                            }, 100); 
 
-                            el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
-                    }).catch(err => { });
+                    }).catch(e => { });
                 }, i * 5); 
             }
         }
@@ -242,6 +240,7 @@
     </script>
 </body>
 </html>
+
 
 
 
