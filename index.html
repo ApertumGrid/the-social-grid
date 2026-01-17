@@ -60,86 +60,76 @@
         @keyframes heartbeat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 255, 213, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); } }
         .wallet-btn { animation: heartbeat 2s infinite; }
         .wallet-btn:hover { animation: none; transform: scale(1.1); box-shadow: 0 0 20px #00ffcc; }
-       /* --- COMPLETE MOBILE OPTIMIZATION --- */
+       /* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
         @media (max-width: 768px) {
-            /* Fix Header: Stop it from floating over content */
+            /* Header Fix: Relative position stops it from covering the grid */
             header { 
                 height: auto; 
-                padding: 20px 0; 
-                position: relative; /* This pulls it out of the grid's way */
-                display: block;
-                backdrop-filter: blur(10px);
+                padding: 15px 0; 
+                position: relative; 
+                display: flex;
+                flex-direction: column;
+                backdrop-filter: blur(15px);
             }
             .header-inner { 
                 flex-direction: column; 
+                gap: 10px; 
                 width: 95%;
-                gap: 15px; 
             }
-            .brand-wrap { 
-                justify-content: center;
-                gap: 12px; 
-            }
+            .brand-wrap { gap: 10px; justify-content: center; }
             .logo-sphere { width: 45px; height: 45px; }
-            .brand-text h1 { 
-                font-size: 18px; 
-                letter-spacing: 2px; 
-                text-align: center;
-            }
+            .brand-text h1 { font-size: 18px; letter-spacing: 2px; text-align: center; }
             .brand-text p { font-size: 9px; letter-spacing: 3px; }
             
-            /* Nav Group: Proper spacing for buttons */
+            /* Buttons: Stacked and easy to tap */
             .nav-group { 
                 display: flex; 
-                flex-direction: column; 
+                flex-direction: column;
                 align-items: center; 
-                gap: 10px; 
+                gap: 8px; 
                 width: 100%;
             }
-            .nav-group > div { order: -1; margin-bottom: 5px !important; } /* Milestone link on top */
-            
-            /* Button Layout: Side-by-side where possible */
             .nav-btn, .wallet-btn, .tg-btn { 
                 padding: 12px 20px; 
                 font-size: 11px; 
-                margin: 0; 
-                width: 80%; /* Easy-to-tap width */
+                width: 85%; /* Bigger target for thumbs */
                 text-align: center;
+                margin: 0;
             }
-            .news-link a { font-size: 10px; padding: 6px 12px; }
+            .news-link a { font-size: 9px; padding: 5px 10px; display: inline-block; margin-bottom: 5px; }
 
-            /* Grid Adjustments */
-            main { margin-top: 20px; } /* Small margin since header isn't floating */
+            /* Grid: No longer covered by header */
+            main { margin-top: 15px; }
             #grid { 
-                grid-template-columns: repeat(auto-fill, 100px); 
-                gap: 12px; 
+                grid-template-columns: repeat(auto-fill, 95px); 
+                gap: 10px; 
             }
-            .tile { width: 100px; height: 100px; }
-            .tile.selected { 
-                transform: scale(1.1); 
-                z-index: 100; 
-                border: 2px solid var(--accent) !important; 
-            }
+            .tile { width: 95px; height: 95px; }
+            .tile.selected { transform: scale(1.1); z-index: 100; }
 
-            /* Selection Bar: Bottom of screen focus */
+            /* Selection Bar: Solid vertical layout */
             #selection-bar { 
                 width: 90%; 
                 min-width: unset; 
                 flex-direction: column; 
-                gap: 15px; 
-                border-radius: 25px; 
+                gap: 12px; 
                 bottom: 10px; 
-                padding: 20px; 
+                padding: 20px;
+                border-radius: 20px;
             }
-            #selection-bar button { 
-                width: 100%; 
-                padding: 18px; 
-                font-size: 14px; 
-            }
+            #selection-bar button { width: 100%; padding: 15px; }
 
-            /* Lite Paper & Modals */
-            .modal-box { width: 85%; padding: 25px; }
-            .glass-panel { padding: 30px; }
-            .feature-grid { grid-template-columns: 1fr; gap: 20px; }
+            /* Modal Fix: Scrollable so no buttons are cut off */
+            .modal-box { 
+                width: 85%; 
+                padding: 20px; 
+                max-height: 85vh; 
+                overflow-y: auto; /* Makes the menu scrollable if it's too long */
+                border-radius: 20px;
+            }
+            .glass-panel { padding: 25px; }
+            .feature-grid { grid-template-columns: 1fr; gap: 15px; }
+            .store-btn { padding: 14px; font-size: 11px; }
         }
     </style>
 </head>
@@ -349,6 +339,7 @@
     </script>
 </body>
 </html>
+
 
 
 
