@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'none';">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; style-src * 'unsafe-inline';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Social Grid | Powered by Apertum</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <style>
@@ -238,10 +239,6 @@ if (i % 3 === 0) { el.style.backgroundPosition = "0% center"; }
 if (i % 3 === 1) { el.style.backgroundPosition = "50% center"; }
 if (i % 3 === 2) { el.style.backgroundPosition = "100% center"; }
                         
-                        // SECURITY FIX: Avoiding backticks for position
-                        el.style.backgroundPosition = xShift + " center";
-                        // -----------------------------
-
                         el.setAttribute('data-owner-info', JSON.stringify(res));
                     }
                 });
@@ -384,6 +381,7 @@ if (i % 3 === 2) { el.style.backgroundPosition = "100% center"; }
 </script>
 </body>
 </html>
+
 
 
 
