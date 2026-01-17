@@ -109,23 +109,25 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- THE PERMANENT SLICER ---
-                            // We use the ID to find the 1st, 2nd, and 3rd blocks in your banner row
-                            // Your banner starts at a specific ID, so we use math that doesn't rely on neighbors
-                            
-                            // 1. We check if the ID is part of the "Banner Zone"
-                            if (i >= 1215 && i <= 1500) { // Adjusting range to cover your new banner
+                            // --- THE "IMAGE-NAME" SLICER ---
+                            // This looks at the name of the image you uploaded.
+                            // If the image contains "banner" or matches your specific Triple Sniper filename:
+                            if (res.imageUrl.includes('banner') || res.imageUrl.includes('f2a99d4580')) { 
                                 el.style.backgroundSize = "300% 100%";
                                 
-                                // We use a "Modulo" that handles any starting ID
-                                // If the banner starts on 1215: 1215%3=0, 1216%3=1, 1217%3=2
-                                var slicePos = i % 3; 
+                                // We calculate position based on its physical spot in the grid
+                                const gridEl = document.getElementById('grid');
+                                const cols = window.getComputedStyle(gridEl).getPropertyValue('grid-template-columns').split(' ').length;
                                 
+                                // This finds if it's the 1st, 2nd, or 3rd in the sequence
+                                var colPos = i % cols;
+                                var slicePos = colPos % 3; 
+
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // Individual blocks (Top Banner) stay centered
+                                // For the Top Red Dot individual images, keep them at 100%
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -235,6 +237,7 @@
     </script>
 </body>
 </html>
+
 
 
 
