@@ -255,12 +255,13 @@
                 // --- SIMPLE SLICER ---
                 el.style.backgroundSize = "300% 100%";
                 
-                var myPos = i % 3;
-                var hShift = "0%";
-                if (myPos === 1) { hShift = "50%"; }
-                if (myPos === 2) { hShift = "100%"; }
+                var pos = i % 3;
+                var xShift = "0%";
                 
-                el.style.backgroundPosition = hShift + " center";
+                if (pos === 1) { xShift = "50%"; }
+                if (pos === 2) { xShift = "100%"; }
+                
+                el.style.backgroundPosition = xShift + " center";
                 // -----------------------------
 
                 el.setAttribute('data-owner-info', JSON.stringify(res));
@@ -405,6 +406,7 @@
 </script>
 </body>
 </html>
+
 
 
 
