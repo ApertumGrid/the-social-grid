@@ -216,19 +216,36 @@
         };
 
         async function loadGrid() {
-            const cols = Math.floor(document.getElementById('grid').offsetWidth / 135); 
-            for(let i = 0; i < 1500; i++) {
-                contractRead.methods.grid(i).call().then(res => {
-                    prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
-                    if(res.isSold) {
-                        const el = document.getElementById('b-' + i); if(!el) return;
-                        el.classList.add('sold'); el.style.backgroundImage = `url('${res.imageUrl}')`;
-                        el.style.backgroundPosition = "center";
-                        el.setAttribute('data-owner-info', JSON.stringify(res));
-                    }
-                });
+    const colsInGrid = Math.floor(document.getElementById('grid').offsetWidth / 135);
+    // We scan up to 3000 blocks to make sure we hit your test area at the bottom
+    for(let i = 0; i < 3000; i++) { 
+        contractRead.methods.grid(i).call().then(res => {
+            prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
+            
+            if(res.isSold) {
+                const el = document.getElementById('b-' + i); 
+                if(!el) return;
+                
+                el.classList.add('sold');
+                el.style.backgroundImage = `url('${res.imageUrl}')`;
+                
+                // --- THE TEST SLICER LOGIC ---
+                // We tell the browser: "The image is 3 blocks wide"
+                el.style.backgroundSize = "300% 100%"; 
+                
+                // We calculate if this is the 1st, 2nd, or 3rd block in the banner
+                // This logic assumes you bought a horizontal row of 3
+                let positionInRow = i % 3; 
+                let horizontalShift = (positionInRow === 0) ? "0%" : (positionInRow === 1) ? "50%" : "100%";
+                
+                el.style.backgroundPosition = `${horizontalShift} center`;
+                // -----------------------------
+
+                el.setAttribute('data-owner-info', JSON.stringify(res));
             }
-        }
+        });
+    }
+}
 
         function handleTileClick(id, event) {
             const el = document.getElementById('b-' + id);
@@ -366,6 +383,7 @@
 </script>
 </body>
 </html>
+
 
 
 
