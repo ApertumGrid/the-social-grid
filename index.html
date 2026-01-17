@@ -109,29 +109,18 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- PRECISION NEIGHBOR SLICER ---
-                            const prevId = 'b-' + (i - 1);
-                            const nextId = 'b-' + (i + 1);
-                            const prevEl = document.getElementById(prevId);
-                            const nextEl = document.getElementById(nextId);
-
-                            let slicePos = -1;
-                            const currentImg = res.imageUrl.split('/').pop();
-
-                            // Logic to determine if it's the 1st, 2nd, or 3rd block
-                            const isNextMatch = nextEl && nextEl.style.backgroundImage.includes(currentImg);
-                            const isPrevMatch = prevEl && prevEl.style.backgroundImage.includes(currentImg);
-
-                            if (isNextMatch && !isPrevMatch) {
-                                slicePos = 0; // The Left Side
-                            } else if (isNextMatch && isPrevMatch) {
-                                slicePos = 1; // The Middle
-                            } else if (!isNextMatch && isPrevMatch) {
-                                slicePos = 2; // The Right Side (QR CODE)
-                            }
-
-                            if (slicePos !== -1) {
+                            // --- THE PERMANENT SLICER ---
+                            // We use the ID to find the 1st, 2nd, and 3rd blocks in your banner row
+                            // Your banner starts at a specific ID, so we use math that doesn't rely on neighbors
+                            
+                            // 1. We check if the ID is part of the "Banner Zone"
+                            if (i >= 1215 && i <= 1500) { // Adjusting range to cover your new banner
                                 el.style.backgroundSize = "300% 100%";
+                                
+                                // We use a "Modulo" that handles any starting ID
+                                // If the banner starts on 1215: 1215%3=0, 1216%3=1, 1217%3=2
+                                var slicePos = i % 3; 
+                                
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
@@ -246,6 +235,7 @@
     </script>
 </body>
 </html>
+
 
 
 
