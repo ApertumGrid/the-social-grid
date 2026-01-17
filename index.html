@@ -109,45 +109,41 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- UNIVERSAL GROUP DETECTOR ---
-                            // We check the neighbors to see if they share the SAME Link and SAME Image
-                            // This identifies a "Group Purchase" vs individual blocks
+                            // --- THE SMART LINK DETECTOR ---
+                            // We only slice if the blocks have the EXACT SAME IMAGE and EXACT SAME LINK
                             const prevId = 'b-' + (i - 1);
                             const nextId = 'b-' + (i + 1);
                             const prevEl = document.getElementById(prevId);
                             const nextEl = document.getElementById(nextId);
 
-                            let isGroup = false;
                             let slicePos = -1;
 
-                            // We look for 3 blocks in a row with identical data
-                            // Check if I am the START (neighbor to the right matches)
-                            if (nextEl && res.linkMain && i % 3 === 0) {
-                                isGroup = true;
-                                slicePos = 0;
-                            } 
-                            // Check if I am the MIDDLE (neighbors on both sides match)
-                            else if (prevEl && nextEl && i % 3 === 1) {
-                                isGroup = true;
-                                slicePos = 1;
-                            } 
-                            // Check if I am the END (neighbor to the left matches)
-                            else if (prevEl && i % 3 === 2) {
-                                isGroup = true;
-                                slicePos = 2;
+                            // We check if the neighbors have the same 'data-link' 
+                            // Individual blocks usually have different links or owners
+                            const isNextMatch = nextEl && nextEl.getAttribute('data-link') === res.linkMain && nextEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
+                            const isPrevMatch = prevEl && prevEl.getAttribute('data-link') === res.linkMain && prevEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
+
+                            if (isNextMatch && !isPrevMatch) {
+                                slicePos = 0; // Start of a banner
+                            } else if (isNextMatch && isPrevMatch) {
+                                slicePos = 1; // Middle of a banner
+                            } else if (!isNextMatch && isPrevMatch) {
+                                slicePos = 2; // End of a banner (QR Code)
                             }
 
-                            // If it's a group, slice it. If not, keep it 100% (Individual)
-                            if (isGroup) {
+                            if (slicePos !== -1) {
                                 el.style.backgroundSize = "300% 100%";
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
+                                // INDIVIDUAL BLOCKS: Keep perfectly centered at 100%
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
 
+                            // We store the link so the neighbors can "check" it
+                            el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
                     });
@@ -253,6 +249,7 @@
     </script>
 </body>
 </html>
+
 
 
 
