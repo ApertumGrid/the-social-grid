@@ -99,37 +99,32 @@
         };
 
        async function loadGrid() {
-            for(let i = 0; i < 3000; i++) { 
+            // Scanning 2500 blocks with a 5ms "breather" between each
+            for(let i = 0; i < 2500; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
                         prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
-                        if(res.isSold) {
+                        if(res.isSold && res.imageUrl) {
                             const el = document.getElementById('b-' + i); 
                             if(!el) return;
                             el.classList.add('sold');
-                            el.style.backgroundImage = "url('" + res.imageUrl + "')";
+                            
+                            // Clean the URL to avoid Security Policy warnings
+                            const safeUrl = res.imageUrl.replace('http://', 'https://');
+                            el.style.backgroundImage = "url('" + safeUrl + "')";
 
-                            // --- THE SMART LINK DETECTOR ---
-                            // We only slice if the blocks have the EXACT SAME IMAGE and EXACT SAME LINK
                             const prevId = 'b-' + (i - 1);
                             const nextId = 'b-' + (i + 1);
                             const prevEl = document.getElementById(prevId);
                             const nextEl = document.getElementById(nextId);
-
                             let slicePos = -1;
 
-                            // We check if the neighbors have the same 'data-link' 
-                            // Individual blocks usually have different links or owners
                             const isNextMatch = nextEl && nextEl.getAttribute('data-link') === res.linkMain && nextEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
                             const isPrevMatch = prevEl && prevEl.getAttribute('data-link') === res.linkMain && prevEl.style.backgroundImage.includes(res.imageUrl.split('/').pop());
 
-                            if (isNextMatch && !isPrevMatch) {
-                                slicePos = 0; // Start of a banner
-                            } else if (isNextMatch && isPrevMatch) {
-                                slicePos = 1; // Middle of a banner
-                            } else if (!isNextMatch && isPrevMatch) {
-                                slicePos = 2; // End of a banner (QR Code)
-                            }
+                            if (isNextMatch && !isPrevMatch) { slicePos = 0; } 
+                            else if (isNextMatch && isPrevMatch) { slicePos = 1; } 
+                            else if (!isNextMatch && isPrevMatch) { slicePos = 2; }
 
                             if (slicePos !== -1) {
                                 el.style.backgroundSize = "300% 100%";
@@ -137,17 +132,15 @@
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // INDIVIDUAL BLOCKS: Keep perfectly centered at 100%
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
 
-                            // We store the link so the neighbors can "check" it
                             el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
-                    });
-                }, i * 2); 
+                    }).catch(e => { /* Silently handle minor RPC timeouts */ });
+                }, i * 5); 
             }
         }
 
@@ -249,6 +242,7 @@
     </script>
 </body>
 </html>
+
 
 
 
