@@ -243,14 +243,32 @@
         }
 
         function updateSelectionBar() {
-            const bar = document.getElementById('selection-bar');
-            if(selected.length > 0) {
-                bar.style.display = 'flex';
-                let total = selected.reduce((sum, id) => sum + (prices[id] || 5), 0);
-                document.getElementById('select-count').innerText = selected.length;
-                document.getElementById('price-tag').innerText = total.toFixed(2) + " APTM";
-            } else { bar.style.display = 'none'; }
-        }
+    const bar = document.getElementById('selection-bar');
+    if(selected.length > 0) {
+        bar.style.display = 'flex';
+        let total = selected.reduce((sum, id) => sum + (prices[id] || 5), 0);
+        
+        // Calculate the bounding box of the selection
+        const colsInGrid = Math.floor(document.getElementById('grid').offsetWidth / 135);
+        let minCol = Infinity, maxCol = -Infinity, minRow = Infinity, maxRow = -Infinity;
+        
+        selected.forEach(id => {
+            let c = id % colsInGrid;
+            let r = Math.floor(id / colsInGrid);
+            minCol = Math.min(minCol, c); maxCol = Math.max(maxCol, c);
+            minRow = Math.min(minRow, r); maxRow = Math.max(maxRow, r);
+        });
+
+        const widthPx = ((maxCol - minCol) + 1) * 500;
+        const heightPx = ((maxRow - minRow) + 1) * 500;
+        
+        document.getElementById('select-count').innerText = selected.length;
+        document.getElementById('price-tag').innerHTML = 
+            `${total.toFixed(2)} APTM <span style="font-size:11px; color:var(--accent); margin-left:15px; border-left:1px solid #333; padding-left:15px;">
+            REQ. SIZE: ${widthPx} x ${heightPx} PX</span>`;
+            
+    } else { bar.style.display = 'none'; }
+}
 
         function showStorefront(data, id) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
@@ -348,6 +366,7 @@
 </script>
 </body>
 </html>
+
 
 
 
