@@ -252,13 +252,11 @@
                     totalWidth++; 
                 }
                 
-                // Apply the math based on the "Triple Sniper" (300%) or others
-                // To fix your current squashed 3-block test:
                 el.style.backgroundSize = "300% 100%"; 
-                let myPosition = i % 3; // This matches your test blocks 
-                let shift = (myPosition === 0) ? "0%" : (myPosition === 1) ? "50%" : "100%";
+                let myPosition = i % 3; 
+                let horizontalShift = (myPosition === 0) ? "0%" : (myPosition === 1) ? "50%" : "100%";
                 
-                el.style.backgroundPosition = `${shift} center`;
+                el.style.backgroundPosition = horizontalShift + " center";
                 // -----------------------------
 
                 el.setAttribute('data-owner-info', JSON.stringify(res));
@@ -403,6 +401,7 @@
 </script>
 </body>
 </html>
+
 
 
 
