@@ -252,10 +252,15 @@
                     totalWidth++; 
                 }
                 
+                // --- SIMPLE SLICER ---
                 el.style.backgroundSize = "300% 100%";
-                let myPos = i % 3;
-                let hShift = (myPos === 0) ? "0%" : (myPos === 1) ? "50%" : "100%";
-                el.style.setProperty('background-position', hShift + ' center', 'important');
+                
+                var myPos = i % 3;
+                var hShift = "0%";
+                if (myPos === 1) { hShift = "50%"; }
+                if (myPos === 2) { hShift = "100%"; }
+                
+                el.style.backgroundPosition = hShift + " center";
                 // -----------------------------
 
                 el.setAttribute('data-owner-info', JSON.stringify(res));
@@ -400,6 +405,7 @@
 </script>
 </body>
 </html>
+
 
 
 
