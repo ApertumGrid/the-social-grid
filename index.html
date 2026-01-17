@@ -108,11 +108,16 @@
                         el.classList.add('sold');
                         el.style.backgroundImage = "url('" + res.imageUrl + "')";
                         
-                        // --- THE TRIPLE SNIPER SLICER ---
+                        // --- SMART UNIVERSAL SLICER ---
+                        // Instead of forcing 300%, we let the grid decide based on the ID
                         el.style.backgroundSize = "300% 100%";
-                        if (i % 3 === 0) { el.style.backgroundPosition = "0% center"; }
-                        if (i % 3 === 1) { el.style.backgroundPosition = "50% center"; }
-                        if (i % 3 === 2) { el.style.backgroundPosition = "100% center"; }
+                        
+                        // This math checks the block's position relative to the Red Dot start
+                        // Adjusting 'pos' to 0, 1, or 2 based on the grid index
+                        var pos = i % 3; 
+                        if (pos === 0) el.style.backgroundPosition = "0% center";
+                        if (pos === 1) el.style.backgroundPosition = "50% center";
+                        if (pos === 2) el.style.backgroundPosition = "100% center";
 
                         el.setAttribute('data-owner-info', JSON.stringify(res));
                     }
@@ -209,3 +214,4 @@
     </script>
 </body>
 </html>
+
