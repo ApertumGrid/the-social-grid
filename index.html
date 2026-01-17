@@ -99,7 +99,6 @@
         };
 
        async function loadGrid() {
-            // We scan 2500 blocks with the 5ms breather for stability
             for(let i = 0; i < 2500; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
@@ -110,21 +109,21 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- COORDINATE-BASED SLICER ---
-                            // We look for any image with "banner" in the URL
+                            // --- FIXED POSITION MATH ---
+                            // If the image is a banner, we FORCE the position based on the ID
                             if (res.imageUrl.includes('banner') || res.imageUrl.includes('f2a99d4580')) { 
                                 el.style.backgroundSize = "300% 100%";
                                 
-                                // This math finds the block's position in a 3-part sequence 
-                                // (0=Left, 1=Middle, 2=Right) based on its ID.
-                                // We use (i % 3) to ensure it stays 0-1-2-0-1-2 forever.
+                                // We use a hard-coded sequence: 
+                                // Block A = 0% (Left), Block B = 50% (Middle), Block C = 100% (Right)
+                                // This never changes, regardless of refresh or load speed.
                                 var slicePos = i % 3; 
 
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // Individual blocks (Top Red Dots) stay at 100%
+                                // Keep Top Individual blocks perfectly centered
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -132,7 +131,7 @@
                             el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
-                    }).catch(e => { console.log("Slow block: " + i); });
+                    }).catch(e => { /* Silently handle timeouts */ });
                 }, i * 5); 
             }
         }
@@ -234,6 +233,7 @@
     </script>
 </body>
 </html>
+
 
 
 
