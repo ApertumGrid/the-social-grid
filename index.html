@@ -109,20 +109,26 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- PRECISION ROW SLICER ---
-                            // We calculate the position based on the width of the grid
-                            const colsInGrid = Math.floor(document.getElementById('grid').offsetWidth / 135);
-                            var colIndex = i % colsInGrid; // This finds exactly which column it is in
-                            var slicePos = colIndex % 3; // This finds if it's 1st, 2nd, or 3rd in the banner
+                            // --- TRUE HORIZONTAL SLICER ---
+                            // 1. Find how many columns are in your current grid view
+                            const gridEl = document.getElementById('grid');
+                            const gridStyle = window.getComputedStyle(gridEl);
+                            const cols = gridStyle.getPropertyValue('grid-template-columns').split(' ').length;
 
-                            // Only apply slicing to the "Banner Zone" (IDs higher than your initial single blocks)
+                            // 2. Find exactly which column this specific block is in (0 to 11+)
+                            const colIndex = i % cols;
+
+                            // 3. Find its position in a 3-block sequence (0, 1, or 2)
+                            const slicePos = colIndex % 3;
+
+                            // Only slice the "New" banners (IDs higher than your top individual blocks)
                             if (i > 1000) { 
                                 el.style.backgroundSize = "300% 100%";
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // Keep your top individual blocks at 100%
+                                // Keep your original top blocks perfectly centered
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -232,6 +238,7 @@
     </script>
 </body>
 </html>
+
 
 
 
