@@ -107,17 +107,30 @@
                         if(!el) return;
                         el.classList.add('sold');
                         el.style.backgroundImage = "url('" + res.imageUrl + "')";
-                        
-                        // --- SMART UNIVERSAL SLICER ---
-                        // Instead of forcing 300%, we let the grid decide based on the ID
-                        el.style.backgroundSize = "300% 100%";
-                        
-                        // This math checks the block's position relative to the Red Dot start
-                        // Adjusting 'pos' to 0, 1, or 2 based on the grid index
-                        var pos = i % 3; 
-                        if (pos === 0) el.style.backgroundPosition = "0% center";
-                        if (pos === 1) el.style.backgroundPosition = "50% center";
-                        if (pos === 2) el.style.backgroundPosition = "100% center";
+
+                        // --- SMART SLICER (Group-Only) ---
+                        // We check the neighbors. If they have the SAME image, it's a banner.
+                        let prevEl = document.getElementById('b-' + (i - 1));
+                        let nextEl = document.getElementById('b-' + (i + 1));
+                        let isBanner = false;
+
+                        if ((prevEl && prevEl.style.backgroundImage.includes(res.imageUrl)) || 
+                            (nextEl && nextEl.style.backgroundImage.includes(res.imageUrl))) {
+                            isBanner = true;
+                        }
+
+                        if (isBanner) {
+                            // Only apply 300% slice to the Triple Sniper blocks
+                            el.style.backgroundSize = "300% 100%";
+                            var pos = i % 3;
+                            if (pos === 0) el.style.backgroundPosition = "0% center";
+                            if (pos === 1) el.style.backgroundPosition = "50% center";
+                            if (pos === 2) el.style.backgroundPosition = "100% center";
+                        } else {
+                            // Keep individual blocks (like your first Red Dot) at 100%
+                            el.style.backgroundSize = "100% 100%";
+                            el.style.backgroundPosition = "center";
+                        }
 
                         el.setAttribute('data-owner-info', JSON.stringify(res));
                     }
@@ -214,4 +227,5 @@
     </script>
 </body>
 </html>
+
 
