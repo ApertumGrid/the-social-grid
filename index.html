@@ -98,7 +98,7 @@
             loadGrid();
         };
 
-        async function loadGrid() {
+       async function loadGrid() {
             for(let i = 0; i < 3000; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
@@ -109,42 +109,34 @@
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
-                            // --- THE MANUAL GROUP CHECK ---
-                            // 1. Get the image of the block to the left and right
+                            // --- PRECISION NEIGHBOR SLICER ---
                             const prevId = 'b-' + (i - 1);
                             const nextId = 'b-' + (i + 1);
                             const prevEl = document.getElementById(prevId);
                             const nextEl = document.getElementById(nextId);
 
-                            // 2. Logic: Am I part of a 3-block set with the SAME image?
-                            let isPart = false;
                             let slicePos = -1;
+                            const currentImg = res.imageUrl.split('/').pop();
 
-                            // We check if we are 1st, 2nd, or 3rd based on neighbors
-                            // This works regardless of the Grid ID number
-                            if (nextEl && nextEl.style.backgroundImage.includes(res.imageUrl.split('/').pop())) {
-                                // I have a neighbor to my right with my image -> I am Block 1
-                                slicePos = 0;
-                            } else if (prevEl && prevEl.style.backgroundImage.includes(res.imageUrl.split('/').pop())) {
-                                // I have a neighbor to my left... let's check one more back
-                                const farPrevEl = document.getElementById('b-' + (i - 2));
-                                if (farPrevEl && farPrevEl.style.backgroundImage.includes(res.imageUrl.split('/').pop())) {
-                                    // Two blocks back match -> I am Block 3
-                                    slicePos = 2;
-                                } else {
-                                    // Only one block back matches -> I am Block 2
-                                    slicePos = 1;
-                                }
+                            // Logic to determine if it's the 1st, 2nd, or 3rd block
+                            const isNextMatch = nextEl && nextEl.style.backgroundImage.includes(currentImg);
+                            const isPrevMatch = prevEl && prevEl.style.backgroundImage.includes(currentImg);
+
+                            if (isNextMatch && !isPrevMatch) {
+                                slicePos = 0; // The Left Side
+                            } else if (isNextMatch && isPrevMatch) {
+                                slicePos = 1; // The Middle
+                            } else if (!isNextMatch && isPrevMatch) {
+                                slicePos = 2; // The Right Side (QR CODE)
                             }
 
                             if (slicePos !== -1) {
-                                // Only apply 300% width if we are part of a banner group
                                 el.style.backgroundSize = "300% 100%";
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // Individual blocks (like your top ones) stay at 100%
+                                // Individual blocks (Top Banner) stay centered
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -254,6 +246,7 @@
     </script>
 </body>
 </html>
+
 
 
 
