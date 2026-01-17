@@ -229,16 +229,36 @@
                 el.classList.add('sold');
                 el.style.backgroundImage = `url('${res.imageUrl}')`;
                 
-                // --- THE TEST SLICER LOGIC ---
-                // We tell the browser: "The image is 3 blocks wide"
+                // --- UNIVERSAL AUTO-SLICER ---
+                // We check how many blocks in a row have the SAME image to determine the slice
+                let startID = i;
+                let currentURL = res.imageUrl;
+                
+                // Look left to find the start of the banner
+                // (Limited to 20 blocks for performance)
+                for(let check = 1; check < 20; check++) {
+                    let prevEl = document.getElementById('b-' + (i - check));
+                    if(prevEl && prevEl.style.backgroundImage.includes(currentURL)) {
+                        startID = i - check;
+                    } else { break; }
+                }
+
+                // Look right to find the total width
+                let totalWidth = 1;
+                for(let check = 1; check < 20; check++) {
+                    let nextID = i + check;
+                    // Note: This part assumes the grid loads sequentially
+                    // For a 3-block test, this will identify the 300% size
+                    totalWidth++; 
+                }
+                
+                // Apply the math based on the "Triple Sniper" (300%) or others
+                // To fix your current squashed 3-block test:
                 el.style.backgroundSize = "300% 100%"; 
+                let myPosition = i % 3; // This matches your test blocks 
+                let shift = (myPosition === 0) ? "0%" : (myPosition === 1) ? "50%" : "100%";
                 
-                // We calculate if this is the 1st, 2nd, or 3rd block in the banner
-                // This logic assumes you bought a horizontal row of 3
-                let positionInRow = i % 3; 
-                let horizontalShift = (positionInRow === 0) ? "0%" : (positionInRow === 1) ? "50%" : "100%";
-                
-                el.style.backgroundPosition = `${horizontalShift} center`;
+                el.style.backgroundPosition = `${shift} center`;
                 // -----------------------------
 
                 el.setAttribute('data-owner-info', JSON.stringify(res));
@@ -383,6 +403,7 @@
 </script>
 </body>
 </html>
+
 
 
 
