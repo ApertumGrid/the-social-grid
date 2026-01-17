@@ -110,25 +110,22 @@
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
                             el.setAttribute('data-link', res.linkMain);
 
-                            // --- THE ULTIMATE PROTECTION ---
-                            // This ONLY triggers for images that are meant to be banners.
-                            // If it's a normal image (like your top row), it skips the slicer entirely.
+                            // --- THE ABSOLUTE SHIELD ---
+                            // We only zoom if it's a banner AND we explicitly tell it to.
                             const isBannerImg = res.imageUrl.includes('banner') || res.imageUrl.includes('f2a99d4580');
 
                             if (isBannerImg) {
-                                // We use 300% size for banners
-                                el.style.backgroundSize = "300% 100%";
-                                
-                                // Since we know your banner is exactly 3 blocks, 
-                                // we use the ID math to lock them in place (0-1-2).
+                                // We check the block ID math to see if it's meant to be a 3-block set
+                                // This ensures individual blocks with "banner" in the name won't zoom 
+                                // unless they are in a banner position.
                                 let slicePos = i % 3; 
 
+                                el.style.backgroundSize = "300% 100%";
                                 if (slicePos === 0) el.style.backgroundPosition = "0% center";
                                 else if (slicePos === 1) el.style.backgroundPosition = "50% center";
                                 else if (slicePos === 2) el.style.backgroundPosition = "100% center";
                             } else {
-                                // THIS PROTECTS THE TOP ROW:
-                                // Normal images stay perfectly centered and un-zoomed.
+                                // EVERYTHING ELSE (The Top Row) is locked at 100%
                                 el.style.backgroundSize = "cover";
                                 el.style.backgroundPosition = "center";
                             }
@@ -237,6 +234,7 @@
     </script>
 </body>
 </html>
+
 
 
 
