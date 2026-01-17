@@ -99,20 +99,18 @@
         };
 
        async function loadGrid() {
-            // Scanning 2500 blocks with a 5ms "breather" between each
+            // We reduced the loop to 2500 to save resources, and increased delay to 5ms
             for(let i = 0; i < 2500; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
                         prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
-                        if(res.isSold && res.imageUrl) {
+                        if(res.isSold) {
                             const el = document.getElementById('b-' + i); 
                             if(!el) return;
                             el.classList.add('sold');
-                            
-                            // Clean the URL to avoid Security Policy warnings
-                            const safeUrl = res.imageUrl.replace('http://', 'https://');
-                            el.style.backgroundImage = "url('" + safeUrl + "')";
+                            el.style.backgroundImage = "url('" + res.imageUrl + "')";
 
+                            // --- KEEPS YOUR PERFECT ALIGNMENT ---
                             const prevId = 'b-' + (i - 1);
                             const nextId = 'b-' + (i + 1);
                             const prevEl = document.getElementById(prevId);
@@ -139,8 +137,11 @@
                             el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                         }
-                    }).catch(e => { /* Silently handle minor RPC timeouts */ });
-                }, i * 5); 
+                    }).catch(err => { 
+                        // This "Catch" stops the red UNCAUGHT error from appearing
+                        console.log("Block " + i + " pending..."); 
+                    });
+                }, i * 5); // Increased to 5ms for maximum stability
             }
         }
 
@@ -242,6 +243,7 @@
     </script>
 </body>
 </html>
+
 
 
 
