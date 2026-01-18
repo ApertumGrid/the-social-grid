@@ -83,6 +83,46 @@
         @keyframes heartbeat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 255, 213, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); } }
         .wallet-btn { animation: heartbeat 2s infinite; }
         .wallet-btn:hover { animation: none; transform: scale(1.1); box-shadow: 0 0 20px #00ffcc; }
+        /* LIVE TICKER STYLING */
+        #live-ticker {
+            position: fixed;
+            top: 130px; 
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: rgba(0, 255, 213, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 213, 0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8fa7c7;
+        }
+
+        .ticker-wrapper {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker-scroll 30s linear infinite;
+        }
+
+        .ticker-item {
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ticker-item span { color: var(--accent); font-weight: 800; }
+
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
        /* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
         @media (max-width: 768px) {
             /* Header Fix: Relative position stops it from covering the grid */
@@ -169,6 +209,16 @@
             </div>
         </div>
     </header>
+    <div id="live-ticker">
+        <div class="ticker-wrapper" id="ticker-content">
+            <div class="ticker-item">⚡ RECENT TAKEOVER: <span>0x4f...2a</span> SECURED 4 BLOCKS (+1.0 APTM PROFIT)</div>
+            <div class="ticker-item">🔥 HOT ZONE: <span>SECTOR 7</span> IS SEEING HIGH ACTIVITY</div>
+            <div class="ticker-item">🚀 NETWORK: <span>8,402,192</span> TX VERIFIED ON APERTUM</div>
+            <div class="ticker-item">⚡ RECENT TAKEOVER: <span>0x4f...2a</span> SECURED 4 BLOCKS (+1.0 APTM PROFIT)</div>
+            <div class="ticker-item">🔥 HOT ZONE: <span>SECTOR 7</span> IS SEEING HIGH ACTIVITY</div>
+            <div class="ticker-item">🚀 NETWORK: <span>8,402,192</span> TX VERIFIED ON APERTUM</div>
+        </div>
+    </div>
     <main><div id="grid"></div></main>
     <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
     <div id="data-modal"><div class="modal-box"><h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3><div class="input-group"><label>IMAGE URL <a href="https://postimages.org/" target="_blank" style="color:var(--accent); text-decoration:underline; font-size:10px; margin-left:5px;">(UPLOAD HERE ↗)</a></label><input type="text" id="img-url" placeholder="Paste Direct Link (must end in .jpg or .png)"></div><div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div><div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="input-group"><label>X / SOCIAL</label><input type="text" id="soc-link" placeholder="@Username"></div><div class="input-group"><label>TELEGRAM</label><input type="text" id="tg-link" placeholder="t.me/group"></div></div><button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button><button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button></div></div>
@@ -375,6 +425,7 @@
     </script>
 </body>
 </html>
+
 
 
 
