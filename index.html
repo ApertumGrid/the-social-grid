@@ -266,7 +266,11 @@
                 const widthPx = ((maxCol - minCol) + 1) * 500;
                 const heightPx = ((maxRow - minRow) + 1) * 500;
                 document.getElementById('select-count').innerText = selected.length;
-                document.getElementById('price-tag').innerHTML = `${total.toFixed(2)} APTM <span style="font-size:11px; color:var(--accent); margin-left:15px; border-left:1px solid #333; padding-left:15px;">REQ. SIZE: ${widthPx} x ${heightPx} PX</span>`;
+                document.getElementById('price-tag').innerHTML = `
+    <span style="font-family:'Montserrat', sans-serif; color:#fff; font-size:18px; font-weight:800; margin-left:5px;">${total.toFixed(1)}</span> 
+    <span style="font-family:'Montserrat', sans-serif; color:var(--accent); font-size:12px; font-weight:600; margin-right:15px;">APTM</span>
+    <span style="font-size:11px; color:#8fa7c7; border-left:1px solid rgba(255,255,255,0.1); padding-left:15px; letter-spacing:1px;">REQ. SIZE: ${widthPx} x ${heightPx} PX</span>
+`;
             } else { bar.style.display = 'none'; }
         }
 
@@ -286,9 +290,7 @@
                         <span style="font-family: 'Montserrat', sans-serif; color: #ffffff; font-size: 28px; font-weight: 800; letter-spacing: -1px;">
                             ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(1)}
                         </span>
-                        <span style="font-family: 'Orbitron'; color: var(--accent); font-size: 14px; font-weight: 700; letter-spacing: 1px;">
-                            APTM
-                        </span>
+                        <span style="font-family: 'Montserrat', sans-serif; color: var(--accent); font-size: 14px; font-weight: 600; letter-spacing: 1px;">APTM</span>
                     </div>
                 </div>
                 </div>
@@ -373,6 +375,7 @@
     </script>
 </body>
 </html>
+
 
 
 
