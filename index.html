@@ -87,17 +87,7 @@
         .tile:not(.sold)::before {
             content: "+";
         }
-
-        .tile:not(.sold)::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, rgba(0, 255, 213, 0.08) 0%, transparent 75%);
-            animation: pulse-glow 4s infinite ease-in-out;
-            pointer-events: none;
-        }
-
-        .tile:not(.sold):hover {
+.tile:not(.sold):hover {
             background: rgba(0, 255, 213, 0.1);
             border: 1px solid rgba(0, 255, 213, 0.5);
             color: #00ffcc;
@@ -108,11 +98,6 @@
             font-size: 14px;
             letter-spacing: 2px;
             font-weight: 900;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.3; transform: scale(0.92); }
-            50% { opacity: 0.9; transform: scale(1.08); }
         }
         .tile.sold { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; z-index: 1; }
         .tile.sold:hover { transform: scale(1.6) rotate(-2deg); box-shadow: 0 0 80px rgba(0, 255, 213, 0.9); z-index: 9999 !important; border: 2px solid #ffffff; cursor: zoom-in; }
@@ -125,6 +110,29 @@
         @keyframes heartbeat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 255, 213, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); } }
         .wallet-btn { animation: heartbeat 2s infinite; }
         .wallet-btn:hover { animation: none; transform: scale(1.1); box-shadow: 0 0 20px #00ffcc; }
+        #social-proof {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(10, 15, 25, 0.95);
+            border: 1px solid var(--accent);
+            padding: 12px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            display: none; /* Stays hidden until triggered */
+            align-items: center;
+            gap: 12px;
+            z-index: 4000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         /* LIVE TICKER STYLING */
         #live-ticker {
             position: fixed;
@@ -432,6 +440,27 @@
             }
         }
         function closeModal() { document.getElementById('overlay').style.display = 'none'; }
+        const proofMessages = [
+            "Someone just viewed Sector 4",
+            "New takeover attempt in progress...",
+            "8,402,192 Transactions verified",
+            "Referral bonus of 1 APTM just paid out",
+            "New territory claimed in Sector 1",
+            "Dynamic price update: Sector 9 is heating up"
+        ];
+
+        function showProof() {
+            const el = document.getElementById('social-proof');
+            const text = document.getElementById('proof-text');
+            if(!el || !text) return;
+            text.innerText = proofMessages[Math.floor(Math.random() * proofMessages.length)];
+            el.style.display = 'flex';
+            setTimeout(() => { el.style.display = 'none'; }, 6000); // Stays for 6 seconds
+        }
+
+        // Show the first one after 10 seconds, then every 45 seconds
+        setTimeout(showProof, 10000);
+        setInterval(showProof, 45000);
     </script>
     <section id="lite-paper">
         <h2>The Social Grid: Lite Paper</h2>
@@ -471,7 +500,12 @@
         }, 5000); 
     </script>
 </body>
+    <div id="social-proof">
+        <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
+        <div id="proof-text" style="color: #fff;"></div>
+    </div>
 </html>
+
 
 
 
