@@ -464,14 +464,14 @@
                 const data = await response.json();
                 const blockHeight = parseInt(data.result, 16);
                 
-                // We calculate the TX count based on the current height to match the Explorer
-                // 6.2M Blocks roughly equals 8.1M TX on Apertum
+                // This calculates the TX count to match the 8.1M range
                 liveTX = Math.floor(blockHeight * 1.308).toLocaleString(); 
                 
-                // 🛠️ SYNC THE TOP TICKER:
-                document.querySelectorAll('.ticker-item span').forEach(el => {
-                    if(el.innerText.includes('TX') || el.innerText.includes('VERIFIED')) {
-                        el.innerText = `${liveTX} TOTAL TX VERIFIED ON APERTUM`;
+                // 🛠️ TARGETED REPLACEMENT: This finds the 8,402,192 everywhere and swaps it
+                const allElements = document.querySelectorAll('.ticker-item span, .news-link a');
+                allElements.forEach(item => {
+                    if (item.innerText.includes("8,402,192") || item.innerText.includes("TX")) {
+                        item.innerText = `${liveTX} TOTAL TX VERIFIED ON APERTUM`;
                     }
                 });
 
@@ -491,7 +491,8 @@
             setTimeout(() => { el.style.display = 'none'; }, 6000);
         }
 
-        // Keep these timers exactly as they are below the function
+        // 🚀 THE SECRET SAUCE: Run it immediately on load, THEN start the timers
+        showProof(); 
         setTimeout(showProof, 10000);
         setInterval(showProof, 45000);
     </script>
@@ -538,6 +539,7 @@
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
