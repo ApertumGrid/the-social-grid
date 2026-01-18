@@ -406,16 +406,46 @@
                 </div>
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
+async function purchase() {
+    if(!userAccount) { alert("Connect wallet first!"); return; }
+    
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
+    
+    // Calculate total price
+    let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
+    
+    // Get affiliate info
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
 
-        async function purchase() {
-            if(!userAccount) { alert("Connect wallet first!"); return; }
-            const web3 = new Web3(window.ethereum);
-            const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
-            let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
-            const urlParams = new URLSearchParams(window.location.search);
-            const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
-            try { await contract.methods.buyBlocks(selected, document.getElementById('img-url').value, document.getElementById('main-link').value, document.getElementById('ext-link').value, document.getElementById('soc-link').value, document.getElementById('tg-link').value, ref).send({ from: userAccount, value: totalWei.toString() }); location.reload(); } catch(e) { alert("Error: " + e.message); }
+    // Get user input data for the Telegram alert
+    const userImg = document.getElementById('img-url').value;
+    const userSite = document.getElementById('main-link').value;
+    const firstSector = selected[0];
+
+    try { 
+        // 1. Execute Blockchain Transaction
+        const tx = await contract.methods.buyBlocks(
+            selected, 
+            userImg, 
+            userSite, 
+            document.getElementById('ext-link').value, 
+            document.getElementById('soc-link').value, 
+            document.getElementById('tg-link').value, 
+            ref
+        ).send({ from: userAccount, value: totalWei.toString() });
+
+        // 2. If Success, Trigger Telegram Bot
+        if (tx.status) {
+            await triggerTelegramWave(firstSector, userSite, userImg);
+            alert("Transaction successful! Your territory is secured.");
+            location.reload(); 
         }
+    } catch(e) { 
+        alert("Error: " + e.message); 
+    }
+}
 
         async function connect() { if (window.ethereum) { const accs = await window.ethereum.request({ method: 'eth_requestAccounts' }); userAccount = accs[0]; document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38); } }
         function openDataModal() { document.getElementById('data-modal').style.display = 'flex'; }
@@ -532,6 +562,34 @@
             const cells = document.querySelectorAll('.tile:not(.sold)');
             cells.forEach(cell => { while (cell.firstChild) { cell.removeChild(cell.firstChild); } });
         }, 5000); 
+        // --- TELEGRAM NOTIFICATION ENGINE ---
+async function triggerTelegramWave(sector, link, image) {
+    const BOT_TOKEN = '8451763772:AAEzg380MMo8zI3zxgkVnc6vx97H4hchdLg';
+    const CHAT_ID = '@TheSocialGridOfficial'; 
+    const TOPIC_ID = 67; 
+
+    const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
+                 `📍 **Location:** Sector ${sector}\n` +
+                 `🔗 **Advertiser:** ${link}\n\n` +
+                 `🛡️ *Secure your brand on the Apertum Grid.*`;
+
+    try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                message_thread_id: TOPIC_ID,
+                photo: image,
+                caption: text,
+                parse_mode: 'Markdown'
+            })
+        });
+        console.log("Wave successfully broadcast to Telegram.");
+    } catch (error) {
+        console.error("Broadcast failed:", error);
+    }
+}
     </script>
 </body>
     <div id="social-proof">
@@ -539,6 +597,7 @@
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
