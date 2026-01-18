@@ -14,10 +14,20 @@
         .brand-wrap { display: flex; align-items: center; gap: 20px; }
         .logo-sphere { width: 65px; height: 65px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--accent), var(--bright-blue)); box-shadow: 0 0 40px var(--accent), inset 0 0 20px rgba(255,255,255,0.5); border: 2px solid rgba(255,255,255,0.3); animation: pulse 2s infinite alternate; }
         @keyframes pulse { from { transform: scale(1); box-shadow: 0 0 30px var(--accent); } to { transform: scale(1.05); box-shadow: 0 0 50px var(--accent); } }
+        /* LOGO & BRANDING BLOCK */
         .brand-wrap { 
-            display: flex; 
-            align-items: center; 
+            display: flex !important; 
+            flex-direction: row !important;
+            align-items: center !important; 
             gap: 20px; 
+        }
+        .logo-sphere {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, var(--accent), #000);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent);
+            flex-shrink: 0; /* Prevents the logo from being squashed to 0px */
         }
         .brand-text h1 { 
             font-family: 'Orbitron'; 
@@ -381,6 +391,7 @@
     </script>
 </body>
 </html>
+
 
 
 
