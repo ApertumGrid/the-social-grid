@@ -125,6 +125,12 @@
         }
        /* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
         @media (max-width: 768px) {
+            #live-ticker { 
+                position: relative !important; 
+                top: 0 !important; 
+                z-index: 1;
+                margin-bottom: 10px;
+            }
             /* Header Fix: Relative position stops it from covering the grid */
             header { 
                 height: auto; 
@@ -343,7 +349,6 @@
                         <span style="font-family: 'Montserrat', sans-serif; color: var(--accent); font-size: 14px; font-weight: 600; letter-spacing: 1px;">APTM</span>
                     </div>
                 </div>
-                </div>
                 <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT MAIN WEBSITE</a>
                 ${partnerBtn} <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                     <a href="https://twitter.com/${data.linkSocial}" target="_blank" class="store-btn">🐦 TWITTER</a>
@@ -425,6 +430,7 @@
     </script>
 </body>
 </html>
+
 
 
 
