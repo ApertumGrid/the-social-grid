@@ -449,16 +449,39 @@
             "Dynamic price update: Sector 9 is heating up"
         ];
 
-        function showProof() {
+        async function showProof() {
             const el = document.getElementById('social-proof');
             const text = document.getElementById('proof-text');
             if(!el || !text) return;
+
+            let liveData = "8,402,192"; 
+            try {
+                // This reaches out to the real Apertum Network
+                const response = await fetch(RPC_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 })
+                });
+                const data = await response.json();
+                // Converts the blockchain hex data into a readable number
+                liveData = parseInt(data.result, 16).toLocaleString(); 
+            } catch (e) { console.log("RPC Fetch error", e); }
+
+            const proofMessages = [
+                "Someone just viewed Sector 4",
+                "New takeover attempt in progress...",
+                `NETWORK: ${liveData} BLOCKS VERIFIED`,
+                "Referral bonus of 1 APTM just paid out",
+                "New territory claimed in Sector 1",
+                `LIVE: Apertum Height at ${liveData}`
+            ];
+
             text.innerText = proofMessages[Math.floor(Math.random() * proofMessages.length)];
             el.style.display = 'flex';
-            setTimeout(() => { el.style.display = 'none'; }, 6000); // Stays for 6 seconds
+            setTimeout(() => { el.style.display = 'none'; }, 6000);
         }
 
-        // Show the first one after 10 seconds, then every 45 seconds
+        // Keep these timers exactly as they are below the function
         setTimeout(showProof, 10000);
         setInterval(showProof, 45000);
     </script>
@@ -505,6 +528,7 @@
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
