@@ -563,10 +563,11 @@ async function purchase() {
             cells.forEach(cell => { while (cell.firstChild) { cell.removeChild(cell.firstChild); } });
         }, 5000); 
         // --- TELEGRAM NOTIFICATION ENGINE ---
+// --- TELEGRAM NOTIFICATION ENGINE ---
 async function triggerTelegramWave(sector, link, image) {
     const BOT_TOKEN = '8451763772:AAEzg380MMo8zI3zxgkVnc6vx97H4hchdLg';
-    const CHAT_ID = '@TheSocialGridOfficial'; 
-    const TOPIC_ID = 67; 
+    const CHAT_ID = '-1003501893896'; // Updated to numeric ID
+    const TOPIC_ID = 67; // Still required to hit the ⚡ topic
 
     const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
                  `📍 **Location:** Sector ${sector}\n` +
@@ -579,7 +580,7 @@ async function triggerTelegramWave(sector, link, image) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: CHAT_ID,
-                message_thread_id: TOPIC_ID,
+                message_thread_id: TOPIC_ID, // This uses the room number 67
                 photo: image,
                 caption: text,
                 parse_mode: 'Markdown'
@@ -597,6 +598,7 @@ async function triggerTelegramWave(sector, link, image) {
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
