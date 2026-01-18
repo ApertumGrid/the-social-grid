@@ -278,8 +278,14 @@
             c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
                 <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2>
                 <p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
-                <div style="background:rgba(0,255,213,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent);">
-                    <p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:12px;">WAR ZONE TAKEOVER PRICE: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</p>
+                <div style="background:rgba(0,255,213,0.1); padding:18px; border-radius:15px; margin-bottom:20px; border:1px solid var(--accent); text-align:center;">
+                    <p style="margin:0; font-family:'Orbitron'; color:var(--accent); font-size:13px; letter-spacing: 1px;">
+                        WAR ZONE TAKEOVER PRICE: 
+                        <span style="color:#fff; font-size:18px; font-weight:900; margin-left:10px;">
+                            ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(1)}
+                        </span> 
+                        <span style="font-size:12px; margin-left:5px;">APTM</span>
+                    </p>
                 </div>
                 <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT MAIN WEBSITE</a>
                 ${partnerBtn} <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
@@ -362,5 +368,6 @@
     </script>
 </body>
 </html>
+
 
 
