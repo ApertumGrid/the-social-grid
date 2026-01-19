@@ -391,7 +391,10 @@ input:focus {
         IMAGE URL 
         <a href="https://postimages.org/" target="_blank" style="color:var(--accent); text-decoration:none; font-size:9px; opacity:0.8;">↗ NEED AN UPLOAD LINK?</a>
     </label>
-    <input type="text" id="img-url" placeholder="Paste .jpg or .png link">
+    <input type="text" id="img-url" placeholder="Paste .jpg or .png link" oninput="validateImage(this)">
+    <div id="link-warning" style="display:none; color:#ff2e63; font-size:10px; margin-top:5px; font-weight:800; font-family:'Montserrat', sans-serif;">
+        ⚠️ WAIT! That looks like a website, not an image. Link must end in .jpg or .png
+    </div>
 </div>
         <div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div>
         <div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div>
@@ -750,12 +753,50 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
     }
 }
     </script>
+    <script>
+/* --- IMAGE LINK VALIDATOR --- */
+function validateImage(field) {
+    const val = field.value.toLowerCase().trim();
+    const warn = document.getElementById('link-warning');
+    const btn = document.getElementById('buy-btn');
+
+    // 1. If empty, reset everything to normal
+    if(val.length === 0) {
+        field.style.border = '1px solid rgba(255,255,255,0.1)';
+        warn.style.display = 'none';
+        btn.style.opacity = '1';
+        btn.innerText = "FINALIZE PURCHASE";
+        btn.disabled = false;
+        return;
+    }
+
+    // 2. Check if it ends in .jpg, .png, etc.
+    const isValid = val.endsWith('.jpg') || val.endsWith('.png') || val.endsWith('.gif') || val.endsWith('.jpeg') || val.endsWith('.webp');
+
+    if (!isValid) {
+        // BAD LINK: Turn Red, Show Warning, FREEZE Button
+        field.style.border = '2px solid #ff2e63';
+        warn.style.display = 'block';
+        btn.style.opacity = '0.5';
+        btn.innerText = "FIX IMAGE LINK FIRST";
+        btn.disabled = true; // Stops the click!
+    } else {
+        // GOOD LINK: Turn Neon Green, UNFREEZE Button
+        field.style.border = '2px solid #00ffd5';
+        warn.style.display = 'none';
+        btn.style.opacity = '1';
+        btn.innerText = "FINALIZE PURCHASE";
+        btn.disabled = false;
+    }
+}
+</script>
 </body>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
