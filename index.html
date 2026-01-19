@@ -557,24 +557,34 @@ input:focus {
         }
 async function purchase() {
     if(!userAccount) { alert("Connect wallet first!"); return; }
+
+    // --- VISUAL FEEDBACK START ---
+    const btn = document.getElementById('buy-btn');
+    const originalText = btn.innerText;
     
+    // 1. Lock the button immediately so they don't double-click
+    btn.innerText = "⏳ WAITING FOR WALLET...";
+    btn.style.opacity = "0.7";
+    btn.style.cursor = "not-allowed";
+    btn.disabled = true;
+
     const web3 = new Web3(window.ethereum);
     const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
-    
+
     // Calculate total price
     let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
-    
+
     // Get affiliate info
     const urlParams = new URLSearchParams(window.location.search);
     const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
 
-    // Get user input data for the Telegram alert
+    // Get user input data
     const userImg = document.getElementById('img-url').value;
     const userSite = document.getElementById('main-link').value;
     const firstSector = selected[0];
 
-    try { 
-        // 1. Execute Blockchain Transaction
+    try {
+        // 2. Execute Transaction
         const tx = await contract.methods.buyBlocks(
             selected, 
             userImg, 
@@ -583,16 +593,27 @@ async function purchase() {
             document.getElementById('soc-link').value, 
             document.getElementById('tg-link').value, 
             ref
-        ).send({ from: userAccount, value: totalWei.toString() });
+        ).send({ from: userAccount, value: totalWei.toString() })
+        .on('transactionHash', function(hash){
+            // 3. User clicked "Confirm" in wallet -> Now we wait for blockchain
+            btn.innerText = "⛓️ VERIFYING ON CHAIN...";
+        });
 
-        // 2. If Success, Trigger Telegram Bot
+        // 4. Success!
         if (tx.status) {
+            btn.innerText = "✅ SECURED!";
             await triggerTelegramWave(firstSector, userSite, userImg);
             alert("Transaction successful! Your territory is secured.");
             location.reload(); 
         }
-    } catch(e) { 
-        alert("Error: " + e.message); 
+    } catch(e) {
+        // 5. If they click "Reject" or Error occurs -> RESET BUTTON
+        console.log(e);
+        alert("Transaction Cancelled"); 
+        btn.innerText = originalText;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+        btn.disabled = false;
     }
 }
 
@@ -625,6 +646,7 @@ async function purchase() {
                 '<p style="color:#ccc; margin-bottom: 25px;">Earn 1 APTM instantly for every single block purchased through your unique referral link. Build your own marketing army.</p>' +
                 '<div style="padding: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: Orbitron; font-size: 12px;">' + (userAccount ? link : "Please connect your wallet first.") + '</div>' +
                 '<button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText(\'' + link + '\'); alert(\'Copied!\');">COPY REFERRAL LINK</button>' +
+                '<button class="store-btn" style="margin-top:10px; color:#fff; border:1px solid #1DA1F2; background:rgba(29, 161, 242, 0.1);" onclick="window.open(\'https://twitter.com/intent/tweet?text=Just%20secured%20territory%20on%20The%20Social%20Grid!%20%F0%9F%9A%80%20The%20first%20decentralized%20billboard%20on%20Apertum.%20Claim%20your%20block%20before%20the%20price%20goes%20up!%20%23Apertum%20%24APTM%20%F0%9F%91%87%20\' + encodeURIComponent(\'' + link + '\'), \'_blank\')">🐦 SHARE ON X (TWITTER)</button>' +   
                 '<button class="nav-btn" style="margin-top:20px; border: none;" onclick="closeModal()">CLOSE [X]</button>';
             }
         }
@@ -809,6 +831,7 @@ window.addEventListener('click', function(e) {
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
