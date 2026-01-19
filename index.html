@@ -790,12 +790,26 @@ function validateImage(field) {
     }
 }
 </script>
+    <script>
+/* --- CLICK OUTSIDE TO CLOSE (FIXED) --- */
+window.addEventListener('click', function(e) {
+    // 1. If they click the dark background of the Storefront Popup
+    if (e.target.id === 'overlay') {
+        closeModal();
+    }
+    // 2. If they click the dark background of the "Enter Data" Popup
+    if (e.target.id === 'data-modal') {
+        closeDataModal();
+    }
+});
+</script>
     </body>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
