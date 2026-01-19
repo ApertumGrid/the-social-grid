@@ -70,13 +70,15 @@
         .contract-box { background: #1a1a1a; padding: 15px; border-radius: 5px; border: 1px dashed #444; word-break: break-all; font-family: monospace; color: #00ffcc; }
         .news-link a { color: #ffd700 !important; font-weight: 800; border: 1px solid #ffd700; padding: 6px 12px; border-radius: 50px; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; margin-right: 15px; text-decoration: none; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); animation: glow 2s infinite alternate; }
         @keyframes glow { from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); } to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); } }
-        /* --- THE NEON CHIP PROTOCOL --- */
+        /* --- THE NEON CHIP PROTOCOL (HIGH VOLTAGE) --- */
 
-/* 1. The Empty Slots (Inactive Chips) */
+/* 1. The Empty Slots (Inactive Chips) - Brighter & Glowier */
 .tile:not(.sold) {
-    background: rgba(10, 15, 25, 0.6); /* Dark Glass */
-    border: 1px solid rgba(0, 255, 213, 0.1); /* Faint Cyan Edge */
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); /* Inner Depth */
+    background: rgba(0, 255, 213, 0.03); /* Subtle Cyan Tint */
+    border: 1px solid rgba(0, 255, 213, 0.4); /* Stronger Neon Border */
+    box-shadow: 
+        inset 0 0 15px rgba(0, 255, 213, 0.05), /* Inner Glow */
+        0 0 10px rgba(0, 255, 213, 0.1); /* Outer Ambient Glow */
     border-radius: 16px; /* Smooth Corners */
     position: relative;
     overflow: hidden;
@@ -84,10 +86,10 @@
     justify-content: center;
     align-items: center;
     font-family: 'Orbitron', sans-serif;
-    color: rgba(0, 255, 213, 0.3);
+    color: rgba(0, 255, 213, 0.8); /* Brighter '+' Sign */
     font-size: 24px;
     font-weight: 700;
-    backdrop-filter: blur(5px); /* Blurs the background behind it */
+    backdrop-filter: blur(4px); /* Blurs the background behind it */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -720,6 +722,7 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
