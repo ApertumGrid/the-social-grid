@@ -225,28 +225,7 @@
     border: 2px solid #fff; /* White ring makes it look like a medal */
     z-index: 30;
 }
-
-/* The Checkmark Badge */
-.verified-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 22px;
-    height: 22px;
-    background: linear-gradient(135deg, #00f3ff, #0099ff);
-    color: #000;
-    font-weight: 900;
-    font-size: 14px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.8);
-    border: 1px solid #fff;
-    cursor: help;
-    z-index: 30;
-}
-       /* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
+/* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
         @media (max-width: 768px) {
             #live-ticker { 
                 position: relative !important; 
@@ -440,7 +419,7 @@
                             // Create and append the verified badge
                             const badge = document.createElement('div');
                             badge.className = 'verified-badge';
-                            badbadge.innerHTML = '★';
+                            badge.innerHTML = '★';
                             badge.title = "Verified DAO1 Partner"; // Tooltip on hover
                             el.appendChild(badge);
                         }
@@ -707,6 +686,7 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
