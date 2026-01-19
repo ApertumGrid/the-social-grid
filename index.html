@@ -520,7 +520,7 @@ input:focus {
                 const heightPx = ((maxRow - minRow) + 1) * 500;
                 document.getElementById('select-count').innerText = selected.length;
                 document.getElementById('price-tag').innerHTML = `
-    <span style="font-family:'Montserrat', sans-serif; color:#fff; font-size:18px; font-weight:800; margin-left:5px;">${total.toFixed(1)}</span> 
+    <span style="font-family:'Montserrat', sans-serif; color:#fff; font-size:18px; font-weight:800; margin-left:5px;">${total.toFixed(2)}</span> 
     <span style="font-family:'Montserrat', sans-serif; color:var(--accent); font-size:12px; font-weight:600; margin-right:15px;">APTM</span>
     <span style="font-size:11px; color:#8fa7c7; border-left:1px solid rgba(255,255,255,0.1); padding-left:15px; letter-spacing:1px;">REQ. SIZE: ${widthPx} x ${heightPx} PX</span>
 `;
@@ -796,6 +796,7 @@ function validateImage(field) {
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
