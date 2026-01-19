@@ -576,10 +576,20 @@ async function purchase() {
             const c = document.getElementById('modal-content');
             if(t === 'how') {
                 c.innerHTML = '<h2 style="color:var(--accent); font-family: Orbitron; letter-spacing:3px;">THE APERTUM PROTOCOL</h2>' +
-                '<div class="feature-grid">' +
+                '<div class="feature-grid" style="grid-template-columns: 1fr 1fr;">' +
+                
+                // 1. Original ADVERTISE Text
                 '<div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory on our 10,000-block landscape for 5 APTM per block. Buy one for a logo or multiple to create a massive billboard. Drive global traffic to your website, socials, and affiliate networks.</p></div>' +
+                
+                // 2. Original WAR ZONE Text
                 '<div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Secure dominance. Any spot can be overtaken by paying 1.5x the current price (7.5 APTM), turning the grid into a competitive battlefield where the most valuable real estate is always in play.</p></div>' +
+                
+                // 3. Original 120% RETURN Text
                 '<div class="feature-item"><h3>💰 120% RETURN</h3><p>If your territory is overtaken, the protocol instantly returns your original 5 APTM plus a 1 APTM (20%) profit bonus. You earn every time someone wants your spot more than you do.</p></div>' +
+                
+                // 4. NEW VERIFIED PARTNER Text
+                '<div class="feature-item"><h3>🌟 DAO1 VERIFIED</h3><p><strong>Exclusive Protocol:</strong> Use your Active Member Referral Link when buying to automatically unlock the <strong>Gold Border & Star Badge</strong>. This permanently certifies your project as a trusted ecosystem partner.</p></div>' +
+                
                 '</div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>';
             } else if(t === 'aff') {
                 const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
@@ -721,6 +731,7 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
