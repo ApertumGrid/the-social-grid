@@ -382,7 +382,20 @@ input:focus {
         </div>
     </div>
     <main><div id="grid"></div></main>
-    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px; margin-left:20px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
+    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button onclick="cancelSelection()" style="
+    background: rgba(255, 0, 0, 0.2); 
+    border: 1px solid #ff4444; 
+    color: #ff4444; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 12px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin-right: 10px;
+    font-size: 16px;
+">✕</button>
+
+<button class="wallet-btn" style="padding: 10px 20px; font-size: 11px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
     <div id="data-modal">
     <div class="modal-box">
         <h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3>
@@ -555,6 +568,24 @@ input:focus {
                 <a href="${data.linkTelegram}" target="_blank" class="store-btn" style="background: rgba(36, 161, 222, 0.1); border-color: rgba(36, 161, 222, 0.4); color: #24A1DE; width: 100%; display: block; margin-top: 10px;">✈️ JOIN OFFICIAL TELEGRAM</a>
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
+        /* --- NEW CANCEL FUNCTION --- */
+function cancelSelection() {
+    // 1. Visually uncheck every selected block
+    selected.forEach(id => {
+        const el = document.getElementById('b-' + id);
+        if(el) {
+            el.classList.remove('selected');
+            el.style.border = ''; 
+            el.style.boxShadow = '';
+        }
+    });
+
+    // 2. Clear the memory
+    selected = [];
+
+    // 3. Hide the bottom bar
+    document.getElementById('selection-bar').style.display = 'none';
+}
 async function purchase() {
     if(!userAccount) { alert("Connect wallet first!"); return; }
 
@@ -831,6 +862,7 @@ window.addEventListener('click', function(e) {
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
