@@ -128,14 +128,13 @@
     z-index: 5;
 }
 
-/* 4. Hovering a Sold Chip (Interacting) */
+/* 4. Hovering a Sold Chip (RESTORED THE BIG POP 💥) */
 .tile.sold:hover {
-    transform: scale(1.15) rotate(0deg) translateY(-5px); /* Pop out effect */
-    box-shadow: 
-        0 20px 40px rgba(0,0,0,0.8), /* Deep Shadow */
-        0 0 0 2px #fff; /* White Focus Ring */
-    z-index: 100 !important;
-    cursor: pointer;
+    transform: scale(1.6) rotate(-2deg); /* The 1.6x Size + The Tilt */
+    box-shadow: 0 0 80px rgba(0, 255, 213, 0.9); /* The Massive Glow */
+    z-index: 9999 !important; /* Forces it on top of everything */
+    border: 2px solid #ffffff; /* Bright White Focus Ring */
+    cursor: zoom-in;
 }
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: #050a14; }
@@ -722,6 +721,7 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
