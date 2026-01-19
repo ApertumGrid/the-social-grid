@@ -386,7 +386,13 @@ input:focus {
     <div id="data-modal">
     <div class="modal-box">
         <h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3>
-        <div class="input-group"><label>IMAGE URL</label><input type="text" id="img-url" placeholder="Paste .jpg or .png link"></div>
+        <div class="input-group">
+    <label style="display:flex; justify-content:space-between;">
+        IMAGE URL 
+        <a href="https://postimages.org/" target="_blank" style="color:var(--accent); text-decoration:none; font-size:9px; opacity:0.8;">↗ NEED AN UPLOAD LINK?</a>
+    </label>
+    <input type="text" id="img-url" placeholder="Paste .jpg or .png link">
+</div>
         <div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div>
         <div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
@@ -750,6 +756,7 @@ const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
