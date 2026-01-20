@@ -295,8 +295,8 @@ input:focus {
             #live-ticker { 
                 position: relative !important; 
                 top: 0 !important; 
+                margin: 10px 0;
                 z-index: 1;
-                margin-bottom: 10px;
             }
             /* Header Fix: Relative position stops it from covering the grid */
             header { 
@@ -306,6 +306,11 @@ input:focus {
                 display: flex;
                 flex-direction: column;
                 backdrop-filter: blur(15px);
+            }
+            #commission-ribbon { 
+                margin-top: 0 !important; 
+                padding: 15px 0 !important;
+                background: rgba(0, 255, 213, 0.1);
             }
             .header-inner { 
                 flex-direction: column; 
@@ -941,6 +946,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
