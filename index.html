@@ -447,13 +447,19 @@ input:focus {
         let web3Read = new Web3(new Web3.providers.HttpProvider(RPC_URL));
         let contractRead = new web3Read.eth.Contract(ABI, CONTRACT_ADDR);
 
-        window.onload = () => {
-            const g = document.getElementById('grid');
-            for (let i = 0; i < 4000; i++) {
-                const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = (e) => handleTileClick(i, e); g.appendChild(d);
-            }
-            loadGrid();
-        };
+        window.onload = async () => {
+    // 1. Build the Grid
+    const g = document.getElementById('grid');
+    for (let i = 0; i < 4000; i++) {
+        const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = (e) => handleTileClick(i, e); g.appendChild(d);
+    }
+    loadGrid();
+
+    // 2. NEW: Check if we should Auto-Connect
+    if (localStorage.getItem('isWalletConnected') === 'true') {
+        await connect();
+    }
+};
 
       async function loadGrid() {
             for(let i = 0; i < 3000; i++) { 
@@ -657,7 +663,25 @@ async function purchase() {
     }
 }
 
-        async function connect() { if (window.ethereum) { const accs = await window.ethereum.request({ method: 'eth_requestAccounts' }); userAccount = accs[0]; document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38); } }
+        async function connect() {
+    if (window.ethereum) {
+        try {
+            const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            userAccount = accs[0];
+            
+            // Update button text
+            document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38);
+            
+            // NEW: Save the session so it remembers you
+            localStorage.setItem('isWalletConnected', 'true');
+            
+        } catch (error) {
+            console.error(error);
+            // If failed, forget the user
+            localStorage.removeItem('isWalletConnected');
+        }
+    }
+}
         function openDataModal() { document.getElementById('data-modal').style.display = 'flex'; }
         function closeDataModal() { document.getElementById('data-modal').style.display = 'none'; }
         function openModal(t) {
@@ -870,6 +894,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
