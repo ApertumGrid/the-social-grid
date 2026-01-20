@@ -491,6 +491,10 @@ input:focus {
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
                             el.setAttribute('data-link', res.linkMain);
                             el.setAttribute('data-img', res.imageUrl);
+                            // --- LIVE SYNC TRIGGER ---
+                    let currentPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
+                    let ribbonText = document.getElementById('live-comm-text');
+                    if(ribbonText) ribbonText.innerText = currentPaid.toFixed(2) + " APTM";
 
                             // --- DYNAMIC TEAM DETECTION ---
                             // We wait for neighbors to load, then check for an IDENTICAL match
@@ -937,6 +941,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
