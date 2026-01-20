@@ -227,7 +227,7 @@ input:focus {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        /* --- GOLD VERIFIED PARTNER STYLES (ULTRA-SLEEK) --- */
+        /* --- GOLD VERIFIED PARTNER STYLES --- */
 .verified-glow {
     position: relative;
     border: 1.5px solid #ffd700 !important; 
@@ -237,14 +237,14 @@ input:focus {
 
 .verified-badge {
     position: absolute;
-    top: -6px; 
-    right: -6px;
-    width: 16px; 
-    height: 16px; 
+    top: -5px; 
+    right: -5px;
+    width: 14px; 
+    height: 14px; 
     background: linear-gradient(135deg, #ffd700, #ffaa00);
     color: #000;
     font-weight: 900;
-    font-size: 10px; 
+    font-size: 9px; 
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -255,25 +255,25 @@ input:focus {
     cursor: help;
 }
 
+/* Minimalist Popup */
 .verified-badge::after {
-    content: "VERIFIED DAO1 PARTNER"; 
+    content: "VERIFIED"; 
     position: absolute;
-    bottom: 160%; 
+    bottom: 150%; 
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(10, 15, 25, 0.98); 
+    background: #000; 
     color: #ffd700;
-    padding: 3px 8px; 
+    padding: 2px 8px; 
     border: 1px solid #ffd700;
-    border-radius: 3px;
+    border-radius: 2px;
     font-family: 'Orbitron', sans-serif;
     font-size: 8px; 
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px; /* Spaced out for a high-end look */
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.2s ease;
     pointer-events: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .verified-badge:hover::after {
@@ -496,7 +496,6 @@ input:focus {
                             const badge = document.createElement('div');
                             badge.className = 'verified-badge';
                             badge.innerHTML = '★';
-                            badge.title = "Verified DAO1 Partner"; // Tooltip on hover
                             el.appendChild(badge);
                         }
                         // ------------------------------------
@@ -862,6 +861,7 @@ window.addEventListener('click', function(e) {
         <div id="proof-text" style="color: #fff;"></div>
     </div>
 </html>
+
 
 
 
