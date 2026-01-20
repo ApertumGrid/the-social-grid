@@ -42,7 +42,7 @@
         .nav-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Orbitron'; font-size: 11px; font-weight: 700; cursor: pointer; padding: 8px 15px; border-radius: 5px; margin-right: 15px; }
         .wallet-btn { padding: 14px 32px; border-radius: 14px; border: none; background: linear-gradient(90deg, var(--accent), var(--bright-blue)); color: #000; font-family: 'Montserrat'; font-weight: 800; font-size: 13px; cursor: pointer; text-transform: uppercase; }
         .tg-btn { background: #24A1DE; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-left: 15px; padding: 14px 24px; border-radius: 14px; font-weight: 800; font-size: 13px; font-family: 'Montserrat'; text-transform: uppercase; vertical-align: middle; }
-        main { margin-top: 180px; padding-bottom: 300px; display: flex; justify-content: center; }
+        main { margin-top: 20px; padding-bottom: 300px; display: flex; justify-content: center; }
         #grid { display: grid; grid-template-columns: repeat(auto-fill, 120px); gap: 15px; width: 92%; max-width: 1500px; justify-content: center; }
         .tile { width: 120px; height: 120px; background: var(--glass); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; cursor: pointer; position: relative; transition: 0.2s; }
         .tile.selected { border: 2px solid var(--accent) !important; box-shadow: 0 0 15px var(--accent) !important; z-index: 10; }
@@ -190,7 +190,7 @@ input:focus {
         /* LIVE TICKER STYLING */
         #live-ticker {
             position: fixed;
-            top: 130px; 
+            top: 0; 
             left: 0;
             width: 100%;
             height: 35px;
@@ -206,6 +206,7 @@ input:focus {
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #8fa7c7;
+            position: relative;
         }
 
         .ticker-wrapper {
@@ -334,7 +335,7 @@ input:focus {
             .news-link a { font-size: 9px; padding: 5px 10px; display: inline-block; margin-bottom: 5px; }
 
             /* Grid: No longer covered by header */
-            main { margin-top: 15px; }
+            main { margin-top: 20px; }
             #grid { 
                 grid-template-columns: repeat(auto-fill, 95px); 
                 gap: 10px; 
@@ -381,6 +382,23 @@ input:focus {
             </div>
         </div>
     </header>
+    <div id="commission-ribbon" style="
+    width: 100%; 
+    background: rgba(0, 255, 213, 0.05); 
+    border-bottom: 1px solid rgba(0, 255, 213, 0.1); 
+    padding: 12px 0; 
+    text-align: center; 
+    position: relative; 
+    margin-top: 130px; /* This clears the 130px height of your fixed header */
+    z-index: 900;
+">
+    <span style="font-family:'Orbitron'; font-size:11px; color:#8fa7c7; letter-spacing:2px;"> 
+        COMMUNITY REWARDS DISTRIBUTED: 
+        <span id="live-comm-text" style="color:var(--accent); font-weight:800; font-size:16px; margin-left:10px; text-shadow: 0 0 10px var(--accent);">
+            0.00 APTM
+        </span>
+    </span>
+</div>
     <div id="live-ticker">
         <div class="ticker-wrapper" id="ticker-content">
             <div class="ticker-item">⚡ RECENT TAKEOVER: <span>0x4f...2a</span> SECURED 4 BLOCKS (+1.0 APTM PROFIT)</div>
@@ -520,6 +538,14 @@ input:focus {
                 }, i * 5); 
             }
         }
+        // Calculate total sold blocks to show honest commission data
+setTimeout(() => {
+    let totalSold = Object.keys(prices).filter(id => prices[id] > 5).length;
+    let counterElement = document.getElementById('live-comm-text');
+    if(counterElement) {
+        counterElement.innerText = totalSold.toFixed(2) + " APTM";
+    }
+}, 2000);
         function handleTileClick(id, event) {
             const el = document.getElementById('b-' + id);
             const isSold = el.classList.contains('sold');
@@ -705,13 +731,30 @@ async function purchase() {
                 
                 '</div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>';
             } else if(t === 'aff') {
-                const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
-                c.innerHTML = '<h2 style="color:var(--accent); font-family: Orbitron">AFFILIATE PROGRAM</h2>' +
-                '<p style="color:#ccc; margin-bottom: 25px;">Earn 1 APTM instantly for every single block purchased through your unique referral link. Build your own marketing army.</p>' +
-                '<div style="padding: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: Orbitron; font-size: 12px;">' + (userAccount ? link : "Please connect your wallet first.") + '</div>' +
-                '<button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText(\'' + link + '\'); alert(\'Copied!\');">COPY REFERRAL LINK</button>' +
-                '<button class="store-btn" style="margin-top:10px; color:#fff; border:1px solid #1DA1F2; background:rgba(29, 161, 242, 0.1);" onclick="window.open(\'https://twitter.com/intent/tweet?text=Just%20secured%20territory%20on%20The%20Social%20Grid!%20%F0%9F%9A%80%20The%20first%20decentralized%20billboard%20on%20Apertum.%20Claim%20your%20block%20before%20the%20price%20goes%20up!%20%23Apertum%20%24APTM%20%F0%9F%91%87%20\' + encodeURIComponent(\'' + link + '\'), \'_blank\')">🐦 SHARE ON X (TWITTER)</button>' +   
-                '<button class="nav-btn" style="margin-top:20px; border: none;" onclick="closeModal()">CLOSE [X]</button>';
+    const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
+    let totalPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
+
+    c.innerHTML = `
+        <h2 style="color:var(--accent); font-family: Orbitron; margin-bottom:10px; letter-spacing:2px;">AFFILIATE HUB</h2>
+        
+        <div style="background: rgba(0, 255, 213, 0.1); border: 1px solid var(--accent); padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);">
+            <p style="margin:0; font-family:'Orbitron'; font-size:10px; color:var(--accent); letter-spacing:2px;">TOTAL COMMISSIONS PAID</p>
+            <h3 style="margin:5px 0 0 0; font-size:36px; font-family:'Montserrat'; font-weight:900; color:#fff;">${totalPaid}.00 <span style="font-size:16px; color:var(--accent);">APTM</span></h3>
+            <p style="margin:5px 0 0 0; font-size:9px; color:#8fa7c7; text-transform:uppercase;">On-Chain Verified</p>
+        </div>
+
+        <p style="color:#ccc; margin-bottom: 20px; font-size:14px;">Earn <b>1 APTM</b> instantly for every block purchased through your link.</p>
+        
+        <div style="padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: Orbitron; font-size: 11px; color:var(--accent);">
+            ${userAccount ? link : "CONNECT WALLET TO GENERATE YOUR LINK"}
+        </div>
+        
+        <button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText('${link}'); alert('Referral Link Copied!');">COPY REFERRAL LINK</button>
+
+        <button class="store-btn" style="margin-top:10px; color:#fff; border:1px solid #1DA1F2; background:rgba(29, 161, 242, 0.1);" onclick="window.open('https://twitter.com/intent/tweet?text=Just%20secured%20territory%20on%20The%20Social%20Grid!%20%F0%9F%9A%80%20The%20first%20decentralized%20billboard%20on%20Apertum.%20Claim%20your%20block%20before%20the%20price%20goes%20up!%20%23Apertum%20%24APTM%20%F0%9F%91%87%20' + encodeURIComponent('${link}'), '_blank')">🐦 SHARE ON X (TWITTER)</button>
+        
+        <button class="nav-btn" style="margin-top:20px; border: none; opacity:0.6;" onclick="closeModal()">CLOSE [X]</button>
+    `;
             }
         }
         function closeModal() { document.getElementById('overlay').style.display = 'none'; }
@@ -894,6 +937,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
