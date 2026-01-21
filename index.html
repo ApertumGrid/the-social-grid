@@ -477,7 +477,7 @@ input:focus {
     <script>
         const CONTRACT_ADDR = "0xF0260a64e4b2D7d5E6dBD157E25dabaA869898df"; 
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
-        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkMain","type":"string"},{"internalType":"string","name":"linkExternal","type":"string"},{"internalType":"string","name":"linkSocial","type":"string"},{"internalType":"string","name":"linkTelegram","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
+        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkUrl","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
         
         let selected = []; let prices = {}; let userAccount = "";
         let web3Read = new Web3(new Web3.providers.HttpProvider(RPC_URL));
@@ -1086,6 +1086,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
