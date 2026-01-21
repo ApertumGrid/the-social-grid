@@ -372,6 +372,19 @@ input:focus {
             .feature-grid { grid-template-columns: 1fr; gap: 15px; }
             .store-btn { padding: 14px; font-size: 11px; }
         }
+        /* GPS Target Pulse Animation */
+            @keyframes gpsPulse {
+                0% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); border-color: #fff; }
+                70% { box-shadow: 0 0 0 20px rgba(0, 255, 213, 0); border-color: var(--accent); }
+                100% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); border-color: #fff; }
+            }
+
+            .gps-target {
+                animation: gpsPulse 2s infinite;
+                z-index: 100 !important;
+                position: relative;
+                border: 2px solid #fff !important;
+            }
     </style>
 </head>
 <body>
@@ -943,6 +956,34 @@ window.addEventListener('click', function(e) {
         closeDataModal();
     }
 });
+       // --- GPS SYSTEM (Adapted for your 'b-' blocks) ---
+    function checkGPS() {
+        // This looks for ?block=123 in your website URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetID = urlParams.get('block');
+
+        if (targetID) {
+            console.log("GPS Targeting Block:", targetID);
+            
+            // Your blocks are named 'b-0', 'b-1', etc.
+            const targetCell = document.getElementById('b-' + targetID);
+
+            if (targetCell) {
+                // Scroll to the block smoothly
+                targetCell.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
+
+                // Add the glowing class
+                targetCell.classList.add('gps-target');
+            }
+        }
+    }
+
+    // Run the GPS check 2 seconds after load (giving your loop time to finish)
+    setTimeout(checkGPS, 2000); 
 </script>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
@@ -950,6 +991,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
