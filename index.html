@@ -506,9 +506,9 @@ input:focus {
                             const el = document.getElementById('b-' + i); 
                             if(!el) return;
                             el.classList.add('sold');
-                            el.style.backgroundImage = "url('" + res.imageUrl + "')";
+                            el.style.backgroundImage = "url('" + res.img + "')";
                             el.setAttribute('data-link', res.linkUrl);
-                            el.setAttribute('data-img', res.imageUrl);
+                            el.setAttribute('data-img', res.img);
                             // --- LIVE SYNC TRIGGER ---
                     let currentPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
                     let ribbonText = document.getElementById('live-comm-text');
@@ -523,12 +523,11 @@ input:focus {
                                 // A match only counts if BOTH Link and Image are exactly the same
                                 const isNextMatch = nextEl && 
                                                    nextEl.getAttribute('data-link') === res.linkUrl && 
-                                                   nextEl.getAttribute('data-img') === res.imageUrl;
+                                                   nextEl.getAttribute('data-img') === res.img;
                                 
                                 const isPrevMatch = prevEl && 
                                                    prevEl.getAttribute('data-link') === res.linkUrl && 
-                                                   prevEl.getAttribute('data-img') === res.imageUrl;
-
+                                                   prevEl.getAttribute('data-img') === res.img;
                                 if (isNextMatch || isPrevMatch) {
                                     // BANNER MODE: Found a team member with the same image
                                     el.style.backgroundSize = "300% 100%";
@@ -546,7 +545,7 @@ input:focus {
                     const legacyData = {
                         owner: res.owner,
                         price: res.price,
-                        imageUrl: res.imageUrl,
+                        imageUrl: res.img,
                         linkMain: res.linkUrl,
                         linkExternal: res.metadata,
                         linkSocial: "Verified Advertiser",
@@ -1097,6 +1096,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
