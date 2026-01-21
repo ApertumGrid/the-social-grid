@@ -475,9 +475,9 @@ input:focus {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script>
-        const CONTRACT_ADDR = "0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1"; 
+        const CONTRACT_ADDR = "0xF0260a64e4b2D7d5E6dBD157E25dabaA869898df"; 
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
-        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkMain","type":"string"},{"internalType":"string","name":"linkExternal","type":"string"},{"internalType":"string","name":"linkSocial","type":"string"},{"internalType":"string","name":"linkTelegram","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
+        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkUrl","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
         
         let selected = []; let prices = {}; let userAccount = "";
         let web3Read = new Web3(new Web3.providers.HttpProvider(RPC_URL));
@@ -507,7 +507,7 @@ input:focus {
                             if(!el) return;
                             el.classList.add('sold');
                             el.style.backgroundImage = "url('" + res.imageUrl + "')";
-                            el.setAttribute('data-link', res.linkMain);
+                            el.setAttribute('data-link', res.linkUrl);
                             el.setAttribute('data-img', res.imageUrl);
                             // --- LIVE SYNC TRIGGER ---
                     let currentPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
@@ -522,11 +522,11 @@ input:focus {
 
                                 // A match only counts if BOTH Link and Image are exactly the same
                                 const isNextMatch = nextEl && 
-                                                   nextEl.getAttribute('data-link') === res.linkMain && 
+                                                   nextEl.getAttribute('data-link') === res.linkUrl && 
                                                    nextEl.getAttribute('data-img') === res.imageUrl;
                                 
                                 const isPrevMatch = prevEl && 
-                                                   prevEl.getAttribute('data-link') === res.linkMain && 
+                                                   prevEl.getAttribute('data-link') === res.linkUrl && 
                                                    prevEl.getAttribute('data-img') === res.imageUrl;
 
                                 if (isNextMatch || isPrevMatch) {
@@ -542,9 +542,20 @@ input:focus {
                                 }
                             }, 200); // 200ms delay to ensure neighbors are ready
 
-                            el.setAttribute('data-owner-info', JSON.stringify(res));
+                            // This translates V2 data into the format your popups expect
+                    const legacyData = {
+                        owner: res.owner,
+                        price: res.price,
+                        imageUrl: res.imageUrl,
+                        linkMain: res.linkUrl,
+                        linkExternal: res.metadata,
+                        linkSocial: "Verified Advertiser",
+                        linkTelegram: "",
+                        isSold: res.isSold
+                    };
+                    el.setAttribute('data-owner-info', JSON.stringify(legacyData));
                             // --- VERIFIED DAO1 PARTNER LOGIC ---
-                        const partnerLink = res.linkExternal || ""; // Get the partner link
+                        const partnerLink = res.metadata || ""; // Get the partner link
                         // Check if it contains the DAO1 domain
                         if (partnerLink.toLowerCase().includes("dao1.info")) {
                             el.classList.add('verified-glow'); // Add the glowing border class
@@ -880,7 +891,7 @@ async function purchase() {
         </div>
 
         <h3 style="margin-top:30px;">Verified Contract</h3>
-        <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
+        <div class="contract-box">0xF0260a64e4b2D7d5E6dBD157E25dabaA869898df</div>
     </section>
     <script>
         setInterval(function() {
@@ -1086,6 +1097,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
