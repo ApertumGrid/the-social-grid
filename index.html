@@ -606,29 +606,41 @@ setTimeout(() => {
         function showStorefront(data, id) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
             const c = document.getElementById('modal-content');
+            
+            // --- 1. GENERATE THE GPS LINK ---
+            const gpsLink = window.location.origin + window.location.pathname + "?block=" + id;
+
             let partnerBtn = '';
             if (data.linkExternal && data.linkExternal.length > 1) { partnerBtn = `<a href="${data.linkExternal}" target="_blank" class="store-btn" style="border:1px dashed var(--accent); color:var(--accent);">🤝 PARTNER / DAO</a>`; }
+            
             c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
                 <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2>
                 <p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
+                
                 <div style="background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); text-align: center;">
                     <p style="margin: 0; font-family: 'Montserrat', sans-serif; color: #8fa7c7; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; opacity: 0.8;">
                         WAR ZONE TAKEOVER PRICE
                     </p>
                     <div style="background: rgba(0, 255, 213, 0.03); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(0, 255, 213, 0.2); text-align: left;">
-    <p style="margin: 0 0 10px 0; font-family: 'Orbitron'; color: var(--accent); font-size: 9px; letter-spacing: 2px;">MESSAGE FROM ADVERTISER</p>
-    <p style="margin: 0; font-family: 'Montserrat'; color: #fff; font-size: 14px; line-height: 1.5;">
-        ${data.linkSocial.includes(' ') ? data.linkSocial : "Official Verified Advertiser on The Social Grid. Click the links below to explore this project."}
-    </p>
-</div>
-<div style="margin-bottom: 20px; text-align: center;">
-    <span style="background: rgba(255, 46, 99, 0.1); color: #ff2e63; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid rgba(255, 46, 99, 0.2);">
-        ⚔️ TAKEOVER: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM
-    </span>
-</div>
+                        <p style="margin: 0 0 10px 0; font-family: 'Orbitron'; color: var(--accent); font-size: 9px; letter-spacing: 2px;">MESSAGE FROM ADVERTISER</p>
+                        <p style="margin: 0; font-family: 'Montserrat'; color: #fff; font-size: 14px; line-height: 1.5;">
+                            ${data.linkSocial.includes(' ') ? data.linkSocial : "Official Verified Advertiser on The Social Grid. Click the links below to explore this project."}
+                        </p>
+                    </div>
+                    <div style="margin-bottom: 20px; text-align: center;">
+                        <span style="background: rgba(255, 46, 99, 0.1); color: #ff2e63; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid rgba(255, 46, 99, 0.2);">
+                            ⚔️ TAKEOVER: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM
+                        </span>
+                    </div>
+                
                 <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT MAIN WEBSITE</a>
                 ${partnerBtn} 
                 <a href="${data.linkTelegram}" target="_blank" class="store-btn" style="background: rgba(36, 161, 222, 0.1); border-color: rgba(36, 161, 222, 0.4); color: #24A1DE; width: 100%; display: block; margin-top: 10px;">✈️ JOIN OFFICIAL TELEGRAM</a>
+                
+                <button class="store-btn" style="margin-top:10px; background: rgba(0, 255, 213, 0.1); border: 1px solid var(--accent); color: #fff; font-size: 10px;" 
+                onclick="navigator.clipboard.writeText('${gpsLink}'); alert('GPS Link Copied! Send it to anyone to bring them directly to this block.');">
+                📍 COPY GPS LOCATION
+                </button>
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
         /* --- NEW CANCEL FUNCTION --- */
@@ -991,6 +1003,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
