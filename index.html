@@ -996,7 +996,7 @@ window.addEventListener('click', function(e) {
 
     // Run the GPS check 2 seconds after load (giving your loop time to finish)
     setTimeout(checkGPS, 2000); 
-        // --- DEBUG SATELLITE BANNER SYSTEM ---
+        // --- SATELLITE BANNER SYSTEM (The Brain) ---
     function optimizeBigBanners() {
         // 1. Find all sold blocks
         const soldBlocks = Array.from(document.querySelectorAll('.tile.sold'));
@@ -1004,12 +1004,8 @@ window.addEventListener('click', function(e) {
 
         // 2. Calculate Grid Geometry (Dynamic)
         const gridEl = document.getElementById('grid');
-        // We calculate how many columns fit on the screen RIGHT NOW
-        const colWidth = 135; // 120px width + 15px gap
-        const gridWidth = Math.floor(gridEl.offsetWidth / colWidth);
+        const gridWidth = Math.floor(gridEl.offsetWidth / 135);
         
-        // console.log(`Satellite Scan: Found ${soldBlocks.length} blocks. Grid is ${gridWidth} cols wide.`);
-
         // 3. Group blocks by Image + Link
         const groups = {};
         soldBlocks.forEach(block => {
@@ -1022,10 +1018,9 @@ window.addEventListener('click', function(e) {
 
         // 4. Process Groups
         Object.values(groups).forEach(group => {
-            // Only process if we have 2 or more blocks
             if (group.length < 2) return; 
 
-            // Calculate Row/Col for every block based on CURRENT grid width
+            // Calculate Row/Col for every block
             const coords = group.map(b => {
                 const id = parseInt(b.id.replace('b-', ''));
                 return {
@@ -1045,31 +1040,27 @@ window.addEventListener('click', function(e) {
                 maxRow = Math.max(maxRow, c.row);
             });
 
-            // CHECK: Are these blocks actually touching?
-            // If the grid reshuffled, a group might be split apart.
-            // We verify if the group spans a solid rectangle.
             const spanCols = (maxCol - minCol) + 1;
             const spanRows = (maxRow - minRow) + 1;
             
-            // If the group is scattered (due to resize), we SKIP it to avoid broken graphics
-            if (coords.length !== spanCols * spanRows) {
-               // console.log("Skipping group - scattered by resize");
-               return; 
-            }
-
-            // Apply Styles
+            // Calculate Pixel Size
             const totalWidthPx = (spanCols * 135) - 15;
             const totalHeightPx = (spanRows * 135) - 15;
 
+            // Apply Styles
             coords.forEach(c => {
                 c.el.style.backgroundSize = `${totalWidthPx}px ${totalHeightPx}px`;
                 const offsetX = (c.col - minCol) * 135;
                 const offsetY = (c.row - minRow) * 135;
+                
                 c.el.style.backgroundPosition = `-${offsetX}px -${offsetY}px`;
+                
+                // Clean up borders
                 c.el.style.border = 'none';
                 c.el.style.borderRadius = '0';
+                c.el.style.boxShadow = 'none';
                 
-                // Corners
+                // Round Outer Corners Only
                 if(c.col === minCol && c.row === minRow) c.el.style.borderTopLeftRadius = '16px';
                 if(c.col === maxCol && c.row === minRow) c.el.style.borderTopRightRadius = '16px';
                 if(c.col === minCol && c.row === maxRow) c.el.style.borderBottomLeftRadius = '16px';
@@ -1078,8 +1069,8 @@ window.addEventListener('click', function(e) {
         });
     }
     
-    // Run frequently
-    setInterval(optimizeBigBanners, 1000);
+    // Run frequently (Every 0.5 seconds)
+    setInterval(optimizeBigBanners, 500);
 </script>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
@@ -1087,6 +1078,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
