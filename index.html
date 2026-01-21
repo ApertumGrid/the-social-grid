@@ -501,7 +501,7 @@ input:focus {
             for(let i = 0; i < 3000; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
-                        prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
+                        prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price || "5000000000000000000", 'ether')) * 1.5) : 5;
                         if(res.isSold) {
                             const el = document.getElementById('b-' + i); 
                             if(!el) return;
@@ -1097,6 +1097,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
