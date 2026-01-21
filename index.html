@@ -996,6 +996,83 @@ window.addEventListener('click', function(e) {
 
     // Run the GPS check 2 seconds after load (giving your loop time to finish)
     setTimeout(checkGPS, 2000); 
+        // --- SATELLITE BANNER SYSTEM (The Whack-A-Mole Fix) ---
+    // This function looks at the whole board and aligns images perfectly
+    function optimizeBigBanners() {
+        const soldBlocks = Array.from(document.querySelectorAll('.tile.sold'));
+        
+        // 1. Group blocks by their Image URL
+        const groups = {};
+        soldBlocks.forEach(block => {
+            const img = block.getAttribute('data-img');
+            // We use image + link to ensure we don't group different advertisers using the same stock photo
+            const link = block.getAttribute('data-link'); 
+            const key = img + '|' + link;
+            
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(block);
+        });
+
+        // 2. Process each group
+        Object.values(groups).forEach(group => {
+            if (group.length < 2) return; // Ignore single blocks
+
+            // Find the boundaries (min X, max X, min Y, max Y)
+            // We assume block IDs are 'b-0', 'b-1', etc.
+            const ids = group.map(b => parseInt(b.id.replace('b-', '')));
+            
+            // We need to know the grid width to calculate X and Y
+            const gridWidth = Math.floor(document.getElementById('grid').offsetWidth / 135); 
+            // Note: 135 is roughly 120px width + 15px gap. 
+            // If the grid resizes, this recalculates automatically.
+
+            let minCol = Infinity, maxCol = -Infinity, minRow = Infinity, maxRow = -Infinity;
+            const coords = ids.map(id => {
+                const col = id % gridWidth;
+                const row = Math.floor(id / gridWidth);
+                minCol = Math.min(minCol, col);
+                maxCol = Math.max(maxCol, col);
+                minRow = Math.min(minRow, row);
+                maxRow = Math.max(maxRow, row);
+                return { id, col, row, el: document.getElementById('b-' + id) };
+            });
+
+            // Calculate the total pixel size of this banner
+            // Formula: (Count * 135) - 15px gap
+            const spanCols = (maxCol - minCol) + 1;
+            const spanRows = (maxRow - minRow) + 1;
+            
+            const totalWidthPx = (spanCols * 135) - 15;
+            const totalHeightPx = (spanRows * 135) - 15;
+
+            // Apply the style to every block in the group
+            coords.forEach(c => {
+                // Set the size to cover the WHOLE group
+                c.el.style.backgroundSize = `${totalWidthPx}px ${totalHeightPx}px`;
+                
+                // Calculate offset for this specific block
+                const offsetX = (c.col - minCol) * 135;
+                const offsetY = (c.row - minRow) * 135;
+                
+                // Shift the image so the correct slice shows
+                c.el.style.backgroundPosition = `-${offsetX}px -${offsetY}px`;
+                
+                // Remove borders to make it seamless
+                c.el.style.border = 'none';
+                c.el.style.borderRadius = '0';
+                
+                // Round the outer corners of the whole group (Optional Polish)
+                if(c.col === minCol && c.row === minRow) c.el.style.borderTopLeftRadius = '16px';
+                if(c.col === maxCol && c.row === minRow) c.el.style.borderTopRightRadius = '16px';
+                if(c.col === minCol && c.row === maxRow) c.el.style.borderBottomLeftRadius = '16px';
+                if(c.col === maxCol && c.row === maxRow) c.el.style.borderBottomRightRadius = '16px';
+            });
+        });
+    }
+
+    // Run this repeatedly to catch blocks as they load in
+    setInterval(optimizeBigBanners, 2000); 
+    // -------------------------------------------------------
 </script>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
@@ -1003,6 +1080,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
