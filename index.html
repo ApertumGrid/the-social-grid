@@ -996,27 +996,29 @@ window.addEventListener('click', function(e) {
 
     // Run the GPS check 2 seconds after load (giving your loop time to finish)
     setTimeout(checkGPS, 2000); 
-        // --- SATELLITE BANNER SYSTEM (Auto-Detect Version) ---
+        // --- SATELLITE BANNER SYSTEM (Physical Detection) ---
     function optimizeBigBanners() {
         const soldBlocks = Array.from(document.querySelectorAll('.tile.sold'));
         if (soldBlocks.length === 0) return; 
 
-        // 1. AUTO-DETECT TRUE GRID WIDTH
-        // We look for the first block that drops to the next line
+        // 1. PHYSICALLY MEASURE THE GRID
+        // We find the first block that "drops" to the next line.
         let gridWidth = 0;
         const firstBlock = document.getElementById('b-0');
         if (firstBlock) {
-            const firstTop = firstBlock.offsetTop;
-            // Scan up to 50 blocks to find where the row breaks
+            const startY = firstBlock.offsetTop;
+            // Scan the first 50 blocks
             for (let i = 1; i < 50; i++) {
                 const b = document.getElementById('b-' + i);
-                if (b && b.offsetTop > firstTop + 10) { // Found the drop!
-                    gridWidth = i;
+                // If this block is lower down than the first one, we found the break!
+                if (b && b.offsetTop > startY + 10) { 
+                    gridWidth = i; 
                     break;
                 }
             }
         }
-        // Fallback if grid is empty or huge
+        
+        // Safety Fallback (rarely needed)
         if (gridWidth === 0) gridWidth = Math.floor(document.getElementById('grid').offsetWidth / 135);
 
         // 2. Group blocks by Image + Link
@@ -1033,7 +1035,7 @@ window.addEventListener('click', function(e) {
         Object.values(groups).forEach(group => {
             if (group.length < 2) return; 
 
-            // Calculate Row/Col using the TRUE gridWidth
+            // Calculate Row/Col using the DETECTED gridWidth
             const coords = group.map(b => {
                 const id = parseInt(b.id.replace('b-', ''));
                 return {
@@ -1044,34 +1046,24 @@ window.addEventListener('click', function(e) {
                 };
             });
 
-            // Find boundaries
             let minCol = Infinity, maxCol = -Infinity, minRow = Infinity, maxRow = -Infinity;
             coords.forEach(c => {
-                minCol = Math.min(minCol, c.col);
-                maxCol = Math.max(maxCol, c.col);
-                minRow = Math.min(minRow, c.row);
-                maxRow = Math.max(maxRow, c.row);
+                minCol = Math.min(minCol, c.col); maxCol = Math.max(maxCol, c.col);
+                minRow = Math.min(minRow, c.row); maxRow = Math.max(maxRow, c.row);
             });
 
-            // CHECK: Is this a valid rectangle?
-            // If the user resized the window, the group might be split across lines.
-            // If the math is wrong, we skip to avoid ugly glitches.
-            const spanCols = (maxCol - minCol) + 1;
-            const spanRows = (maxRow - minRow) + 1;
-            
-            // Pixel Calculation (Standard 120px tile + 15px gap)
-            const totalWidthPx = (spanCols * 135) - 15;
-            const totalHeightPx = (spanRows * 135) - 15;
+            // 4. Apply the Snap
+            const totalWidthPx = ((maxCol - minCol) + 1) * 135 - 15;
+            const totalHeightPx = ((maxRow - minRow) + 1) * 135 - 15;
 
-            // Apply Styles with !important to force update
             coords.forEach(c => {
-                c.el.style.backgroundSize = `${totalWidthPx}px ${totalHeightPx}px`;
                 const offsetX = (c.col - minCol) * 135;
                 const offsetY = (c.row - minRow) * 135;
                 
-                c.el.style.backgroundPosition = `-${offsetX}px -${offsetY}px`;
+                // Use !important to override any defaults
+                c.el.style.setProperty('background-size', `${totalWidthPx}px ${totalHeightPx}px`, 'important');
+                c.el.style.setProperty('background-position', `-${offsetX}px -${offsetY}px`, 'important');
                 
-                // Remove borders
                 c.el.style.border = 'none';
                 c.el.style.borderRadius = '0';
                 c.el.style.boxShadow = 'none';
@@ -1085,8 +1077,8 @@ window.addEventListener('click', function(e) {
         });
     }
     
-    // Run frequently
-    setInterval(optimizeBigBanners, 500);
+    // Check frequently
+    setInterval(optimizeBigBanners, 250);
 </script>
     <div id="social-proof">
         <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
@@ -1094,6 +1086,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
