@@ -22,8 +22,11 @@
             font-weight: 900; 
             text-transform: uppercase; 
             line-height: 1; 
+            /* Base color for THE SOCIAL */
             color: #ffffff; 
         }
+
+        /* This targets the word GRID specifically */
         .brand-text h1 span { 
             color: var(--accent); 
             text-shadow: 0 0 15px rgba(0, 255, 213, 0.4); 
@@ -49,8 +52,26 @@
         .modal-box { width: 90%; max-width: 500px; background: #0a0f19; border: 1px solid var(--accent); padding: 40px; border-radius: 30px; }
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-group label { display: block; font-family: 'Orbitron'; font-size: 10px; color: var(--accent); margin-bottom: 6px; }
-        input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: #fff; box-sizing: border-box; font-family: 'Montserrat', sans-serif; transition: all 0.3s ease; }
-        input:focus { outline: none; border: 1px solid #00ffd5; box-shadow: 0 0 15px rgba(0, 255, 213, 0.3); background: rgba(0, 255, 213, 0.05); }
+        /* --- NEON INPUT STYLING --- */
+input { 
+    width: 100%; 
+    background: rgba(255,255,255,0.05); 
+    border: 1px solid rgba(255,255,255,0.1); 
+    padding: 12px; 
+    border-radius: 10px; 
+    color: #fff; 
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease; 
+}
+
+/* The Glow Effect on Focus */
+input:focus {
+    outline: none;
+    border: 1px solid #00ffd5; /* Bright Cyan Border */
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.3); /* The Glow */
+    background: rgba(0, 255, 213, 0.05); /* Slight tint inside */
+}
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.95); backdrop-filter: blur(40px); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 5000; }
         .glass-panel { width: 90%; max-width: 1100px; padding: 60px; border-radius: 40px; background: rgba(10, 15, 25, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); overflow-y: auto; max-height: 85vh; text-align: center; }
         .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
@@ -68,53 +89,302 @@
         .contract-box { background: #1a1a1a; padding: 15px; border-radius: 5px; border: 1px dashed #444; word-break: break-all; font-family: monospace; color: #00ffcc; }
         .news-link a { color: #ffd700 !important; font-weight: 800; border: 1px solid #ffd700; padding: 6px 12px; border-radius: 50px; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; margin-right: 15px; text-decoration: none; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); animation: glow 2s infinite alternate; }
         @keyframes glow { from { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); } to { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); } }
-        .tile:not(.sold) { background: rgba(0, 255, 213, 0.03); border: 1px solid rgba(0, 255, 213, 0.4); box-shadow: inset 0 0 15px rgba(0, 255, 213, 0.05), 0 0 10px rgba(0, 255, 213, 0.1); border-radius: 16px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: 'Orbitron', sans-serif; color: rgba(0, 255, 213, 0.8); font-size: 24px; font-weight: 700; backdrop-filter: blur(4px); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .tile:not(.sold)::before { content: "+"; }
-        .tile:not(.sold):hover { transform: translateY(-5px) scale(1.02); background: rgba(0, 255, 213, 0.05); border: 1px solid rgba(0, 255, 213, 0.8); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 213, 0.4), inset 0 0 10px rgba(0, 255, 213, 0.2); color: #fff; cursor: pointer; z-index: 10; }
-        .tile:not(.sold):hover::before { content: "CLAIM"; font-size: 11px; letter-spacing: 2px; }
-        .tile.sold { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; background-size: cover; background-position: center; box-shadow: 0 5px 15px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 5; }
-        .tile.sold:hover { transform: scale(1.6) rotate(-2deg); box-shadow: 0 0 80px rgba(0, 255, 213, 0.9); z-index: 9999 !important; border: 2px solid #ffffff; cursor: zoom-in; }
+        /* --- THE NEON CHIP PROTOCOL (HIGH VOLTAGE) --- */
+
+/* 1. The Empty Slots (Inactive Chips) - Brighter & Glowier */
+.tile:not(.sold) {
+    background: rgba(0, 255, 213, 0.03); /* Subtle Cyan Tint */
+    border: 1px solid rgba(0, 255, 213, 0.4); /* Stronger Neon Border */
+    box-shadow: 
+        inset 0 0 15px rgba(0, 255, 213, 0.05), /* Inner Glow */
+        0 0 10px rgba(0, 255, 213, 0.1); /* Outer Ambient Glow */
+    border-radius: 16px; /* Smooth Corners */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    color: rgba(0, 255, 213, 0.8); /* Brighter '+' Sign */
+    font-size: 24px;
+    font-weight: 700;
+    backdrop-filter: blur(4px); /* Blurs the background behind it */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tile:not(.sold)::before { content: "+"; }
+
+/* 2. Hovering an Empty Slot (Activation Ready) */
+.tile:not(.sold):hover {
+    transform: translateY(-5px) scale(1.02); /* Physically lifts up */
+    background: rgba(0, 255, 213, 0.05);
+    border: 1px solid rgba(0, 255, 213, 0.8); /* Bright Cyan Edge */
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.5), /* Drop Shadow */
+        0 0 20px rgba(0, 255, 213, 0.4), /* Outer Glow */
+        inset 0 0 10px rgba(0, 255, 213, 0.2); /* Inner Glow */
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.tile:not(.sold):hover::before {
+    content: "CLAIM";
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* 3. The SOLD Chips (Active Data Blocks) */
+.tile.sold {
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle Metal Edge */
+    border-radius: 16px; 
+    background-size: cover;
+    background-position: center;
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.7), /* Depth */
+        inset 0 0 0 1px rgba(255,255,255,0.1); /* Inner Rim */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+}
+
+/* 4. Hovering a Sold Chip (RESTORED THE BIG POP 💥) */
+.tile.sold:hover {
+    transform: scale(1.6) rotate(-2deg); /* The 1.6x Size + The Tilt */
+    box-shadow: 0 0 80px rgba(0, 255, 213, 0.9); /* The Massive Glow */
+    z-index: 9999 !important; /* Forces it on top of everything */
+    border: 2px solid #ffffff; /* Bright White Focus Ring */
+    cursor: zoom-in;
+}
         ::-webkit-scrollbar { width: 12px; }
         ::-webkit-scrollbar-track { background: #050a14; }
         ::-webkit-scrollbar-thumb { background: #1a2a44; border: 1px solid #00ffcc; border-radius: 6px; }
         ::-webkit-scrollbar-thumb:hover { background: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
         ::selection { background: #00ffcc; color: #000000; text-shadow: none; }
+        .tile:not(.sold):hover::before { transform: scale(1.1); letter-spacing: 4px; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); background: rgba(0, 255, 213, 0.15); box-shadow: inset 0 0 15px rgba(0, 255, 213, 0.3); border: 1px solid rgba(0, 255, 213, 0.5); }
         @keyframes heartbeat { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 255, 213, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); } }
         .wallet-btn { animation: heartbeat 2s infinite; }
         .wallet-btn:hover { animation: none; transform: scale(1.1); box-shadow: 0 0 20px #00ffcc; }
-        #social-proof { position: fixed; bottom: 30px; left: 30px; background: rgba(10, 15, 25, 0.95); border: 1px solid var(--accent); padding: 12px 20px; border-radius: 12px; backdrop-filter: blur(10px); display: none; align-items: center; gap: 12px; z-index: 4000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 11px; font-family: 'Montserrat', sans-serif; animation: slideInUp 0.5s ease-out; }
-        @keyframes slideInUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        #live-ticker { position: fixed; top: 0; left: 0; width: 100%; height: 35px; background: rgba(0, 255, 213, 0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 255, 213, 0.1); z-index: 999; display: flex; align-items: center; overflow: hidden; font-family: 'Montserrat', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8fa7c7; position: relative; }
-        .ticker-wrapper { display: flex; white-space: nowrap; animation: ticker-scroll 30s linear infinite; }
-        .ticker-item { padding: 0 40px; display: flex; align-items: center; gap: 10px; }
+        #social-proof {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(10, 15, 25, 0.95);
+            border: 1px solid var(--accent);
+            padding: 12px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            display: none; /* Stays hidden until triggered */
+            align-items: center;
+            gap: 12px;
+            z-index: 4000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        /* LIVE TICKER STYLING */
+        #live-ticker {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: rgba(0, 255, 213, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 213, 0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8fa7c7;
+            position: relative;
+        }
+
+        .ticker-wrapper {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker-scroll 30s linear infinite;
+        }
+
+        .ticker-item {
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .ticker-item span { color: var(--accent); font-weight: 800; }
-        @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .verified-glow { position: relative; border: 2px solid #ffd700 !important; box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.2), inset 0 0 12px rgba(255, 215, 0, 0.3); z-index: 20; animation: goldPulse 2s infinite alternate; }
-        @keyframes goldPulse { 0% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.5); } 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.4); } }
-        .verified-badge { position: absolute; top: -5px; right: -5px; width: 14px; height: 14px; background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; font-weight: 900; font-size: 9px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #fff; z-index: 30; cursor: help; }
-        .verified-badge::after { content: "VERIFIED"; position: absolute; bottom: 150%; left: 50%; transform: translateX(-50%); background: #000; color: #00ffd5; padding: 2px 8px; border: 1px solid #ffd700; border-radius: 2px; font-family: 'Orbitron', sans-serif; font-size: 8px; letter-spacing: 1.5px; white-space: nowrap; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; }
-        .verified-badge:hover::after { opacity: 1; }
+
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        /* --- GOLD VERIFIED PARTNER STYLES --- */
+.verified-glow {
+    position: relative;
+    border: 2px solid #ffd700 !important; /* Restored to 2px for thickness */
+    /* Thick, wide atmospheric glow from the original version */
+    box-shadow: 
+        0 0 15px rgba(255, 215, 0, 0.6), 
+        0 0 30px rgba(255, 215, 0, 0.2), 
+        inset 0 0 12px rgba(255, 215, 0, 0.3); 
+    z-index: 20;
+    animation: goldPulse 2s infinite alternate;
+}
+
+@keyframes goldPulse {
+    0% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.5); }
+    100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.4); }
+}
+
+.verified-badge {
+    position: absolute;
+    top: -5px; 
+    right: -5px;
+    width: 14px; 
+    height: 14px; 
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #000;
+    font-weight: 900;
+    font-size: 9px; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    border: 1px solid #fff;
+    z-index: 30;
+    cursor: help;
+}
+
+/* Minimalist Popup */
+.verified-badge::after {
+    content: "VERIFIED"; 
+    position: absolute;
+    bottom: 150%; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000; 
+    color: #00ffd5;
+    padding: 2px 8px; 
+    border: 1px solid #ffd700;
+    border-radius: 2px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 8px; 
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.verified-badge:hover::after {
+    opacity: 1;
+}
+/* --- COMPLETE MOBILE OPTIMIZATION (FINAL POLISH) --- */
         @media (max-width: 768px) {
-            #live-ticker { position: relative !important; top: 0 !important; margin: 10px 0; z-index: 1; }
-            header { height: auto; padding: 15px 0; position: relative; display: flex; flex-direction: column; backdrop-filter: blur(15px); }
-            #commission-ribbon { margin-top: 0 !important; padding: 15px 0 !important; background: rgba(0, 255, 213, 0.1); }
-            .header-inner { flex-direction: column; gap: 10px; width: 95%; }
+            #live-ticker { 
+                position: relative !important; 
+                top: 0 !important; 
+                margin: 10px 0;
+                z-index: 1;
+            }
+            /* Header Fix: Relative position stops it from covering the grid */
+            header { 
+                height: auto; 
+                padding: 15px 0; 
+                position: relative; 
+                display: flex;
+                flex-direction: column;
+                backdrop-filter: blur(15px);
+            }
+            #commission-ribbon { 
+                margin-top: 0 !important; 
+                padding: 15px 0 !important;
+                background: rgba(0, 255, 213, 0.1);
+            }
+            .header-inner { 
+                flex-direction: column; 
+                gap: 10px; 
+                width: 95%;
+            }
             .brand-wrap { gap: 10px; justify-content: center; }
             .logo-sphere { width: 45px; height: 45px; }
             .brand-text h1 { font-size: 18px; letter-spacing: 2px; text-align: center; }
             .brand-text p { font-size: 9px; letter-spacing: 3px; }
-            .nav-group { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
-            .nav-btn, .wallet-btn, .tg-btn { padding: 12px 20px; font-size: 11px; width: 85%; text-align: center; margin: 0; }
+            
+            /* Buttons: Stacked and easy to tap */
+            .nav-group { 
+                display: flex; 
+                flex-direction: column;
+                align-items: center; 
+                gap: 8px; 
+                width: 100%;
+            }
+            .nav-btn, .wallet-btn, .tg-btn { 
+                padding: 12px 20px; 
+                font-size: 11px; 
+                width: 85%; /* Bigger target for thumbs */
+                text-align: center;
+                margin: 0;
+            }
+            .news-link a { font-size: 9px; padding: 5px 10px; display: inline-block; margin-bottom: 5px; }
+
+            /* Grid: No longer covered by header */
             main { margin-top: 20px; }
-            #grid { grid-template-columns: repeat(auto-fill, 95px); gap: 10px; }
+            #grid { 
+                grid-template-columns: repeat(auto-fill, 95px); 
+                gap: 10px; 
+            }
             .tile { width: 95px; height: 95px; }
-            #selection-bar { width: 90%; min-width: unset; flex-direction: column; gap: 12px; bottom: 10px; padding: 20px; border-radius: 20px; }
-            .modal-box { width: 85%; padding: 20px; max-height: 85vh; overflow-y: auto; border-radius: 20px; }
+            .tile.selected { transform: scale(1.1); z-index: 100; }
+
+            /* Selection Bar: Solid vertical layout */
+            #selection-bar { 
+                width: 90%; 
+                min-width: unset; 
+                flex-direction: column; 
+                gap: 12px; 
+                bottom: 10px; 
+                padding: 20px;
+                border-radius: 20px;
+            }
+            #selection-bar button { width: 100%; padding: 15px; }
+
+            /* Modal Fix: Scrollable so no buttons are cut off */
+            .modal-box { 
+                width: 85%; 
+                padding: 20px; 
+                max-height: 85vh; 
+                overflow-y: auto; /* Makes the menu scrollable if it's too long */
+                border-radius: 20px;
+            }
             .glass-panel { padding: 25px; }
             .feature-grid { grid-template-columns: 1fr; gap: 15px; }
+            .store-btn { padding: 14px; font-size: 11px; }
         }
-        @keyframes gpsPulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); border-color: #fff; } 70% { box-shadow: 0 0 0 20px rgba(0, 255, 213, 0); border-color: var(--accent); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); border-color: #fff; } }
-        .gps-target { animation: gpsPulse 2s infinite; z-index: 100 !important; position: relative; border: 2px solid #fff !important; }
+        /* GPS Target Pulse Animation */
+            @keyframes gpsPulse {
+                0% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0.7); border-color: #fff; }
+                70% { box-shadow: 0 0 0 20px rgba(0, 255, 213, 0); border-color: var(--accent); }
+                100% { box-shadow: 0 0 0 0 rgba(0, 255, 213, 0); border-color: #fff; }
+            }
+
+            .gps-target {
+                animation: gpsPulse 2s infinite;
+                z-index: 100 !important;
+                position: relative;
+                border: 2px solid #fff !important;
+            }
     </style>
 </head>
 <body>
@@ -130,92 +400,174 @@
             </div>
         </div>
     </header>
-    <div id="commission-ribbon" style="width: 100%; background: rgba(0, 255, 213, 0.05); border-bottom: 1px solid rgba(0, 255, 213, 0.1); padding: 12px 0; text-align: center; position: relative; margin-top: 130px; z-index: 900;">
-        <span style="font-family:'Orbitron'; font-size:11px; color:#8fa7c7; letter-spacing:2px;"> COMMUNITY REWARDS DISTRIBUTED: <span id="live-comm-text" style="color:var(--accent); font-weight:800; font-size:16px; margin-left:10px; text-shadow: 0 0 10px var(--accent);"> 0.00 APTM </span></span>
-    </div>
+    <div id="commission-ribbon" style="
+    width: 100%; 
+    background: rgba(0, 255, 213, 0.05); 
+    border-bottom: 1px solid rgba(0, 255, 213, 0.1); 
+    padding: 12px 0; 
+    text-align: center; 
+    position: relative; 
+    margin-top: 130px; /* This clears the 130px height of your fixed header */
+    z-index: 900;
+">
+    <span style="font-family:'Orbitron'; font-size:11px; color:#8fa7c7; letter-spacing:2px;"> 
+        COMMUNITY REWARDS DISTRIBUTED: 
+        <span id="live-comm-text" style="color:var(--accent); font-weight:800; font-size:16px; margin-left:10px; text-shadow: 0 0 10px var(--accent);">
+            0.00 APTM
+        </span>
+    </span>
+</div>
     <div id="live-ticker">
         <div class="ticker-wrapper" id="ticker-content">
+            <div class="ticker-item">⚡ RECENT TAKEOVER: <span>0x4f...2a</span> SECURED 4 BLOCKS (+1.0 APTM PROFIT)</div>
+            <div class="ticker-item">🔥 HOT ZONE: <span>SECTOR 7</span> IS SEEING HIGH ACTIVITY</div>
+            <div class="ticker-item">🚀 NETWORK: <span>8,402,192</span> TX VERIFIED ON APERTUM</div>
             <div class="ticker-item">⚡ RECENT TAKEOVER: <span>0x4f...2a</span> SECURED 4 BLOCKS (+1.0 APTM PROFIT)</div>
             <div class="ticker-item">🔥 HOT ZONE: <span>SECTOR 7</span> IS SEEING HIGH ACTIVITY</div>
             <div class="ticker-item">🚀 NETWORK: <span>8,402,192</span> TX VERIFIED ON APERTUM</div>
         </div>
     </div>
     <main><div id="grid"></div></main>
-    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button onclick="cancelSelection()" style="background: rgba(255, 0, 0, 0.2); border: 1px solid #ff4444; color: #ff4444; width: 40px; height: 40px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-right: 10px; font-size: 16px;">✕</button><button class="wallet-btn" style="padding: 10px 20px; font-size: 11px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
+    <div id="selection-bar"><div style="font-family:'Orbitron'; font-size:14px;"><span id="select-count">0</span> Blocks | <span id="price-tag" style="color:var(--accent)">0 APTM</span></div><button onclick="cancelSelection()" style="
+    background: rgba(255, 0, 0, 0.2); 
+    border: 1px solid #ff4444; 
+    color: #ff4444; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 12px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin-right: 10px;
+    font-size: 16px;
+">✕</button>
+
+<button class="wallet-btn" style="padding: 10px 20px; font-size: 11px;" onclick="openDataModal()">ENTER DATA & BUY</button></div>
     <div id="data-modal">
-        <div class="modal-box">
-            <h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3>
-            <div class="input-group">
-                <label style="display:flex; justify-content:space-between;"> IMAGE URL <a href="https://postimages.org/" target="_blank" style="color:var(--accent); text-decoration:none; font-size:9px; opacity:0.8;">↗ NEED AN UPLOAD LINK?</a></label>
-                <input type="text" id="img-url" placeholder="Paste .jpg or .png link" oninput="validateImage(this)">
-                <div id="link-warning" style="display:none; color:#ff2e63; font-size:10px; margin-top:5px; font-weight:800; font-family:'Montserrat', sans-serif;"> ⚠️ WAIT! That looks like a website, not an image. Link must end in .jpg or .png </div>
-            </div>
-            <div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div>
-            <div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div class="input-group" style="grid-column: span 2;">
-                    <label>ADVERTISER MESSAGE (MAX 100 CHARS)</label>
-                    <input type="text" id="soc-link" placeholder="Example: Join the DAO1 revolution today!">
-                </div>
-                <div class="input-group" style="grid-column: span 2;">
-                    <label>TELEGRAM</label>
-                    <input type="text" id="tg-link" placeholder="t.me/group">
-                </div>
-            </div>
-            <button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button>
-            <button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button>
-        </div>
+    <div class="modal-box">
+        <h3 style="font-family:'Orbitron'; color:var(--accent); margin-top:0;">SECURE TERRITORY</h3>
+        <div class="input-group">
+    <label style="display:flex; justify-content:space-between;">
+        IMAGE URL 
+        <a href="https://postimages.org/" target="_blank" style="color:var(--accent); text-decoration:none; font-size:9px; opacity:0.8;">↗ NEED AN UPLOAD LINK?</a>
+    </label>
+    <input type="text" id="img-url" placeholder="Paste .jpg or .png link" oninput="validateImage(this)">
+    <div id="link-warning" style="display:none; color:#ff2e63; font-size:10px; margin-top:5px; font-weight:800; font-family:'Montserrat', sans-serif;">
+        ⚠️ WAIT! That looks like a website, not an image. Link must end in .jpg or .png
     </div>
+</div>
+        <div class="input-group"><label>MAIN WEBSITE</label><input type="text" id="main-link" placeholder="https://website.com"></div>
+        <div class="input-group"><label>DAO / PARTNER</label><input type="text" id="ext-link" placeholder="Optional Link"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div class="input-group" style="grid-column: span 2;">
+                <label>ADVERTISER MESSAGE (MAX 100 CHARS)</label>
+                <input type="text" id="soc-link" placeholder="Example: Join the DAO1 revolution today!">
+            </div>
+            <div class="input-group" style="grid-column: span 2;">
+                <label>TELEGRAM</label>
+                <input type="text" id="tg-link" placeholder="t.me/group">
+            </div>
+        </div>
+        <button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button>
+        <button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button>
+    </div>
+</div>
     <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script>
-        const CONTRACT_ADDR = "0xF0260a64e4b2D7d5E6dBD157E25dabaA869898df"; 
+        const CONTRACT_ADDR = "0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1"; 
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
-        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkUrl","type":"string"},{"internalType":"string","name":"metadata","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
+        const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkMain","type":"string"},{"internalType":"string","name":"linkExternal","type":"string"},{"internalType":"string","name":"linkSocial","type":"string"},{"internalType":"string","name":"linkTelegram","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
         
         let selected = []; let prices = {}; let userAccount = "";
         let web3Read = new Web3(new Web3.providers.HttpProvider(RPC_URL));
         let contractRead = new web3Read.eth.Contract(ABI, CONTRACT_ADDR);
 
         window.onload = async () => {
-            const g = document.getElementById('grid');
-            for (let i = 0; i < 1000; i++) {
-                const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = (e) => handleTileClick(i, e); g.appendChild(d);
-            }
-            loadGrid();
-            if (localStorage.getItem('isWalletConnected') === 'true') { await connect(); }
-        };
-
-        async function loadGrid() {
-    for(let i = 0; i < 500; i++) { 
-        setTimeout(() => {
-            contractRead.methods.grid(i).call().then(res => {
-                if(res.isSold) {
-                    const el = document.getElementById('b-' + i); 
-                    if(!el) return;
-                    el.classList.add('sold');
-                    el.style.backgroundImage = "url('" + res.imageUrl + "')";
-                    el.setAttribute('data-link', res.linkUrl);
-                    el.setAttribute('data-img', res.imageUrl);
-                    
-                    const legacyData = {
-                        owner: res.owner,
-                        price: web3Read.utils.toWei("5", 'ether'),
-                        imageUrl: res.imageUrl,
-                        linkMain: res.linkUrl,
-                        linkExternal: res.metadata,
-                        linkSocial: "Verified Advertiser",
-                        linkTelegram: "",
-                        isSold: true
-                    };
-                    el.setAttribute('data-owner-info', JSON.stringify(legacyData));
-                }
-            }).catch(e => { });
-        }, i * 2); 
+    // 1. Build the Grid
+    const g = document.getElementById('grid');
+    for (let i = 0; i < 4000; i++) {
+        const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = (e) => handleTileClick(i, e); g.appendChild(d);
     }
-}
+    loadGrid();
 
+    // 2. NEW: Check if we should Auto-Connect
+    if (localStorage.getItem('isWalletConnected') === 'true') {
+        await connect();
+    }
+};
+
+      async function loadGrid() {
+            for(let i = 0; i < 3000; i++) { 
+                setTimeout(() => {
+                    contractRead.methods.grid(i).call().then(res => {
+                        prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
+                        if(res.isSold) {
+                            const el = document.getElementById('b-' + i); 
+                            if(!el) return;
+                            el.classList.add('sold');
+                            el.style.backgroundImage = "url('" + res.imageUrl + "')";
+                            el.setAttribute('data-link', res.linkMain);
+                            el.setAttribute('data-img', res.imageUrl);
+                            // --- LIVE SYNC TRIGGER ---
+                    let currentPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
+                    let ribbonText = document.getElementById('live-comm-text');
+                    if(ribbonText) ribbonText.innerText = currentPaid.toFixed(2) + " APTM";
+
+                            // --- DYNAMIC TEAM DETECTION ---
+                            // We wait for neighbors to load, then check for an IDENTICAL match
+                            setTimeout(() => {
+                                const prevEl = document.getElementById('b-' + (i - 1));
+                                const nextEl = document.getElementById('b-' + (i + 1));
+
+                                // A match only counts if BOTH Link and Image are exactly the same
+                                const isNextMatch = nextEl && 
+                                                   nextEl.getAttribute('data-link') === res.linkMain && 
+                                                   nextEl.getAttribute('data-img') === res.imageUrl;
+                                
+                                const isPrevMatch = prevEl && 
+                                                   prevEl.getAttribute('data-link') === res.linkMain && 
+                                                   prevEl.getAttribute('data-img') === res.imageUrl;
+
+                                if (isNextMatch || isPrevMatch) {
+                                    // BANNER MODE: Found a team member with the same image
+                                    el.style.backgroundSize = "300% 100%";
+                                    if (isNextMatch && !isPrevMatch) el.style.backgroundPosition = "0% center"; 
+                                    else if (isNextMatch && isPrevMatch) el.style.backgroundPosition = "50% center";
+                                    else if (!isNextMatch && isPrevMatch) el.style.backgroundPosition = "100% center";
+                                } else {
+                                    // INDIVIDUAL MODE: Solo image, no matching neighbor image
+                                    el.style.backgroundSize = "cover";
+                                    el.style.backgroundPosition = "center";
+                                }
+                            }, 200); // 200ms delay to ensure neighbors are ready
+
+                            el.setAttribute('data-owner-info', JSON.stringify(res));
+                            // --- VERIFIED DAO1 PARTNER LOGIC ---
+                        const partnerLink = res.linkExternal || ""; // Get the partner link
+                        // Check if it contains the DAO1 domain
+                        if (partnerLink.toLowerCase().includes("dao1.info")) {
+                            el.classList.add('verified-glow'); // Add the glowing border class
+                            // Create and append the verified badge
+                            const badge = document.createElement('div');
+                            badge.className = 'verified-badge';
+                            badge.innerHTML = '★';
+                            el.appendChild(badge);
+                        }
+                        // ------------------------------------
+                        }
+                    }).catch(e => { });
+                }, i * 5); 
+            }
+        }
+        // Calculate total sold blocks to show honest commission data
+setTimeout(() => {
+    let totalSold = Object.keys(prices).filter(id => prices[id] > 5).length;
+    let counterElement = document.getElementById('live-comm-text');
+    if(counterElement) {
+        counterElement.innerText = totalSold.toFixed(2) + " APTM";
+    }
+}, 2000);
         function handleTileClick(id, event) {
             const el = document.getElementById('b-' + id);
             const isSold = el.classList.contains('sold');
@@ -233,89 +585,559 @@
             if(selected.length > 0) {
                 bar.style.display = 'flex';
                 let total = selected.reduce((sum, id) => sum + (prices[id] || 5), 0);
+                const colsInGrid = Math.floor(document.getElementById('grid').offsetWidth / 135);
+                let minCol = Infinity, maxCol = -Infinity, minRow = Infinity, maxRow = -Infinity;
+                selected.forEach(id => {
+                    let c = id % colsInGrid; let r = Math.floor(id / colsInGrid);
+                    minCol = Math.min(minCol, c); maxCol = Math.max(maxCol, c);
+                    minRow = Math.min(minRow, r); maxRow = Math.max(maxRow, r);
+                });
+                const widthPx = ((maxCol - minCol) + 1) * 500;
+                const heightPx = ((maxRow - minRow) + 1) * 500;
                 document.getElementById('select-count').innerText = selected.length;
-                document.getElementById('price-tag').innerHTML = `<span style="color:#fff; font-size:18px;">${total.toFixed(2)}</span> <span style="color:var(--accent); font-size:12px;">APTM</span>`;
+                document.getElementById('price-tag').innerHTML = `
+    <span style="font-family:'Montserrat', sans-serif; color:#fff; font-size:18px; font-weight:800; margin-left:5px;">${total.toFixed(2)}</span> 
+    <span style="font-family:'Montserrat', sans-serif; color:var(--accent); font-size:12px; font-weight:600; margin-right:15px;">APTM</span>
+    <span style="font-size:11px; color:#8fa7c7; border-left:1px solid rgba(255,255,255,0.1); padding-left:15px; letter-spacing:1px;">REQ. SIZE: ${widthPx} x ${heightPx} PX</span>
+`;
             } else { bar.style.display = 'none'; }
         }
 
         function showStorefront(data, id) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
             const c = document.getElementById('modal-content');
+            
+            // --- 1. GENERATE THE GPS LINK ---
             const gpsLink = window.location.origin + window.location.pathname + "?block=" + id;
-            let partnerBtn = data.linkExternal ? `<a href="${data.linkExternal}" target="_blank" class="store-btn" style="border:1px dashed var(--accent);">🤝 PARTNER / DAO</a>` : '';
+
+            let partnerBtn = '';
+            if (data.linkExternal && data.linkExternal.length > 1) { partnerBtn = `<a href="${data.linkExternal}" target="_blank" class="store-btn" style="border:1px dashed var(--accent); color:var(--accent);">🤝 PARTNER / DAO</a>`; }
+            
             c.innerHTML = `<img src="${data.imageUrl}" style="width:150px; height:150px; border-radius:20px; border:2px solid var(--accent); margin-bottom:20px; object-fit:cover;">
                 <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">TERRITORY OWNER</h2>
-                <p style="color:#8fa7c7; font-size:12px; margin-bottom:30px;">${data.owner}</p>
-                <div style="background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; margin-bottom: 25px;">
-                    <p style="color: var(--accent); font-size: 9px;">MESSAGE FROM ADVERTISER</p>
-                    <p style="color: #fff; font-size: 14px;">${data.linkSocial || "Official Verified Advertiser."}</p>
-                    <span style="background: rgba(255, 46, 99, 0.1); color: #ff2e63; padding: 5px 12px; border-radius: 20px; font-size: 11px;">⚔️ TAKEOVER: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM</span>
-                </div>
+                <p style="color:#8fa7c7; font-size:12px; margin-bottom:30px; word-break:break-all;">${data.owner}</p>
+                
+                <div style="background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); text-align: center;">
+                    <p style="margin: 0; font-family: 'Montserrat', sans-serif; color: #8fa7c7; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; opacity: 0.8;">
+                        WAR ZONE TAKEOVER PRICE
+                    </p>
+                    <div style="background: rgba(0, 255, 213, 0.03); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(0, 255, 213, 0.2); text-align: left;">
+                        <p style="margin: 0 0 10px 0; font-family: 'Orbitron'; color: var(--accent); font-size: 9px; letter-spacing: 2px;">MESSAGE FROM ADVERTISER</p>
+                        <p style="margin: 0; font-family: 'Montserrat'; color: #fff; font-size: 14px; line-height: 1.5;">
+                            ${data.linkSocial.includes(' ') ? data.linkSocial : "Official Verified Advertiser on The Social Grid. Click the links below to explore this project."}
+                        </p>
+                    </div>
+                    <div style="margin-bottom: 20px; text-align: center;">
+                        <span style="background: rgba(255, 46, 99, 0.1); color: #ff2e63; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid rgba(255, 46, 99, 0.2);">
+                            ⚔️ TAKEOVER: ${(parseFloat(web3Read.utils.fromWei(data.price, 'ether')) * 1.5).toFixed(2)} APTM
+                        </span>
+                    </div>
+                
                 <a href="${data.linkMain}" target="_blank" class="store-btn">🌐 VISIT MAIN WEBSITE</a>
                 ${partnerBtn} 
-                <a href="${data.linkTelegram}" target="_blank" class="store-btn" style="background: rgba(36, 161, 222, 0.1);">✈️ JOIN OFFICIAL TELEGRAM</a>
-                <button class="store-btn" onclick="navigator.clipboard.writeText('${gpsLink}'); alert('GPS Link Copied!');">📍 COPY GPS LOCATION</button>
+                <a href="${data.linkTelegram}" target="_blank" class="store-btn" style="background: rgba(36, 161, 222, 0.1); border-color: rgba(36, 161, 222, 0.4); color: #24A1DE; width: 100%; display: block; margin-top: 10px;">✈️ JOIN OFFICIAL TELEGRAM</a>
+                
+                <button class="store-btn" style="margin-top:10px; background: rgba(0, 255, 213, 0.1); border: 1px solid var(--accent); color: #fff; font-size: 10px;" 
+                onclick="navigator.clipboard.writeText('${gpsLink}'); alert('GPS Link Copied! Send it to anyone to bring them directly to this block.');">
+                📍 COPY GPS LOCATION
+                </button>
                 <button class="wallet-btn" style="width:100%; margin-top:20px;" onclick="closeModal()">CLOSE [X]</button>`;
         }
-
-        function cancelSelection() {
-            selected.forEach(id => { const el = document.getElementById('b-' + id); if(el) el.classList.remove('selected'); });
-            selected = []; document.getElementById('selection-bar').style.display = 'none';
+        /* --- NEW CANCEL FUNCTION --- */
+function cancelSelection() {
+    // 1. Visually uncheck every selected block
+    selected.forEach(id => {
+        const el = document.getElementById('b-' + id);
+        if(el) {
+            el.classList.remove('selected');
+            el.style.border = ''; 
+            el.style.boxShadow = '';
         }
+    });
 
-        async function purchase() {
-            if(!userAccount) { alert("Connect wallet first!"); return; }
-            const btn = document.getElementById('buy-btn');
-            btn.innerText = "⏳ WAITING FOR WALLET...";
-            const web3 = new Web3(window.ethereum);
-            const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
-            let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
-            const urlParams = new URLSearchParams(window.location.search);
-            const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
-            try {
-                const tx = await contract.methods.buyBlocks(
-                    selected, document.getElementById('img-url').value, document.getElementById('main-link').value,
-                    document.getElementById('ext-link').value, document.getElementById('soc-link').value, 
-                    document.getElementById('tg-link').value, ref
-                ).send({ from: userAccount, value: totalWei.toString() });
-                if (tx.status) { location.reload(); }
-            } catch(e) { btn.innerText = "FINALIZE PURCHASE"; alert("Transaction Cancelled"); }
+    // 2. Clear the memory
+    selected = [];
+
+    // 3. Hide the bottom bar
+    document.getElementById('selection-bar').style.display = 'none';
+}
+async function purchase() {
+    if(!userAccount) { alert("Connect wallet first!"); return; }
+
+    // --- VISUAL FEEDBACK START ---
+    const btn = document.getElementById('buy-btn');
+    const originalText = btn.innerText;
+    
+    // 1. Lock the button immediately so they don't double-click
+    btn.innerText = "⏳ WAITING FOR WALLET...";
+    btn.style.opacity = "0.7";
+    btn.style.cursor = "not-allowed";
+    btn.disabled = true;
+
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
+
+    // Calculate total price
+    let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
+
+    // Get affiliate info
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
+
+    // Get user input data
+    const userImg = document.getElementById('img-url').value;
+    const userSite = document.getElementById('main-link').value;
+    const firstSector = selected[0];
+
+    try {
+        // 2. Execute Transaction
+        const tx = await contract.methods.buyBlocks(
+            selected, 
+            userImg, 
+            userSite, 
+            document.getElementById('ext-link').value, 
+            document.getElementById('soc-link').value, 
+            document.getElementById('tg-link').value, 
+            ref
+        ).send({ from: userAccount, value: totalWei.toString() })
+        .on('transactionHash', function(hash){
+            // 3. User clicked "Confirm" in wallet -> Now we wait for blockchain
+            btn.innerText = "⛓️ VERIFYING ON CHAIN...";
+        });
+
+        // 4. Success!
+        if (tx.status) {
+            btn.innerText = "✅ SECURED!";
+            await triggerTelegramWave(firstSector, userSite, userImg);
+            alert("Transaction successful! Your territory is secured.");
+            location.reload(); 
         }
+    } catch(e) {
+        // 5. If they click "Reject" or Error occurs -> RESET BUTTON
+        console.log(e);
+        alert("Transaction Cancelled"); 
+        btn.innerText = originalText;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+        btn.disabled = false;
+    }
+}
 
         async function connect() {
-            if (window.ethereum) {
-                const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAccount = accs[0];
-                document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38);
-                localStorage.setItem('isWalletConnected', 'true');
-            }
+    if (window.ethereum) {
+        try {
+            const accs = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            userAccount = accs[0];
+            
+            // Update button text
+            document.getElementById('w-btn').innerText = userAccount.substring(0,6)+"..."+userAccount.substring(38);
+            
+            // NEW: Save the session so it remembers you
+            localStorage.setItem('isWalletConnected', 'true');
+            
+        } catch (error) {
+            console.error(error);
+            // If failed, forget the user
+            localStorage.removeItem('isWalletConnected');
         }
+    }
+}
         function openDataModal() { document.getElementById('data-modal').style.display = 'flex'; }
         function closeDataModal() { document.getElementById('data-modal').style.display = 'none'; }
-        function closeModal() { document.getElementById('overlay').style.display = 'none'; }
         function openModal(t) {
             const m = document.getElementById('overlay'); m.style.display = 'flex';
             const c = document.getElementById('modal-content');
             if(t === 'how') {
-                c.innerHTML = '<h2 style="color:var(--accent); font-family: Orbitron;">THE APERTUM PROTOCOL</h2><div class="feature-grid">' +
-                '<div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory for 5 APTM per block.</p></div>' +
-                '<div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Takeover for 1.5x price.</p></div>' +
-                '<div class="feature-item"><h3>💰 120% RETURN</h3><p>Earn 20% profit on takeovers.</p></div></div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>';
-            }
+                c.innerHTML = '<h2 style="color:var(--accent); font-family: Orbitron; letter-spacing:3px;">THE APERTUM PROTOCOL</h2>' +
+                '<div class="feature-grid" style="grid-template-columns: 1fr 1fr;">' +
+                
+                // 1. Original ADVERTISE Text
+                '<div class="feature-item"><h3>📍 ADVERTISE</h3><p>Claim territory on our 10,000-block landscape for 5 APTM per block. Buy one for a logo or multiple to create a massive billboard. Drive global traffic to your website, socials, and affiliate networks.</p></div>' +
+                
+                // 2. Original WAR ZONE Text
+                '<div class="feature-item"><h3>⚔️ WAR ZONE</h3><p>Secure dominance. Any spot can be overtaken by paying 1.5x the current price (7.5 APTM), turning the grid into a competitive battlefield where the most valuable real estate is always in play.</p></div>' +
+                
+                // 3. Original 120% RETURN Text
+                '<div class="feature-item"><h3>💰 120% RETURN</h3><p>If your territory is overtaken, the protocol instantly returns your original 5 APTM plus a 1 APTM (20%) profit bonus. You earn every time someone wants your spot more than you do.</p></div>' +
+                
+                // 4. NEW VERIFIED PARTNER Text
+                '<div class="feature-item"><h3>🌟 DAO1 VERIFIED</h3><p><strong>Exclusive Protocol:</strong> Use your Active Member Referral Link when buying to automatically unlock the <strong>Gold Border & Star Badge</strong>. This permanently certifies your project as a trusted ecosystem partner.</p></div>' +
+                
+                '</div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>';
+            } else if(t === 'aff') {
+    const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
+    
+    // --- PERSONAL TRACKER LOGIC ---
+    // Currently set to 0.00 for the clean launch. 
+    // Later, we can connect this to the scanner to find their real history.
+    let myEarnings = 0.00; 
+
+    c.innerHTML = `
+        <h2 style="color:var(--accent); font-family: Orbitron; margin-bottom:10px; letter-spacing:2px;">AFFILIATE HUB</h2>
+        
+        <div style="background: rgba(0, 255, 213, 0.1); border: 1px solid var(--accent); padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);">
+            <p style="margin:0; font-family:'Orbitron'; font-size:10px; color:var(--accent); letter-spacing:2px;">YOUR PERSONAL EARNINGS</p>
+            <h3 style="margin:5px 0 0 0; font-size:36px; font-family:'Montserrat'; font-weight:900; color:#fff;">${myEarnings.toFixed(2)} <span style="font-size:16px; color:var(--accent);">APTM</span></h3>
+            <p style="margin:5px 0 0 0; font-size:9px; color:#8fa7c7; text-transform:uppercase;">Directly to your wallet</p>
+        </div>
+
+        <p style="color:#ccc; margin-bottom: 20px; font-size:14px;">Earn <b>1 APTM</b> instantly for every block purchased through your link.</p>
+        
+        <div style="padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent); border-radius: 10px; word-break: break-all; margin-bottom: 20px; font-family: Orbitron; font-size: 11px; color:var(--accent);">
+            ${userAccount ? link : "CONNECT WALLET TO GENERATE YOUR LINK"}
+        </div>
+        
+        <button class="wallet-btn" style="width:100%" onclick="navigator.clipboard.writeText('${link}'); alert('Referral Link Copied!');">COPY REFERRAL LINK</button>
+
+        <button class="store-btn" style="margin-top:10px; color:#fff; border:1px solid #1DA1F2; background:rgba(29, 161, 242, 0.1);" onclick="window.open('https://twitter.com/intent/tweet?text=Just%20secured%20territory%20on%20The%20Social%20Grid!%20%F0%9F%9A%80%20The%20first%20decentralized%20billboard%20on%20Apertum.%20Claim%20your%20block%20before%20the%20price%20goes%20up!%20%23Apertum%20%24APTM%20%F0%9F%91%87%20' + encodeURIComponent('${link}'), '_blank')">🐦 SHARE ON X (TWITTER)</button>
+        
+        <button class="nav-btn" style="margin-top:20px; border: none; opacity:0.6;" onclick="closeModal()">CLOSE [X]</button>
+    `;
+}
         }
-        function validateImage(field) {
-            const val = field.value.toLowerCase().trim();
-            const isValid = val.endsWith('.jpg') || val.endsWith('.png') || val.endsWith('.gif') || val.endsWith('.jpeg') || val.endsWith('.webp');
-            document.getElementById('link-warning').style.display = isValid || val === "" ? 'none' : 'block';
+        function closeModal() { document.getElementById('overlay').style.display = 'none'; }
+        const proofMessages = [
+            "Someone just viewed Sector 4",
+            "New takeover attempt in progress...",
+            "8,402,192 Transactions verified",
+            "Referral bonus of 1 APTM just paid out",
+            "New territory claimed in Sector 1",
+            "Dynamic price update: Sector 9 is heating up"
+        ];
+
+        async function showProof() {
+            const el = document.getElementById('social-proof');
+            const text = document.getElementById('proof-text');
+            if(!el || !text) return;
+
+            // This starts with your current Explorer TX count as a fallback
+            let liveTX = "8,114,741"; 
+            try {
+                const response = await fetch(RPC_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jsonrpc: "2.0", method: "eth_blockNumber", params: [], id: 1 })
+                });
+                const data = await response.json();
+                const blockHeight = parseInt(data.result, 16);
+                
+                // 🧮 CALCULATION: Matches the 1.29x ratio seen on your Explorer screenshot
+                liveTX = Math.floor(blockHeight * 1.2943).toLocaleString(); 
+                
+                // 🎯 THE SWAP: This finds the old 8.4M bait number and forces it to match the Explorer
+                document.querySelectorAll('.ticker-item span, .news-link a').forEach(item => {
+                    if (item.innerText.includes("8,402,192") || item.innerText.includes("TX")) {
+                        item.innerText = `${liveTX} TOTAL TX VERIFIED ON APERTUM`;
+                    }
+                });
+
+            } catch (e) { console.log("RPC Fetch error", e); }
+
+            const proofMessages = [
+                "Someone just viewed Sector 4",
+                "New takeover attempt in progress...",
+                `NETWORK: ${liveTX} TOTAL TRANSACTIONS`,
+                "Referral bonus of 1 APTM just paid out",
+                "New territory claimed in Sector 1",
+                `LIVE: ${liveTX} TX PROCESSED`
+            ];
+
+            text.innerText = proofMessages[Math.floor(Math.random() * proofMessages.length)];
+            el.style.display = 'flex';
+            setTimeout(() => { el.style.display = 'none'; }, 6000);
         }
-        window.addEventListener('click', function(e) { if (e.target.id === 'overlay' || e.target.id === 'data-modal') closeModal(); closeDataModal(); });
+
+        // Run immediately to clear the 8.4M bait info instantly
+        showProof(); 
+        setTimeout(showProof, 10000);
+        setInterval(showProof, 45000);
     </script>
     <section id="lite-paper">
         <h2>The Social Grid: Lite Paper</h2>
-        <p>The Social Grid is a decentralized advertising economy built on the Apertum Network.</p>
-        <div class="contract-box">0xF0260a64e4b2D7d5E6dBD157E25dabaA869898df</div>
+        <p>The Social Grid is a <strong>decentralized, high-velocity advertising economy</strong> built on the Apertum Network. Every block is a programmable on-chain asset that serves as a high-traffic recruitment portal for the next generation of Web3 projects.</p>
+
+        <h3>The Economic Engine</h3>
+        <ul>
+            <li><strong>Dynamic Takeover:</strong> Use 5 APTM to claim territory. Any spot can be overtaken at 1.5x the price, ensuring the most active projects stay at the forefront.</li>
+            <li><strong>The 120% Protocol:</strong> When your territory is overtaken, the smart contract instantly triggers a 120% payout—returning your 5 APTM plus a 1 APTM (20%) profit bonus.</li>
+            <li><strong>Affiliate Rewards:</strong> Earn 1 APTM instantly for every single block purchased through your network.</li>
+        </ul>
+
+        <h3>2026 Strategic Roadmap</h3>
+        <div class="feature-grid" style="margin-top:20px; text-align:left;">
+            <div class="feature-item" style="padding:15px;">
+                <h4 style="color:var(--accent); margin-top:0;">PHASE 1: GENESIS</h4>
+                <p style="font-size:12px;">Launch of the 10,000 block mainnet grid. Integration with Apertum Explorer and initial DAO partnerships.</p>
+            </div>
+            <div class="feature-item" style="padding:15px;">
+                <h4 style="color:var(--accent); margin-top:0;">PHASE 2: VELOCITY</h4>
+                <p style="font-size:12px;">Implementation of "Hot Zones" and trending territory metrics. Mobile-first grid optimization to ensure global accessibility.</p>
+            </div>
+            <div class="feature-item" style="padding:15px;">
+                <h4 style="color:var(--accent); margin-top:0;">PHASE 3: SYNDICATION</h4>
+                <p style="font-size:12px;">Launch of the Apertum Ad-SDK, allowing the Social Grid to be embedded into partner websites. This transforms every block into a portable billboard across the Web3 ecosystem.</p>
+            </div>
+        </div>
+
+        <h3 style="margin-top:30px;">Verified Contract</h3>
+        <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
     </section>
-</body>
+    <script>
+        setInterval(function() {
+            const cells = document.querySelectorAll('.tile:not(.sold)');
+            cells.forEach(cell => { while (cell.firstChild) { cell.removeChild(cell.firstChild); } });
+        }, 5000); 
+        // --- TELEGRAM NOTIFICATION ENGINE ---
+// --- TELEGRAM NOTIFICATION ENGINE ---
+async function triggerTelegramWave(sector, link, image) {
+    const BOT_TOKEN = '8451763772:AAEzg380MMo8zI3zxgkVnc6vx97H4hchdLg';
+    const CHAT_ID = '-1003501893896'; // Updated to numeric ID
+    const TOPIC_ID = 67; // Still required to hit the ⚡ topic
+
+    const adMessage = document.getElementById('soc-link').value || "New territory secured!";
+const text = `⚡ **NEW SECTOR CLAIMED!**\n\n` +
+             `📝 **Message:** ${adMessage}\n` +
+             `📍 **Location:** Sector ${sector}\n` +
+             `🔗 **Visit:** ${link}\n\n` +
+             `🛡️ *Secure your brand on the Apertum Grid.*`;
+
+    try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                message_thread_id: TOPIC_ID, // This uses the room number 67
+                photo: image,
+                caption: text,
+                parse_mode: 'Markdown'
+            })
+        });
+        console.log("Wave successfully broadcast to Telegram.");
+    } catch (error) {
+        console.error("Broadcast failed:", error);
+    }
+}
+    </script>
+    <script>
+/* --- IMAGE LINK VALIDATOR --- */
+function validateImage(field) {
+    const val = field.value.toLowerCase().trim();
+    const warn = document.getElementById('link-warning');
+    const btn = document.getElementById('buy-btn');
+
+    // 1. If empty, reset everything to normal
+    if(val.length === 0) {
+        field.style.border = '1px solid rgba(255,255,255,0.1)';
+        warn.style.display = 'none';
+        btn.style.opacity = '1';
+        btn.innerText = "FINALIZE PURCHASE";
+        btn.disabled = false;
+        return;
+    }
+
+    // 2. Check if it ends in .jpg, .png, etc.
+    const isValid = val.endsWith('.jpg') || val.endsWith('.png') || val.endsWith('.gif') || val.endsWith('.jpeg') || val.endsWith('.webp');
+
+    if (!isValid) {
+        // BAD LINK: Turn Red, Show Warning, FREEZE Button
+        field.style.border = '2px solid #ff2e63';
+        warn.style.display = 'block';
+        btn.style.opacity = '0.5';
+        btn.innerText = "FIX IMAGE LINK FIRST";
+        btn.disabled = true; // Stops the click!
+    } else {
+        // GOOD LINK: Turn Neon Green, UNFREEZE Button
+        field.style.border = '2px solid #00ffd5';
+        warn.style.display = 'none';
+        btn.style.opacity = '1';
+        btn.innerText = "FINALIZE PURCHASE";
+        btn.disabled = false;
+    }
+}
+</script>
+    <script>
+/* --- CLICK OUTSIDE TO CLOSE (FIXED) --- */
+window.addEventListener('click', function(e) {
+    // 1. If they click the dark background of the Storefront Popup
+    if (e.target.id === 'overlay') {
+        closeModal();
+    }
+    // 2. If they click the dark background of the "Enter Data" Popup
+    if (e.target.id === 'data-modal') {
+        closeDataModal();
+    }
+});
+       // --- GPS SYSTEM (Adapted for your 'b-' blocks) ---
+    function checkGPS() {
+        // This looks for ?block=123 in your website URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetID = urlParams.get('block');
+
+        if (targetID) {
+            console.log("GPS Targeting Block:", targetID);
+            
+            // Your blocks are named 'b-0', 'b-1', etc.
+            const targetCell = document.getElementById('b-' + targetID);
+
+            if (targetCell) {
+                // Scroll to the block smoothly
+                targetCell.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
+
+                // Add the glowing class
+                targetCell.classList.add('gps-target');
+            }
+        }
+    }
+
+    // Run the GPS check 2 seconds after load (giving your loop time to finish)
+    setTimeout(checkGPS, 2000); 
+        // --- SATELLITE BANNER SYSTEM (Physical Detection) ---
+    function optimizeBigBanners() {
+        const soldBlocks = Array.from(document.querySelectorAll('.tile.sold'));
+        if (soldBlocks.length === 0) return; 
+
+        // 1. PHYSICALLY MEASURE THE GRID
+        // We find the first block that "drops" to the next line.
+        let gridWidth = 0;
+        const firstBlock = document.getElementById('b-0');
+        if (firstBlock) {
+            const startY = firstBlock.offsetTop;
+            // Scan the first 50 blocks
+            for (let i = 1; i < 50; i++) {
+                const b = document.getElementById('b-' + i);
+                // If this block is lower down than the first one, we found the break!
+                if (b && b.offsetTop > startY + 10) { 
+                    gridWidth = i; 
+                    break;
+                }
+            }
+        }
+        
+        // Safety Fallback (rarely needed)
+        if (gridWidth === 0) gridWidth = Math.floor(document.getElementById('grid').offsetWidth / 135);
+
+        // 2. Group blocks by Image + Link
+        const groups = {};
+        soldBlocks.forEach(block => {
+            const img = block.getAttribute('data-img');
+            const link = block.getAttribute('data-link'); 
+            const key = img + '|' + link;
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(block);
+        });
+
+        // 3. Process Groups
+        Object.values(groups).forEach(group => {
+            if (group.length < 2) return; 
+
+            // Calculate Row/Col using the DETECTED gridWidth
+            const coords = group.map(b => {
+                const id = parseInt(b.id.replace('b-', ''));
+                return {
+                    id: id,
+                    col: id % gridWidth,
+                    row: Math.floor(id / gridWidth),
+                    el: b
+                };
+            });
+
+            let minCol = Infinity, maxCol = -Infinity, minRow = Infinity, maxRow = -Infinity;
+            coords.forEach(c => {
+                minCol = Math.min(minCol, c.col); maxCol = Math.max(maxCol, c.col);
+                minRow = Math.min(minRow, c.row); maxRow = Math.max(maxRow, c.row);
+            });
+
+            // 4. Apply the Snap
+            const totalWidthPx = ((maxCol - minCol) + 1) * 135 - 15;
+            const totalHeightPx = ((maxRow - minRow) + 1) * 135 - 15;
+
+            coords.forEach(c => {
+                const offsetX = (c.col - minCol) * 135;
+                const offsetY = (c.row - minRow) * 135;
+                
+                // Use !important to override any defaults
+                c.el.style.setProperty('background-size', `${totalWidthPx}px ${totalHeightPx}px`, 'important');
+                c.el.style.setProperty('background-position', `-${offsetX}px -${offsetY}px`, 'important');
+                
+                c.el.style.border = 'none';
+                c.el.style.borderRadius = '0';
+                c.el.style.boxShadow = 'none';
+                
+                // Round Outer Corners
+                if(c.col === minCol && c.row === minRow) c.el.style.borderTopLeftRadius = '16px';
+                if(c.col === maxCol && c.row === minRow) c.el.style.borderTopRightRadius = '16px';
+                if(c.col === minCol && c.row === maxRow) c.el.style.borderBottomLeftRadius = '16px';
+                if(c.col === maxCol && c.row === maxRow) c.el.style.borderBottomRightRadius = '16px';
+            });
+        });
+    }
+    
+    // Check frequently
+    setInterval(optimizeBigBanners, 250);
+</script>
+    <div id="social-proof">
+        <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
+        <div id="proof-text" style="color: #fff;"></div>
+    </div>
+    </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
