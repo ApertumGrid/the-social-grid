@@ -486,7 +486,7 @@ input:focus {
         window.onload = async () => {
     // 1. Build the Grid
     const g = document.getElementById('grid');
-    for (let i = 0; i < 4000; i++) {
+    for (let i = 0; i < 1000; i++) {
         const d = document.createElement('div'); d.className = 'tile'; d.id = 'b-' + i; d.onclick = (e) => handleTileClick(i, e); g.appendChild(d);
     }
     loadGrid();
@@ -498,7 +498,7 @@ input:focus {
 };
 
       async function loadGrid() {
-            for(let i = 0; i < 3000; i++) { 
+            for(let i = 0; i < 500; i++) { 
                 setTimeout(() => {
                     contractRead.methods.grid(i).call().then(res => {
                         prices[i] = res.isSold ? (parseFloat(web3Read.utils.fromWei(res.price, 'ether')) * 1.5) : 5;
@@ -557,7 +557,7 @@ input:focus {
                         // ------------------------------------
                         }
                     }).catch(e => { });
-                }, i * 5); 
+                }, i * 2); 
             }
         }
         // Calculate total sold blocks to show honest commission data
@@ -1086,6 +1086,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
