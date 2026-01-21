@@ -996,17 +996,30 @@ window.addEventListener('click', function(e) {
 
     // Run the GPS check 2 seconds after load (giving your loop time to finish)
     setTimeout(checkGPS, 2000); 
-        // --- SATELLITE BANNER SYSTEM (The Brain) ---
+        // --- SATELLITE BANNER SYSTEM (Auto-Detect Version) ---
     function optimizeBigBanners() {
-        // 1. Find all sold blocks
         const soldBlocks = Array.from(document.querySelectorAll('.tile.sold'));
         if (soldBlocks.length === 0) return; 
 
-        // 2. Calculate Grid Geometry (Dynamic)
-        const gridEl = document.getElementById('grid');
-        const gridWidth = Math.floor(gridEl.offsetWidth / 135);
-        
-        // 3. Group blocks by Image + Link
+        // 1. AUTO-DETECT TRUE GRID WIDTH
+        // We look for the first block that drops to the next line
+        let gridWidth = 0;
+        const firstBlock = document.getElementById('b-0');
+        if (firstBlock) {
+            const firstTop = firstBlock.offsetTop;
+            // Scan up to 50 blocks to find where the row breaks
+            for (let i = 1; i < 50; i++) {
+                const b = document.getElementById('b-' + i);
+                if (b && b.offsetTop > firstTop + 10) { // Found the drop!
+                    gridWidth = i;
+                    break;
+                }
+            }
+        }
+        // Fallback if grid is empty or huge
+        if (gridWidth === 0) gridWidth = Math.floor(document.getElementById('grid').offsetWidth / 135);
+
+        // 2. Group blocks by Image + Link
         const groups = {};
         soldBlocks.forEach(block => {
             const img = block.getAttribute('data-img');
@@ -1016,11 +1029,11 @@ window.addEventListener('click', function(e) {
             groups[key].push(block);
         });
 
-        // 4. Process Groups
+        // 3. Process Groups
         Object.values(groups).forEach(group => {
             if (group.length < 2) return; 
 
-            // Calculate Row/Col for every block
+            // Calculate Row/Col using the TRUE gridWidth
             const coords = group.map(b => {
                 const id = parseInt(b.id.replace('b-', ''));
                 return {
@@ -1040,14 +1053,17 @@ window.addEventListener('click', function(e) {
                 maxRow = Math.max(maxRow, c.row);
             });
 
+            // CHECK: Is this a valid rectangle?
+            // If the user resized the window, the group might be split across lines.
+            // If the math is wrong, we skip to avoid ugly glitches.
             const spanCols = (maxCol - minCol) + 1;
             const spanRows = (maxRow - minRow) + 1;
             
-            // Calculate Pixel Size
+            // Pixel Calculation (Standard 120px tile + 15px gap)
             const totalWidthPx = (spanCols * 135) - 15;
             const totalHeightPx = (spanRows * 135) - 15;
 
-            // Apply Styles
+            // Apply Styles with !important to force update
             coords.forEach(c => {
                 c.el.style.backgroundSize = `${totalWidthPx}px ${totalHeightPx}px`;
                 const offsetX = (c.col - minCol) * 135;
@@ -1055,12 +1071,12 @@ window.addEventListener('click', function(e) {
                 
                 c.el.style.backgroundPosition = `-${offsetX}px -${offsetY}px`;
                 
-                // Clean up borders
+                // Remove borders
                 c.el.style.border = 'none';
                 c.el.style.borderRadius = '0';
                 c.el.style.boxShadow = 'none';
                 
-                // Round Outer Corners Only
+                // Round Outer Corners
                 if(c.col === minCol && c.row === minRow) c.el.style.borderTopLeftRadius = '16px';
                 if(c.col === maxCol && c.row === minRow) c.el.style.borderTopRightRadius = '16px';
                 if(c.col === minCol && c.row === maxRow) c.el.style.borderBottomLeftRadius = '16px';
@@ -1069,7 +1085,7 @@ window.addEventListener('click', function(e) {
         });
     }
     
-    // Run frequently (Every 0.5 seconds)
+    // Run frequently
     setInterval(optimizeBigBanners, 500);
 </script>
     <div id="social-proof">
@@ -1078,6 +1094,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
