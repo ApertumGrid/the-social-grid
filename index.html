@@ -741,15 +741,19 @@ async function purchase() {
                 '</div><button class="wallet-btn" style="margin-top:40px; width:100%" onclick="closeModal()">CLOSE [X]</button>';
             } else if(t === 'aff') {
     const link = window.location.origin + window.location.pathname + "?ref=" + (userAccount || "CONNECT_WALLET");
-    let totalPaid = Object.keys(prices).filter(id => prices[id] > 5).length;
+    
+    // --- PERSONAL TRACKER LOGIC ---
+    // Currently set to 0.00 for the clean launch. 
+    // Later, we can connect this to the scanner to find their real history.
+    let myEarnings = 0.00; 
 
     c.innerHTML = `
         <h2 style="color:var(--accent); font-family: Orbitron; margin-bottom:10px; letter-spacing:2px;">AFFILIATE HUB</h2>
         
         <div style="background: rgba(0, 255, 213, 0.1); border: 1px solid var(--accent); padding: 20px; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 0 20px rgba(0, 255, 213, 0.1);">
-            <p style="margin:0; font-family:'Orbitron'; font-size:10px; color:var(--accent); letter-spacing:2px;">TOTAL COMMISSIONS PAID</p>
-            <h3 style="margin:5px 0 0 0; font-size:36px; font-family:'Montserrat'; font-weight:900; color:#fff;">${totalPaid}.00 <span style="font-size:16px; color:var(--accent);">APTM</span></h3>
-            <p style="margin:5px 0 0 0; font-size:9px; color:#8fa7c7; text-transform:uppercase;">On-Chain Verified</p>
+            <p style="margin:0; font-family:'Orbitron'; font-size:10px; color:var(--accent); letter-spacing:2px;">YOUR PERSONAL EARNINGS</p>
+            <h3 style="margin:5px 0 0 0; font-size:36px; font-family:'Montserrat'; font-weight:900; color:#fff;">${myEarnings.toFixed(2)} <span style="font-size:16px; color:var(--accent);">APTM</span></h3>
+            <p style="margin:5px 0 0 0; font-size:9px; color:#8fa7c7; text-transform:uppercase;">Directly to your wallet</p>
         </div>
 
         <p style="color:#ccc; margin-bottom: 20px; font-size:14px;">Earn <b>1 APTM</b> instantly for every block purchased through your link.</p>
@@ -764,7 +768,7 @@ async function purchase() {
         
         <button class="nav-btn" style="margin-top:20px; border: none; opacity:0.6;" onclick="closeModal()">CLOSE [X]</button>
     `;
-            }
+}
         }
         function closeModal() { document.getElementById('overlay').style.display = 'none'; }
         const proofMessages = [
@@ -946,6 +950,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
