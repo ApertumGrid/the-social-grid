@@ -467,15 +467,17 @@ input:focus {
                 <input type="text" id="tg-link" placeholder="t.me/group">
             </div>
         </div>
-        <button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button>
-        <button class="nav-btn" style="border:none; margin-top:15px; width:100%;" onclick="closeDataModal()">BACK TO GRID</button>
-    </div>
+    <button class="wallet-btn" id="buy-btn" style="width:100%; margin-top:15px;" onclick="purchase()">FINALIZE PURCHASE</button>
+    <button class="nav-btn" ...>BACK TO GRID</button>
+</div>
 </div>
     <div id="overlay"><div class="glass-panel" id="modal-content"></div></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
     <script>
-        const CONTRACT_ADDR = "0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1"; 
+        const CONTRACT_ADDR = "0x8f51EAa0aEEb3123Feb7005F734a336D41ac15bE"; // The Grid (APTM)
+
+// Standard Code to allow the website to "speak" to the wUSDT contract
         const RPC_URL = "https://rpc.apertum.io/ext/bc/YDJ1r9RMkewATmA7B35q1bdV18aywzmdiXwd9zGBq3uQjsCnn/rpc";
         const ABI = [{"inputs":[{"internalType":"uint256[]","name":"ids","type":"uint256[]"},{"internalType":"string","name":"img","type":"string"},{"internalType":"string","name":"m","type":"string"},{"internalType":"string","name":"e","type":"string"},{"internalType":"string","name":"s","type":"string"},{"internalType":"string","name":"t","type":"string"},{"internalType":"address","name":"referrer","type":"address"}],"name":"buyBlocks","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"grid","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"price","type":"uint256"},{"internalType":"string","name":"imageUrl","type":"string"},{"internalType":"string","name":"linkMain","type":"string"},{"internalType":"string","name":"linkExternal","type":"string"},{"internalType":"string","name":"linkSocial","type":"string"},{"internalType":"string","name":"linkTelegram","type":"string"},{"internalType":"bool","name":"isSold","type":"bool"}],"stateMutability":"view","type":"function"}];
         
@@ -662,13 +664,13 @@ function cancelSelection() {
     document.getElementById('selection-bar').style.display = 'none';
 }
 async function purchase() {
+    // 1. Safety Check
     if(!userAccount) { alert("Connect wallet first!"); return; }
 
-    // --- VISUAL FEEDBACK START ---
     const btn = document.getElementById('buy-btn');
     const originalText = btn.innerText;
-    
-    // 1. Lock the button immediately so they don't double-click
+
+    // 2. Lock Button
     btn.innerText = "⏳ WAITING FOR WALLET...";
     btn.style.opacity = "0.7";
     btn.style.cursor = "not-allowed";
@@ -677,43 +679,50 @@ async function purchase() {
     const web3 = new Web3(window.ethereum);
     const contract = new web3.eth.Contract(ABI, CONTRACT_ADDR);
 
-    // Calculate total price
+    // 3. Calculate Price
     let totalWei = selected.reduce((sum, id) => sum.add(web3.utils.toBN(web3.utils.toWei((prices[id] || 5).toString(), "ether"))), web3.utils.toBN(0));
 
-    // Get affiliate info
+    // --- 4. GATHER DATA (Including Affiliate) ---
+    
+    // A. Affiliate Link (The "Ref" Logic)
     const urlParams = new URLSearchParams(window.location.search);
     const ref = urlParams.get('ref') || "0x0000000000000000000000000000000000000000";
 
-    // Get user input data
+    // B. User Inputs
     const userImg = document.getElementById('img-url').value;
     const userSite = document.getElementById('main-link').value;
+    const extLink = document.getElementById('ext-link').value;
+    const socLink = document.getElementById('soc-link').value;
+    const tgLink = document.getElementById('tg-link').value;
     const firstSector = selected[0];
 
     try {
-        // 2. Execute Transaction
+        // 5. SEND TRANSACTION (APTM ONLY)
+        btn.innerText = "⏳ CONFIRM APTM TX...";
+        
         const tx = await contract.methods.buyBlocks(
-            selected, 
-            userImg, 
-            userSite, 
-            document.getElementById('ext-link').value, 
-            document.getElementById('soc-link').value, 
-            document.getElementById('tg-link').value, 
-            ref
+            selected,   // The Blocks
+            userImg,    // Image
+            userSite,   // Main Link
+            extLink,    // Partner/DAO Link
+            socLink,    // Message
+            tgLink,     // Telegram
+            ref         // <--- Affiliate Address is sent here
         ).send({ from: userAccount, value: totalWei.toString() })
         .on('transactionHash', function(hash){
-            // 3. User clicked "Confirm" in wallet -> Now we wait for blockchain
             btn.innerText = "⛓️ VERIFYING ON CHAIN...";
         });
 
-        // 4. Success!
+        // 6. SUCCESS
         if (tx.status) {
             btn.innerText = "✅ SECURED!";
             await triggerTelegramWave(firstSector, userSite, userImg);
             alert("Transaction successful! Your territory is secured.");
             location.reload(); 
         }
+
     } catch(e) {
-        // 5. If they click "Reject" or Error occurs -> RESET BUTTON
+        // 7. ERROR / CANCEL
         console.log(e);
         alert("Transaction Cancelled"); 
         btn.innerText = originalText;
@@ -880,7 +889,7 @@ async function purchase() {
         </div>
 
         <h3 style="margin-top:30px;">Verified Contract</h3>
-        <div class="contract-box">0x506Ce6C4A3F8572143D98999fD129bEf7D2101a1</div>
+        <div class="contract-box">0x8f51EAa0aEEb3123Feb7005F734a336D41ac15bE</div>
     </section>
     <script>
         setInterval(function() {
