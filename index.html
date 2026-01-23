@@ -532,17 +532,29 @@ input:focus {
                                                    prevEl.getAttribute('data-img') === res.imageUrl;
 
                                 if (isNextMatch || isPrevMatch) {
-                                    // BANNER MODE: Found a team member with the same image
-                                    el.style.backgroundSize = "300% 100%";
-                                    if (isNextMatch && !isPrevMatch) el.style.backgroundPosition = "0% center"; 
-                                    else if (isNextMatch && isPrevMatch) el.style.backgroundPosition = "50% center";
-                                    else if (!isNextMatch && isPrevMatch) el.style.backgroundPosition = "100% center";
-                                } else {
-                                    // INDIVIDUAL MODE: Solo image, no matching neighbor image
-                                    el.style.backgroundSize = "cover";
-                                    el.style.backgroundPosition = "center";
-                                }
-                            }, 200); // 200ms delay to ensure neighbors are ready
+        // BANNER MODE: Found a team member with the same image
+        el.style.backgroundSize = "300% 100%";
+
+        // --- ORANGE JUICE FILTER: KILL BORDERS & ROUNDED CORNERS ---
+        el.style.setProperty('border', 'none', 'important');
+        el.style.setProperty('border-radius', '0px', 'important');
+        el.style.setProperty('box-shadow', 'none', 'important');
+        // -----------------------------------------------------------
+
+        if (isNextMatch && !isPrevMatch) el.style.backgroundPosition = "0% center"; 
+        else if (isNextMatch && isPrevMatch) el.style.backgroundPosition = "50% center";
+        else if (!isNextMatch && isPrevMatch) el.style.backgroundPosition = "100% center";
+    } else {
+        // INDIVIDUAL MODE: Solo image, keep original styling
+        el.style.backgroundSize = "cover";
+        el.style.backgroundPosition = "center";
+
+        // SAFETY: Restore orange borders if it stops being a banner
+        el.style.removeProperty('border');
+        el.style.removeProperty('border-radius');
+        el.style.removeProperty('box-shadow');
+    }
+}, 200); // 200ms delay to ensure neighbors are ready
 
                             el.setAttribute('data-owner-info', JSON.stringify(res));
                             // --- VERIFIED DAO1 PARTNER LOGIC ---
@@ -1095,6 +1107,7 @@ window.addEventListener('click', function(e) {
     </div>
     </body>
 </html>
+
 
 
 
